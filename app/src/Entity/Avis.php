@@ -37,6 +37,11 @@ class Avis
      */
     private $voyageur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Voyage::class, inversedBy="avis")
+     */
+    private $voyage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Avis
     public function setVoyageur(?Voyageur $voyageur): self
     {
         $this->voyageur = $voyageur;
+
+        return $this;
+    }
+
+    public function getVoyage(): ?Voyage
+    {
+        return $this->voyage;
+    }
+
+    public function setVoyage(?Voyage $voyage): self
+    {
+        $this->voyage = $voyage;
 
         return $this;
     }
