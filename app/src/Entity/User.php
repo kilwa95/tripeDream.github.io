@@ -8,8 +8,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({
+ *    "agence" = "Agence",
+ *    "voyageur" = "Voyageur",
+ * })
  */
-class User implements UserInterface
+abstract class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -39,20 +45,7 @@ class User implements UserInterface
      */
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $lastName;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $civility;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $SIREN;
+   
 
     public function getId(): ?int
     {
@@ -144,39 +137,5 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(string $lastName): self
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getCivility(): ?string
-    {
-        return $this->civility;
-    }
-
-    public function setCivility(?string $civility): self
-    {
-        $this->civility = $civility;
-
-        return $this;
-    }
-
-    public function getSIREN(): ?int
-    {
-        return $this->SIREN;
-    }
-
-    public function setSIREN(?int $SIREN): self
-    {
-        $this->SIREN = $SIREN;
-
-        return $this;
-    }
+   
 }
