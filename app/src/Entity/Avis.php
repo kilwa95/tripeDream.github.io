@@ -32,6 +32,11 @@ class Avis
      */
     private $date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Voyageur::class, inversedBy="avis")
+     */
+    private $voyageur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Avis
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getVoyageur(): ?Voyageur
+    {
+        return $this->voyageur;
+    }
+
+    public function setVoyageur(?Voyageur $voyageur): self
+    {
+        $this->voyageur = $voyageur;
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VoyageurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,21 @@ class Voyageur extends User
      * @ORM\Column(type="string", length=255)
      */
     private $civility;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Adresse::class, cascade={"persist", "remove"})
+     */
+    private $adresse;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Avis::class, mappedBy="voyageur")
+     */
+    private $avis;
+
+    public function __construct()
+    {
+        $this->avis = new ArrayCollection();
+    }
 
 
 
@@ -63,6 +80,48 @@ class Voyageur extends User
     public function setCivility(string $civility): self
     {
         $this->civility = $civility;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?Adresse
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?Adresse $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Avis[]
+     */
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addAvi(Avis $avi): self
+    {
+        if (!$this->avis->contains($avi)) {
+            $this->avis[] = $avi;
+            $avi->setVoyageur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(Avis $avi): self
+    {
+        if ($this->avis->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getVoyageur() === $this) {
+                $avi->setVoyageur(null);
+            }
+        }
 
         return $this;
     }
