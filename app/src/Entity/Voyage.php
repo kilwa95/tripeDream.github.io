@@ -32,6 +32,11 @@ class Voyage
      */
     private $pointFort;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Agence::class, inversedBy="voyage")
+     */
+    private $agence;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Voyage
     public function setPointFort(?string $pointFort): self
     {
         $this->pointFort = $pointFort;
+
+        return $this;
+    }
+
+    public function getAgence(): ?Agence
+    {
+        return $this->agence;
+    }
+
+    public function setAgence(?Agence $agence): self
+    {
+        $this->agence = $agence;
 
         return $this;
     }
