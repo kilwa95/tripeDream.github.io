@@ -37,6 +37,11 @@ class Tarif
      */
     private $capacite;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Voyage::class, inversedBy="tarif")
+     */
+    private $voyage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Tarif
     public function setCapacite(int $capacite): self
     {
         $this->capacite = $capacite;
+
+        return $this;
+    }
+
+    public function getVoyage(): ?Voyage
+    {
+        return $this->voyage;
+    }
+
+    public function setVoyage(?Voyage $voyage): self
+    {
+        $this->voyage = $voyage;
 
         return $this;
     }

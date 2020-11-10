@@ -27,6 +27,11 @@ class Programme
      */
     private $description;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Voyage::class, inversedBy="programme")
+     */
+    private $voyage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class Programme
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getVoyage(): ?Voyage
+    {
+        return $this->voyage;
+    }
+
+    public function setVoyage(?Voyage $voyage): self
+    {
+        $this->voyage = $voyage;
 
         return $this;
     }

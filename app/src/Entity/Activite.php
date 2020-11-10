@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ActiviteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +24,16 @@ class Activite
      */
     private $name;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Voyage::class, mappedBy="activity")
+     */
+    private $voyages;
+
+    public function __construct()
+    {
+        $this->voyages = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +47,33 @@ class Activite
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Voyage[]
+     */
+    public function getVoyages(): Collection
+    {
+        return $this->voyages;
+    }
+
+    public function addVoyage(Voyage $voyage): self
+    {
+        if (!$this->voyages->contains($voyage)) {
+            $this->voyages[] = $voyage;
+            $voyage->addActivity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVoyage(Voyage $voyage): self
+    {
+        if ($this->voyages->removeElement($voyage)) {
+            $voyage->removeActivity($this);
+        }
 
         return $this;
     }
