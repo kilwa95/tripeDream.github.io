@@ -1,7 +1,9 @@
 {
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.1",
         "@symfony/webpack-encore": "^0.31.0",
         "core-js": "^3.0.0",
+        "prettier": "2.1.2",
         "regenerator-runtime": "^0.13.2",
         "webpack-notifier": "^1.6.0"
     },
@@ -15,6 +17,7 @@
     },
     "dependencies": {
         "bootstrap": "^4.5.3",
+        "font-awesome-webpack": "0.0.5-beta.2",
         "jquery": "^3.5.1",
         "popper.js": "^1.16.1"
     }
