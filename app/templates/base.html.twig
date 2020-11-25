@@ -28,22 +28,25 @@
                     </li>
 
                     <li class="nav-item dropdown has-megamenu">
-                        <a class="nav-link text-dark ml-4 dropdown-toggle" href="#" data-hover="dropdown"
-                            data-toggle="dropdown"> Activites
+                        <a class="nav-link text-dark ml-4 dropdown-toggle" href="#" data-toggle="dropdown"> Activites
                         </a>
-                        <ul class="dropdown-menu fade-up megamenu">
-                            <li><a class="dropdown-item" href="#"> Submenu item 1</a></li>
-                            <li><a class="dropdown-item" href="#"> Submenu item 2 </a></li>
-                            <li><a class="dropdown-item" href="#"> Submenu item 3 </a></li>
+                        <ul class="dropdown-menu  megamenu">
+                            {% for activite in activites %}
+                            <li><a class="dropdown-item" href="#"> {{activite.name}}</a></li>
+                            <hr>
+                            {% endfor %}
+
                         </ul>
                     </li>
 
                     <li class="nav-item dropdown has-megamenu">
                         <a class="nav-link text-dark  ml-4  dropdown-toggle" href="#" data-toggle="dropdown"> Pays</a>
                         <ul class="dropdown-menu fade-up megamenu ">
-                            <li><a class="dropdown-item" href="#"> Submenu item 1</a></li>
-                            <li><a class="dropdown-item" href="#"> Submenu item 2 </a></li>
-                            <li><a class="dropdown-item" href="#"> Submenu item 3 </a></li>
+                            {% for pays in pays %}
+                            <li><a class="dropdown-item" href="#"> {{pays.name}}</a></li>
+                            <hr>
+                            {% endfor %}
+
                         </ul>
                     </li>
 
@@ -51,9 +54,11 @@
                         <a class="nav-link text-dark  ml-4  dropdown-toggle" href="#" data-toggle="dropdown"
                             data-hover="dropdown "> Sasions </a>
                         <ul class="dropdown-menu  fade-up megamenu ">
-                            <li><a class="dropdown-item" href="#"> Submenu item 1</a></li>
-                            <li><a class="dropdown-item" href="#"> Submenu item 2 </a></li>
-                            <li><a class="dropdown-item" href="#"> Submenu item 3 </a></li>
+                            {% for saison in saison %}
+                            <li><a class="dropdown-item " href="#"> {{saison.name}}</a></li>
+                            <hr>
+                            {% endfor %}
+
                         </ul>
                     </li>
 
