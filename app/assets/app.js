@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 require('@fortawesome/fontawesome-free/css/all.min.css');
 require('@fortawesome/fontawesome-free/js/all.js');
 import 'bootstrap';
+
  import $ from 'jquery';
 
 if ($(window).width() > 992) {
