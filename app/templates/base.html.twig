@@ -31,9 +31,12 @@
                         <a class="nav-link text-dark ml-4 dropdown-toggle" href="#" data-toggle="dropdown"> Activites
                         </a>
                         <ul class="dropdown-menu  megamenu">
+
                             {% for activite in activites %}
                             <li><a class="dropdown-item" href="#"> {{activite.name}}</a></li>
                             <hr>
+                            <li><a class="dropdown-item" href="#"> </a></li>
+
                             {% endfor %}
 
                         </ul>
@@ -76,7 +79,7 @@
         </nav>
         {% block body %}{% endblock %}
 
-        <footer style="background: #040E27;padding: 100px;">
+        <footer   style="background: #040E27;padding:100px;">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-4 d-flex flex-column">
@@ -144,14 +147,11 @@
                             </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
         </footer>
         {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
-
-
         {% endblock %}
 </body>
 
