@@ -13,33 +13,38 @@ use Symfony\Component\Security\Core\User\UserInterface;
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    * @ORM\GeneratedValue
+    * @ORM\Column(type="integer")
+    */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     */
+    */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     */
+    */
     private $roles = [];
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
+    * @ORM\Column(type="string")
+    */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
-     */
+    */
     private $name;
 
-   
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+    */
+    private $prenom;
+
+    
 
     public function getId(): ?int
     {
@@ -60,9 +65,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
     /**
      * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
+    *
+    * @see UserInterface
+    */
     public function getUsername(): string
     {
         return (string) $this->email;
@@ -70,7 +75,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
     /**
      * @see UserInterface
-     */
+    */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -89,7 +94,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
     /**
      * @see UserInterface
-     */
+    */
     public function getPassword(): string
     {
         return (string) $this->password;
@@ -104,7 +109,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
     /**
      * @see UserInterface
-     */
+    */
     public function getSalt()
     {
         // not needed when using the "bcrypt" algorithm in security.yaml
@@ -112,7 +117,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
     /**
      * @see UserInterface
-     */
+    */
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
@@ -131,5 +136,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
         return $this;
     }
 
-   
-}
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(?string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+         
+            
+         }
