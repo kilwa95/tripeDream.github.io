@@ -34,10 +34,7 @@ class Voyage
      */
     private $pointFort;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Agence::class, inversedBy="voyage")
-     */
-    private $agence;
+  
 
     /**
      * @ORM\OneToMany(targetEntity=Avis::class, mappedBy="voyage")
@@ -131,17 +128,6 @@ class Voyage
         return $this;
     }
 
-    public function getAgence(): ?Agence
-    {
-        return $this->agence;
-    }
-
-    public function setAgence(?Agence $agence): self
-    {
-        $this->agence = $agence;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Avis[]

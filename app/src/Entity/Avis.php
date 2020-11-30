@@ -32,10 +32,7 @@ class Avis
      */
     private $date;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Voyageur::class, inversedBy="avis")
-     */
-    private $voyageur;
+   
 
     /**
      * @ORM\ManyToOne(targetEntity=Voyage::class, inversedBy="avis")
@@ -83,17 +80,7 @@ class Avis
         return $this;
     }
 
-    public function getVoyageur(): ?Voyageur
-    {
-        return $this->voyageur;
-    }
-
-    public function setVoyageur(?Voyageur $voyageur): self
-    {
-        $this->voyageur = $voyageur;
-
-        return $this;
-    }
+  
 
     public function getVoyage(): ?Voyage
     {
