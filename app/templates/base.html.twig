@@ -56,7 +56,7 @@
                             data-hover="dropdown "> Sasions </a>
                         <ul class="dropdown-menu  fade-up megamenu ">
                             {% for saison in saison %}
-                            <li><a class="dropdown-item " href="#"> {{saison.name}}</a></li>
+                            <li><a class="dropdown-item " href="{{ path('voyage', {'saisonId':saison.id}) }}"> {{saison.name}}</a></li>
                             <hr>
                             {% endfor %}
 
