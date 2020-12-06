@@ -13,6 +13,9 @@ class ActivityFixtures extends Fixture
         $ski = new Activite();
         $tennis = new Activite();
         $canoë = new Activite();
+
+
+        
         $baby_foot = new Activite();
 
         $ski->setName('ski');

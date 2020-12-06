@@ -22,29 +22,32 @@ class VoyageRepository extends ServiceEntityRepository
     // /**
     //  * @return Voyage[] Returns an array of Voyage objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function findVoyagesByActivityId(int $activiteId)
     {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $conn = $this->getEntityManager()->getConnection();
 
-    /*
-    public function findOneBySomeField($value): ?Voyage
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $sql = '
+        SELECT * FROM `voyage_activite` INNER JOIN  voyage ON voyage_activite.voyage_id = voyage.id
+        WHERE  activite_id = :activiteId';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['activiteId' => $activiteId]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAllAssociative();
     }
-    */
+
+    public function findVoyagesByPaysId(int $paysId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT * FROM `voyage_pays` INNER JOIN  voyage ON voyage_pays.voyage_id = voyage.id
+        WHERE  pays_id = :paysId';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['paysId' => $paysId]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAllAssociative();
+    }
 }

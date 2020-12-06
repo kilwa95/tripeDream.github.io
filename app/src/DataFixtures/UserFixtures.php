@@ -14,14 +14,14 @@ class UserFixtures extends Fixture
         $faker = \Faker\Factory::create('fr-FR');
         for ($i = 0; $i < 5; $i++) {
 
-            $user = new User();
-            $user->setEmail($faker->email());
-            $user->setName($faker->name());
-            $user->setPrenom($faker->lastName());
-            $user->setPassword($faker->password());
-            $user->setRoles(['ROLE_USER','ROLE_AGENCE']);
+            $agence = new User();
+            $agence->setEmail($faker->email());
+            $agence->setName($faker->name());
+            $agence->setPrenom($faker->lastName());
+            $agence->setPassword($faker->password());
+            $agence->setRoles(['ROLE_USER','ROLE_AGENCE']);
 
-            $manager->persist($user);
+            $manager->persist($agence);
            }
 
         $manager->flush();
