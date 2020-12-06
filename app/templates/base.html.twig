@@ -12,7 +12,7 @@
 <body style="font-family: Georgia, serif;">
     <header>
         <nav id="navbar_top" class="navbar navbar-light navbar-expand-lg bg-white border rounded  ">
-            <a class="navbar-brand mr-5" href="#">
+            <a class="navbar-brand mr-5" href="{{ path('homepage') }}">
                 <img src="{{ asset('images/logo.png') }}" width="80" height="90" alt="logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -24,7 +24,7 @@
 
                 <ul class="navbar-nav w-75">
                     <li class="nav-item">
-                        <a class="nav-link text-dark  ml-4" href="#">Home</a>
+                        <a class="nav-link text-dark  ml-4" href="{{ path('homepage') }}">Home</a>
                     </li>
 
                     <li class="nav-item dropdown has-megamenu">
@@ -33,10 +33,8 @@
                         <ul class="dropdown-menu  megamenu">
 
                             {% for activite in activites %}
-                            <li><a class="dropdown-item" href="#"> {{activite.name}}</a></li>
+                            <li><a class="dropdown-item" href="{{ path('voyage', {'activiteId':activite.id}) }}"> {{activite.name}}</a></li>
                             <hr>
-                            <li><a class="dropdown-item" href="#"> </a></li>
-
                             {% endfor %}
 
                         </ul>
@@ -46,7 +44,7 @@
                         <a class="nav-link text-dark  ml-4  dropdown-toggle" href="#" data-toggle="dropdown"> Pays</a>
                         <ul class="dropdown-menu fade-up megamenu ">
                             {% for pays in pays %}
-                            <li><a class="dropdown-item" href="#"> {{pays.name}}</a></li>
+                            <li><a class="dropdown-item" href="{{ path('voyage', {'paysId':pays.id}) }}"> {{pays.name}}</a></li>
                             <hr>
                             {% endfor %}
 

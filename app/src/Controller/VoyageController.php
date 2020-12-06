@@ -38,12 +38,10 @@ class VoyageController extends AbstractController
         $voyages = $VoyageRepository->findAll();
      }
 
-
         $activites = $ActiviteRepository->findAll();
         $pays = $PaysRepository->findAll();
         $saison= $SaisonRepository->findAll();
         $agences = $UserRepository->findAll();
-        dump( $agences );
 
 
         
