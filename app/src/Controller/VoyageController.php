@@ -25,6 +25,8 @@ class VoyageController extends AbstractController
 
      $activiteId  = $request->query->get('activiteId');
      $paysId = $request->query->get('paysId');
+     $saisonId = $request->query->get('saisonId');
+
      $voyages  = [];
 
      if($paysId){
@@ -34,16 +36,18 @@ class VoyageController extends AbstractController
      else if($activiteId){
         $voyages  =  $VoyageRepository->findVoyagesByActivityId($activiteId);
      }
+
+     else if($saisonId ){
+        $voyages  =  $VoyageRepository->findVoyagesBySaisonId($saisonId);
+     }
      else{
         $voyages = $VoyageRepository->findAll();
      }
-
 
         $activites = $ActiviteRepository->findAll();
         $pays = $PaysRepository->findAll();
         $saison= $SaisonRepository->findAll();
         $agences = $UserRepository->findAll();
-        dump( $agences );
 
 
         

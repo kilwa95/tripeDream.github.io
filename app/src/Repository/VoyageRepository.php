@@ -50,4 +50,18 @@ class VoyageRepository extends ServiceEntityRepository
         // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetchAllAssociative();
     }
+
+    public function findVoyagesBySaisonId(int $saisonId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT * FROM `voyage_saison` INNER JOIN  voyage ON voyage_saison.voyage_id = voyage.id
+        WHERE  saison_id = :saisonId';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['saisonId' => $saisonId]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAllAssociative();
+    }
 }
