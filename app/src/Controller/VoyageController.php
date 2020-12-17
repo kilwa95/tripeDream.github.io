@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +22,8 @@ class VoyageController extends AbstractController
      * @Route("/voyage", name="voyage")
      */
     public function index(ActiviteRepository $ActiviteRepository,PaysRepository $PaysRepository
-    ,SaisonRepository $SaisonRepository,VoyageRepository $VoyageRepository,UserRepository $UserRepository ,Request $request)
+    ,SaisonRepository $SaisonRepository,VoyageRepository $VoyageRepository,UserRepository $UserRepository
+     ,Request $request,PaginatorInterface $paginator)
     {
 
      $activiteId  = $request->query->get('activiteId');
@@ -44,6 +47,13 @@ class VoyageController extends AbstractController
         $voyages = $VoyageRepository->findAll();
      }
 
+     $pagination = $paginator->paginate(
+      $voyages, /* query NOT result */
+      $request->query->getInt('page', 1)/*page number*/,
+      3/*limit per page*/
+  );
+  dump( $pagination);
+
         $activites = $ActiviteRepository->findAll();
         $pays = $PaysRepository->findAll();
         $saison= $SaisonRepository->findAll();
@@ -55,7 +65,7 @@ class VoyageController extends AbstractController
             'activites' => $activites,
             'pays' => $pays,
             'saison' =>  $saison,
-            'voyages' => $voyages,
+            'voyages' => $pagination,
             'agences' => $agences
         ]);
     }

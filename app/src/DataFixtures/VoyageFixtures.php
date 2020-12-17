@@ -81,6 +81,13 @@ class VoyageFixtures extends Fixture
         $manager->persist($voyage);
        }
 
+       for ($i = 0; $i < 80; $i++) {
+        $voyage = new Voyage();
+        $voyage->setName($faker->name());
+        $voyage->setDescription($faker->text());;
+        $manager->persist($voyage);
+       }
+
        $manager->flush();
     }
 }
