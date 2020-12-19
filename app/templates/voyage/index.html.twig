@@ -1,124 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}listes voyages{% endblock %}
+{% block title %}Voyage index{% endblock %}
 
 {% block body %}
 <div class="mt-5" style="min-height: 70vh;">
     <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h2 class="pb-2">Rechercher un voyage </h2>
-                <div class="accordion bg-dark" id="accordionExample">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    activites
-                                </button>
-                            </h2>
+        <h2 class="pb-2">{{count|length}} résultats correspondent à votre recherche </h2>
+        <h1></h1>
+        <ul class="list-unstyled  ">
+            {% for voyage in voyages %}
+            <li class="media w-75  ">
+                <a href="#">
+                    <img width="200" class="mr-3"
+                        src="https://www.labalaguere.com/sites/default/files/styles/banner_voyage/public/upload_voyages/FP1COLC_1.jpg?itok=pOymZ75X"
+                        alt="Generic placeholder image">
+                </a>
+
+                <div class="media-body">
+                    <a href="#" style="font-size:24px;font-weight:700; color:#61464b;"
+                        class="mt-0 mb-1">{{voyage.name}}</a>
+                    <p style="font-size:16px; color: #61464b;" class="font-weight-light text-justify ">
+                        {{voyage.description}}
+                    </p>
+                    <div class="d-flex flex-row justify-content-between ">
+                        <div class="mr-4">Prochaine depart: <span class="text-warning">31/10/2021</span> </div>
+                        <div>
+                            <div style="font-weight:700;">3600€<br> <strong class="text-warning ">15
+                                    jours</strong></div>
                         </div>
-
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                            data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div class="list-group" id="list-tab" role="tablist">
-                                    {% for activite in activites %}
-
-                                    <a class="list-group-item list-group-item-action " id="{{activite.id}}"
-                                        href="{{ path('voyage', {'activiteId':activite.id}) }}" />{{activite.name}}</a>
-
-                                    {% endfor %}
-
-                                </div>
-                            </div>
+                        <div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left collapsed" type="button"
-                                    data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-                                    aria-controls="collapseTwo">
-                                    pays
-                                </button>
-                            </h2>
-                        </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                            data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div class="list-group" id="list-tab" role="tablist">
-                                    {% for pays in pays %}
-                                    <a class="list-group-item list-group-item-action " id="{{pays.id}}"
-                                        href="{{ path('voyage', {'paysId':pays.id}) }}" />{{pays.name}}</a>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header" id="headingThree">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left collapsed" type="button"
-                                    data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
-                                    aria-controls="collapseThree">
-                                    agences
-                                </button>
-                            </h2>
-                        </div>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                            data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div class="list-group" id="list-tab" role="tablist">
-                                    {% for agence in agences %}
-                                    <a class="list-group-item list-group-item-action " id="{{agence.id}}"
-                                        href="{{ path('voyage', {'agenceId':agence.id}) }}" />{{agence.name}}</a>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm">
-                <h2 class="pb-2">{{voyages|length}} résultats correspondent à votre recherche </h2>
-
-                <ul class="list-unstyled ">
-                    {% for voyage in voyages %}
-                    <li class="media ">
-                        <a href="#">
-                            <img width="200" class="mr-3"
-                                src="https://www.labalaguere.com/sites/default/files/styles/banner_voyage/public/upload_voyages/FP1COLC_1.jpg?itok=pOymZ75X"
-                                alt="Generic placeholder image">
-                        </a>
-
-                        <div class="media-body">
-                            <a href="#" style="font-size:24px;font-weight:700; color:#61464b;"
-                                class="mt-0 mb-1">{{voyage.name}}</a>
-                            <p style="font-size:16px; color: #61464b;" class="font-weight-light text-justify ">
-                                {{voyage.description}}
-                            </p>
-                            <div class="d-flex flex-row ">
-                                <div class="mr-4">Prochaine depart: <span class="text-warning">31/10/2021</span> </div>
-                                <div>
-                                    <div style="font-weight:700;">3600€<br> <strong class="text-warning">15
-                                            jours</strong></div>
-                                </div>
-                                <div>
-                                </div>
-                    </li>
-                    <hr>
-                    {% endfor %}
-
-                </ul>
-                <div class="navigation">
-                    {{ knp_pagination_render(voyages) }}
-                </div>
-            </div>
-
+            </li>
+            {% endfor %}
+            <hr>
+        </ul>
+        <div class="navigation">
+            {{ knp_pagination_render(voyages) }}
         </div>
     </div>
 </div>
-
 
 {% endblock %}

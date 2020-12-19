@@ -10,20 +10,18 @@ use App\Repository\PaysRepository;
 use App\Repository\SaisonRepository;
 
 
-
-
 class NavigationController extends AbstractController
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="navigation")
      */
-    public function index(ActiviteRepository $ActiviteRepository,PaysRepository $PaysRepository
-    ,SaisonRepository $SaisonRepository)
+    public function index(ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
-        $activites = $ActiviteRepository->findAll();
+        $activites = $activiteRepository->findAll();
         $pays = $PaysRepository->findAll();
         $saison= $SaisonRepository->findAll();
-        return $this->render('navigation/homepage.html.twig',[
+
+        return $this->render('navigation/index.html.twig',[
             'activites' => $activites,
             'pays' => $pays,
             'saison' =>  $saison
