@@ -105,7 +105,6 @@ class VoyageController extends AbstractController
         4/*limit per page*/
         );
 
-        dump( $voyages);
 
         return $this->render('voyage/index.html.twig',[
             'voyages' => $pagination,

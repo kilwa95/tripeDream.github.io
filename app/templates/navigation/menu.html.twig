@@ -51,8 +51,22 @@
                     data-hover="dropdown "> Sasions </a>
                 <ul class="dropdown-menu  fade-up megamenu ">
                     {% for saison in saison %}
-                    <li><a class="navigation text-body  text-decoration-none" href="{{ path('activite_name',{'id': saison.id}) }}">
+                    <li><a class="navigation text-body  text-decoration-none" href="{{ path('saison_name',{'id': saison.id}) }}">
                             {{saison.name}}</a></li>
+                    <hr>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endif %}
+
+              {% if  ville is defined %}
+            <li class="nav-item dropdown has-megamenu">
+                <a class="nav-link text-dark  ml-4  dropdown-toggle" href="#" data-toggle="dropdown"
+                    data-hover="dropdown "> villes </a>
+                <ul class="dropdown-menu  fade-up megamenu ">
+                    {% for ville in villes %}
+                    <li><a class="navigation text-body  text-decoration-none" href="{{ path('ville_name',{'id': ville.id}) }}">
+                        {{ville.name}}</a></li>
                     <hr>
                     {% endfor %}
                 </ul>
