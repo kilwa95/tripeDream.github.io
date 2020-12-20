@@ -1,7 +1,6 @@
 import './styles/app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-require('@fortawesome/fontawesome-free/css/all.min.css');
-require('@fortawesome/fontawesome-free/js/all.js');
+
 import 'bootstrap';
 
 import $ from 'jquery';
@@ -25,3 +24,7 @@ $(document).on('click', '.dropdown-menu', function(e) {
 });
 
 $('.animated').addClass('delay-1s');
+
+$('.far.fa').click(function() {
+	$(this).toggleClass('fa-heart fa-heart-o');
+});

@@ -30,3 +30,7 @@
 a:hover {
 	color: #ffc107 !important;
 }
+.far {
+	font-size: 25px !important;
+	color: red;
+}
