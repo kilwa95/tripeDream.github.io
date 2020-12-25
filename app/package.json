@@ -1,9 +1,10 @@
 {
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^5.15.1",
+        "@prettier/plugin-php": "github:prettier/plugin-php",
         "@symfony/webpack-encore": "^0.31.0",
         "core-js": "^3.0.0",
-        "prettier": "2.2.1",
+        "prettier": "^2.2.1",
         "regenerator-runtime": "^0.13.2",
         "webpack-notifier": "^1.6.0"
     },
@@ -18,7 +19,6 @@
     "dependencies": {
         "@coreui/coreui": "^3.4.0",
         "@popperjs/core": "^2.5.4",
-        "@prettier/plugin-php": "github:prettier/plugin-php",
         "bootstrap": "^4.5.3",
         "font-awesome-webpack": "0.0.5-beta.2",
         "jquery": "^3.5.1",

@@ -8,6 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ActiviteRepository;
 use App\Repository\PaysRepository;
 use App\Repository\SaisonRepository;
+use App\Repository\FavorieRepository;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 
 
 class NavigationController extends AbstractController
@@ -15,16 +18,17 @@ class NavigationController extends AbstractController
     /**
      * @Route("/", name="navigation")
      */
-    public function index(ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
+    public function index(ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository): Response
     {
-        $activites = $activiteRepository->findAll();
-        $pays = $PaysRepository->findAll();
-        $saison= $SaisonRepository->findAll();
+        
 
         return $this->render('navigation/index.html.twig',[
-            'activites' => $activites,
-            'pays' => $pays,
-            'saison' =>  $saison
+            'activites' => $activiteRepository->findAll(),
+            'pays' => $PaysRepository->findAll(),
+            'saison' =>  $SaisonRepository->findAll(),
+            'favories' =>  $favorieRepository->findAll()
         ]);
     }
+
+    
 }

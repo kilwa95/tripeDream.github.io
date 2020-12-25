@@ -1,4 +1,3 @@
-
 <nav id="navbar_top" class="navbar navbar-light navbar-expand-lg bg-white border rounded  ">
     <a class="navbar-brand mr-5" href="{{ path('navigation') }}">
         <img src="{{ asset('images/logo.png') }}" width="80" height="90" alt="logo">
@@ -17,10 +16,12 @@
 
             {% if pays is defined %}
             <li class="nav-item dropdown has-megamenu">
-                <a class="nav-link text-dark  ml-4  dropdown-toggle" href="{{ path('navigation') }}" data-toggle="dropdown"> Pays</a>
+                <a class="nav-link text-dark  ml-4  dropdown-toggle" href="{{ path('navigation') }}"
+                    data-toggle="dropdown"> Pays</a>
                 <ul class="dropdown-menu fade-up megamenu ">
                     {% for pays in pays %}
-                    <li><a class=" navigation text-body  text-decoration-none"  href="{{ path('pays_name',{'id': pays.id}) }}"> {{pays.name}}</a></li>
+                    <li><a class=" navigation text-body  text-decoration-none"
+                            href="{{ path('pays_name',{'id': pays.id}) }}"> {{pays.name}}</a></li>
                     <hr>
                     {% endfor %}
 
@@ -35,7 +36,8 @@
                 <ul class="dropdown-menu  megamenu">
 
                     {% for activite in activites %}
-                    <li><a class="navigation text-body  text-decoration-none" href="{{ path('activite_name',{'id': activite.id}) }}">
+                    <li><a class="navigation text-body  text-decoration-none"
+                            href="{{ path('activite_name',{'id': activite.id}) }}">
                             {{activite.name}}</a></li>
                     <hr>
                     {% endfor %}
@@ -51,7 +53,8 @@
                     data-hover="dropdown "> Sasions </a>
                 <ul class="dropdown-menu  fade-up megamenu ">
                     {% for saison in saison %}
-                    <li><a class="navigation text-body  text-decoration-none" href="{{ path('saison_name',{'id': saison.id}) }}">
+                    <li><a class="navigation text-body  text-decoration-none"
+                            href="{{ path('saison_name',{'id': saison.id}) }}">
                             {{saison.name}}</a></li>
                     <hr>
                     {% endfor %}
@@ -59,14 +62,15 @@
             </li>
             {% endif %}
 
-              {% if  ville is defined %}
+            {% if  ville is defined %}
             <li class="nav-item dropdown has-megamenu">
                 <a class="nav-link text-dark  ml-4  dropdown-toggle" href="#" data-toggle="dropdown"
                     data-hover="dropdown "> villes </a>
                 <ul class="dropdown-menu  fade-up megamenu ">
                     {% for ville in villes %}
-                    <li><a class="navigation text-body  text-decoration-none" href="{{ path('ville_name',{'id': ville.id}) }}">
-                        {{ville.name}}</a></li>
+                    <li><a class="navigation text-body  text-decoration-none"
+                            href="{{ path('ville_name',{'id': ville.id}) }}">
+                            {{ville.name}}</a></li>
                     <hr>
                     {% endfor %}
                 </ul>
@@ -79,10 +83,12 @@
                 <a class="nav-link text-dark ml-4" href="#">About Us</a>
             </li>
         </ul>
-
         <ul class="navbar-nav ">
-            <button type="button" class="btn btn-outline-danger mr-3">connexion</button>
+            <button type="button" class="btn btn-outline-success mr-3">connexion</button>
             <button type="button" class="btn btn-outline-primary">inscription</button>
+            <a  href="{{path('favorie_index')}}" type="button" class="btn btn-danger ml-3">favorie
+                <span  class=" nbselection badge badge-light">{{favories|length}}</span></a>
+
         </ul>
     </div>
     </div>

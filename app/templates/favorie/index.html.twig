@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Favorie index{% endblock %}
+{% block body %}
+
+<div class="mt-5" style="min-height: 70vh;">
+    <div class="container">
+        <h1 class="text-center mb-5">My favories</h1>
+        <div class="row">
+            {% for favorie in favories %}
+            <div class="col-3">
+                <div class="card mb-5">
+                    <img src="https://www.labalaguere.com/sites/default/files/styles/banner_voyage/public/upload_voyages/FP1COLC_1.jpg?itok=pOymZ75X"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{favorie.name}}</h5>
+                        <p class="card-text">{{favorie.description}}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">agence: GoVoyag</li>
+                        <li class="list-group-item">Jours: 15 jours</li>
+                        <li class="list-group-item"> prochaine depart: 31/10/2021</li>
+                        <li class="list-group-item">prix: 3600€</li>
+
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

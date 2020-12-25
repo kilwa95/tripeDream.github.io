@@ -25,6 +25,9 @@ $(document).on('click', '.dropdown-menu', function(e) {
 
 $('.animated').addClass('delay-1s');
 
+// add au favorie
+
 $('.far.fa').click(function() {
+	debugger;
 	$(this).toggleClass('fa-heart fa-heart-o');
 });
