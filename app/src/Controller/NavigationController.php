@@ -8,25 +8,27 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ActiviteRepository;
 use App\Repository\PaysRepository;
 use App\Repository\SaisonRepository;
-
+use App\Repository\FavorieRepository;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 
 
 class NavigationController extends AbstractController
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="navigation")
      */
-    public function index(ActiviteRepository $ActiviteRepository,PaysRepository $PaysRepository
-    ,SaisonRepository $SaisonRepository)
+    public function index(ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository): Response
     {
-        $activites = $ActiviteRepository->findAll();
-        $pays = $PaysRepository->findAll();
-        $saison= $SaisonRepository->findAll();
-        return $this->render('navigation/homepage.html.twig',[
-            'activites' => $activites,
-            'pays' => $pays,
-            'saison' =>  $saison
+        
+
+        return $this->render('navigation/index.html.twig',[
+            'activites' => $activiteRepository->findAll(),
+            'pays' => $PaysRepository->findAll(),
+            'saison' =>  $SaisonRepository->findAll(),
+            'favories' =>  $favorieRepository->findAll()
         ]);
     }
+
+    
 }

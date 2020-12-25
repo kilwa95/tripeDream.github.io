@@ -39,6 +39,17 @@ class Avis
      */
     private $voyage;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="avis")
+     */
+    private $user;
+
+   
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +101,18 @@ class Avis
     public function setVoyage(?Voyage $voyage): self
     {
         $this->voyage = $voyage;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

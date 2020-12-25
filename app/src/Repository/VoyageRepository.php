@@ -23,7 +23,7 @@ class VoyageRepository extends ServiceEntityRepository
     //  * @return Voyage[] Returns an array of Voyage objects
     //  */
     
-    public function findVoyagesByActivityId(int $activiteId)
+    public function findVoyagesByActivityId(int $id)
     {
         $conn = $this->getEntityManager()->getConnection();
 
@@ -31,7 +31,7 @@ class VoyageRepository extends ServiceEntityRepository
         SELECT * FROM `voyage_activite` INNER JOIN  voyage ON voyage_activite.voyage_id = voyage.id
         WHERE  activite_id = :activiteId';
         $stmt = $conn->prepare($sql);
-        $stmt->execute(['activiteId' => $activiteId]);
+        $stmt->execute(['activiteId' => $id]);
 
         // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetchAllAssociative();
