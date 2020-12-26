@@ -85,7 +85,6 @@ class VoyageController extends AbstractController
         4/*limit per page*/
         );
 
-        dump( $voyages);
 
         return $this->render('voyage/index.html.twig',[
             'voyages' => $pagination,
@@ -159,7 +158,7 @@ class VoyageController extends AbstractController
             'favories' =>  $favorieRepository->findAll(),
             'avis' => $voyage->getAvis(),
             'programme' => $voyage->getProgramme(),
-            'tarif'  => $voyage->getTarif(),
+            'tarifs'  => $voyage->getTarif(),
             
         ]);
     }
