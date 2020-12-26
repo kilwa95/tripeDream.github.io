@@ -28,8 +28,6 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
 
 
 
-
-
         for ($i=0; $i<100; $i++) {
             $voyage  = new Voyage();
             $voyage->setName($faker->jobTitle());
@@ -39,11 +37,7 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
             $voyage->addPay($pays[array_rand($pays)]);
             $voyage->addSaison($saison[array_rand($saison)]);
             $voyage->addVille($villes[array_rand($villes)]);
-
-
-
             // $voyage->setInfoPratique($infoPratiques[array_rand($infoPratiques)]);
-
             $manager->persist($voyage);
 
         }
