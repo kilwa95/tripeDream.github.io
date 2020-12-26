@@ -1,26 +1,26 @@
-  <div class="tab-pane  mt-5 fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-  <table class="table table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">prix</th>
-      <th scope="col">depart</th>
-      <th scope="col">arrivée</th>
-      <th scope="col">capacite</th>
+  <div class="tab-pane  mt-5 mb-5 fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th class="text-center" scope="col">prix</th>
+          <th class="text-center" scope="col">depart</th>
+          <th class="text-center" scope="col">arrivée</th>
+          <th class="text-center" scope="col">capacite</th>
 
-    </tr>
-  </thead>
-  <tbody>
-  {% for tarif in tarifs %}
-    <tr>
-      <td>{{tarif.prix}} €</td>
-      <td>{{tarif.depart|date("m/d/Y")}}</td>
-      <td>{{tarif.arrive|date("m/d/Y")}}</td>
-      <td>{{tarif.capacite}}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tarif in tarifs %}
+        <tr>
+          <td class="text-center">{{tarif.prix}} €</td>
+          <td class="text-center">{{tarif.depart|date("m/d/Y")}}</td>
+          <td class="text-center">{{tarif.arrive|date("m/d/Y")}}</td>
+          <td class="text-center">{{tarif.capacite}}</td>
 
-    </tr>
-    {% endfor %}
+        </tr>
+        {% endfor %}
 
-   
-  </tbody>
-</table>
+
+      </tbody>
+    </table>
   </div>

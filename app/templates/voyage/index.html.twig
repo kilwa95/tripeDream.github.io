@@ -26,8 +26,8 @@
                         <div><a href="{{ path('voyage_show', {'id': voyage.id}) }}"
                                 style="font-size:24px;font-weight:700; color:#61464b;"
                                 class="mt-0 mb-1">{{voyage.name}}</a></div>
-                        <div> <a id="favorie_lien" href="{{path('favorie_new',{'id': voyage.id})}}"><i class="far fa fa-heart-o"></i></a>
-                        </div>
+                        {# <div> <a id="favorie_lien" href="{{path('favorie_new',{'id': voyage.id})}}"><i class="far fa fa-heart-o"></i></a>
+                        </div> #}
                     </div>
 
 
@@ -36,7 +36,7 @@
                     </p>
 
                     <div class="d-flex justify-content-between">
-                        <div>agence: GoVoyage</div>
+                        <div  style="font-size:24px;font-weight:700;">agence: <span style="color:#61464b"> GoVoyage</span></div>
                         <div>15 jours</div>
                     </div>
 
