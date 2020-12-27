@@ -1,0 +1,23 @@
+      <div class="tab-pane  mt-5 mb-5 fade" id="v-pills-settings" role="tabpanel"
+          aria-labelledby="v-pills-settings-tab">
+          {% for avis in avis %}
+          <ul class="list-unstyled  ">
+              <li class="media w-75  ">
+                  <div class="media-body ">
+                      <div class="d-flex justify-content-between">
+                          <div><a href="" style="font-size:24px;font-weight:700; color:#61464b;" class="mt-0 mb-1">Saint
+                                  {{avis.titre}}</a></div>
+                      </div>
+
+
+                      <p style="font-size:16px; color: #61464b;" class="font-weight-light text-justify  ">
+                          {{avis.description}}
+                      </p>
+                       <p style="font-size:16px; color: #61464b;" class="font-weight-light text-justify  ">
+                          {{avis.date|date("m/d/Y")}}
+                      </p>
+              </li>
+              <hr>
+          </ul>
+          {% endfor %}
+      </div>

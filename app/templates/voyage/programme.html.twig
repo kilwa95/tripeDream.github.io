@@ -1,0 +1,21 @@
+<div class="tab-pane fade show active mt-5" id="v-pills-programme" role="tabpanel" aria-labelledby="v-pills-programme-tab">
+      {% for programme in programme %}
+        <ul class="list-unstyled  ">
+            <li class="media w-75  ">
+               <h3 style="font-size:24px;color:#593e42;" class="mr-4">Jour {{programme.jour}}</h3>
+
+                <div class="media-body ">
+                    <div class="d-flex justify-content-between">
+                        <div><a href="" style="font-size:24px;font-weight:700; color:#61464b;" class="mt-0 mb-1">Saint
+                                Paul en Chablais</a></div>
+                    </div>
+
+
+                    <p style="font-size:16px; color: #61464b;" class="font-weight-light text-justify  ">
+                      {{programme.description}}
+                    </p>
+            </li>
+            <hr>
+        </ul>
+        {% endfor %}
+    </div>
