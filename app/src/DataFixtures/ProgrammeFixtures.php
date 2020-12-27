@@ -16,13 +16,12 @@ class ProgrammeFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = \Faker\Factory::create('FR-fr');
         $voyages = $manager->getRepository(Voyage::class)->findAll();
-        for ($i=0; $i<10; $i++) {
+        for ($i=0; $i<700; $i++) {
             $programme  = new Programme();
             $programme->setJour(rand(5, 15));
             $programme->setDescription($faker->realText());
             $programme->setVoyage($voyages[array_rand($voyages)]);
             $manager->persist($programme);
-
         }
 
         $manager->flush();

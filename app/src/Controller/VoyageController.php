@@ -85,7 +85,6 @@ class VoyageController extends AbstractController
         4/*limit per page*/
         );
 
-        dump( $voyages);
 
         return $this->render('voyage/index.html.twig',[
             'voyages' => $pagination,
@@ -147,10 +146,20 @@ class VoyageController extends AbstractController
     /**
      * @Route("/{id}", name="voyage_show", methods={"GET"})
      */
-    public function show(Voyage $voyage): Response
+    public function show(ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository,Voyage $voyage): Response
     {
+
+       
         return $this->render('voyage/show.html.twig', [
             'voyage' => $voyage,
+            'activites' => $activiteRepository->findAll(),
+            'pays' => $PaysRepository->findAll(),
+            'saison' =>  $SaisonRepository->findAll(),
+            'favories' =>  $favorieRepository->findAll(),
+            'avis' => $voyage->getAvis(),
+            'programme' => $voyage->getProgramme(),
+            'tarifs'  => $voyage->getTarif(),
+            
         ]);
     }
 

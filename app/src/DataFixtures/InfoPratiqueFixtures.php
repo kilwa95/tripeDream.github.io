@@ -12,7 +12,7 @@ class InfoPratiqueFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = \Faker\Factory::create('FR-fr');
-        for ($i=0; $i<10; $i++) {
+        for ($i=0; $i<100; $i++) {
             $infoPratique  = new InfoPratique();
             $infoPratique->setRendezVous($faker->dateTime('Y-m-d'));
             $infoPratique->setFinSejour($faker->dateTime('Y-m-d'));

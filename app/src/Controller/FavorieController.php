@@ -55,7 +55,7 @@ class FavorieController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($favorie);
         $entityManager->flush();
-        return $this->redirectToRoute('voyage_index');
+        return $this->redirectToRoute('voyage_show',['id'=> $id]);
 
     }
 

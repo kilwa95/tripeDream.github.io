@@ -20,14 +20,11 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = \Faker\Factory::create('fr-FR');
-        $infoPratiques =  $manager->getRepository(infoPratique::class)->findAll();
+        $infoPratiques =  $manager->getRepository(InfoPratique::class)->findAll();
         $activites=  $manager->getRepository(Activite::class)->findAll();
         $pays =  $manager->getRepository(Pays::class)->findAll();
         $saison =  $manager->getRepository(Saison::class)->findAll();
         $villes =  $manager->getRepository(Ville::class)->findAll();
-
-
-
 
 
         for ($i=0; $i<100; $i++) {
@@ -39,14 +36,10 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
             $voyage->addPay($pays[array_rand($pays)]);
             $voyage->addSaison($saison[array_rand($saison)]);
             $voyage->addVille($villes[array_rand($villes)]);
-
-
-
-            // $voyage->setInfoPratique($infoPratiques[array_rand($infoPratiques)]);
-
             $manager->persist($voyage);
-
         }
+      
+
         $manager->flush();
 
     }

@@ -34,3 +34,8 @@ a:hover {
 	font-size: 25px !important;
 	color: red;
 }
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+	color: #fff !important;
+	background-color: #040e27 !important;
+}
