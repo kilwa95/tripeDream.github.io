@@ -32,8 +32,6 @@ class Avis
      */
     private $date;
 
-   
-
     /**
      * @ORM\ManyToOne(targetEntity=Voyage::class, inversedBy="avis")
      */
@@ -116,4 +114,6 @@ class Avis
 
         return $this;
     }
+
+  
 }
