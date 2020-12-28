@@ -76,6 +76,13 @@ class Voyage
      */
     private $infoPratique;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Favorie::class, mappedBy="voyage")
+     */
+    private $favorie;
+
+ 
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
@@ -85,6 +92,7 @@ class Voyage
         $this->saison = new ArrayCollection();
         $this->tarif = new ArrayCollection();
         $this->programme = new ArrayCollection();
+        $this->favorie = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -326,4 +334,36 @@ class Voyage
 
         return $this;
     }
+
+    /**
+     * @return Collection|Favorie[]
+     */
+    public function getFavorie(): Collection
+    {
+        return $this->favorie;
+    }
+
+    public function addFavorie(Favorie $favorie): self
+    {
+        if (!$this->favorie->contains($favorie)) {
+            $this->favorie[] = $favorie;
+            $favorie->setVoyage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorie(Favorie $favorie): self
+    {
+        if ($this->favorie->removeElement($favorie)) {
+            // set the owning side to null (unless already changed)
+            if ($favorie->getVoyage() === $this) {
+                $favorie->setVoyage(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }
