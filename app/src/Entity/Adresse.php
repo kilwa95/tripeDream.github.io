@@ -44,6 +44,8 @@ class Adresse
      */
     private $users;
 
+ 
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -131,4 +133,5 @@ class Adresse
 
         return $this;
     }
+
 }
