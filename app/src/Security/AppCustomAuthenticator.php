@@ -96,7 +96,7 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('main_dashboard'));
+        return new RedirectResponse($this->urlGenerator->generate('navigation'));
     }
 
     protected function getLoginUrl()

@@ -34,7 +34,7 @@ class RegistrationController extends AbstractController
                 
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
-                return $this->redirectToRoute('main_dashboard');
+                return $this->redirectToRoute('navigation');
         }
         return $this->render(
             'security/register.html.twig',['form' => $form->createView()]);
