@@ -46,7 +46,7 @@ class VoyageController extends AbstractController
             'pays' => $paysRepository->findAll(),
             'saison' => $saisonRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
-            'favories' => $favorieRepository->findAll()
+            // 'favories' => $favorieRepository->findAll()
 
             
         ]);
@@ -70,7 +70,7 @@ class VoyageController extends AbstractController
             'pays' => $paysRepository->findAll(),
             'saison' => $saisonRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
-            'favories' => $favorieRepository->findAll()
+            // 'favories' => $favorieRepository->findAll()
         ]);
     }
 
@@ -92,7 +92,7 @@ class VoyageController extends AbstractController
             'pays' => $paysRepository->findAll(),
             'saison' => $saisonRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
-            'favories' => $favorieRepository->findAll()
+            // 'favories' => $favorieRepository->findAll()
 
         ]);
     }
@@ -115,7 +115,7 @@ class VoyageController extends AbstractController
             'pays' => $paysRepository->findAll(),
             'saison' => $saisonRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
-            'favories' => $favorieRepository->findAll()
+            // 'favories' => $favorieRepository->findAll()
 
         ]);
     }
