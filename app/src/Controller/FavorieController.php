@@ -66,18 +66,16 @@ class FavorieController extends AbstractController
 
     
     /**
-     * @Route("/{id}", name="favorie_delete", methods={"DELETE"})
+     * @Route("/{id}", name="favorie_delete", methods={"DELETE","GET"})
      */
-    public function delete(Request $request, Favorie $favorie): Response
+    public function delete(int $id, FavorieRepository $favorieRepository): Response
     {
-        
-        if ($this->isCsrfTokenValid('delete'.$favorie->getId(), $request->request->get('_token'))) {
+            $favorie = $favorieRepository->findOneBy(['voyage' => $id]);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($favorie);
             $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('favorie_index');
-    }
+            return $this->redirectToRoute('voyage_show',['id'=> $id]);
+        }
   
 }

@@ -149,16 +149,39 @@ class VoyageController extends AbstractController
     public function show(ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository,Voyage $voyage): Response
     {
 
-       
+        $favories = $this->getUser()->getFavorie();
+        $voyages = [];
+        $isfavorie = false;
+        $id = $voyage->getId();
+
+
+        foreach($favories as $favorie){
+        $voyage_favorie = $favorie->getVoyage();
+        array_push( $voyages, $voyage_favorie);
+        }
+
+        if(empty($voyages)){
+            $isfavorie = false;
+        }
+
+        else{
+        foreach($voyages as $v){
+            $idVoyage = $v->getId();
+            if($idVoyage == $id)
+            $isfavorie = true;
+            else $isfavorie = false;
+            }
+        }
+ 
         return $this->render('voyage/show.html.twig', [
             'voyage' => $voyage,
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),
             'saison' =>  $SaisonRepository->findAll(),
-            'favories' =>  $favorieRepository->findAll(),
             'avis' => $voyage->getAvis(),
             'programme' => $voyage->getProgramme(),
             'tarifs'  => $voyage->getTarif(),
+            'isfavorie' =>  $isfavorie
             
         ]);
     }
