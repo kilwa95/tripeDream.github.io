@@ -150,26 +150,13 @@ class VoyageController extends AbstractController
     {
 
         $favories = $this->getUser()->getFavorie();
-        $voyages = [];
         $isfavorie = false;
-        $id = $voyage->getId();
 
-
+       
         foreach($favories as $favorie){
-        $voyage_favorie = $favorie->getVoyage();
-        array_push( $voyages, $voyage_favorie);
-        }
-
-        if(empty($voyages)){
-            $isfavorie = false;
-        }
-
-        else{
-        foreach($voyages as $v){
-            $idVoyage = $v->getId();
-            if($idVoyage == $id)
-            $isfavorie = true;
-            else $isfavorie = false;
+            $voyage_favorie = $favorie->getVoyage();
+            if( $voyage_favorie->getId()==$voyage->getId() ){
+                $isfavorie = true;
             }
         }
  
