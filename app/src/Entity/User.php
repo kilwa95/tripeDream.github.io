@@ -63,9 +63,15 @@ class User implements UserInterface
      */
     private $avis;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Favorie::class, mappedBy="user")
+     */
+    private $favorie;
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
+        $this->favorie = new ArrayCollection();
     }
 
 
@@ -212,6 +218,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($avi->getUser() === $this) {
                 $avi->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Favorie[]
+     */
+    public function getFavorie(): Collection
+    {
+        return $this->favorie;
+    }
+
+    public function addFavorie(Favorie $favorie): self
+    {
+        if (!$this->favorie->contains($favorie)) {
+            $this->favorie[] = $favorie;
+            $favorie->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorie(Favorie $favorie): self
+    {
+        if ($this->favorie->removeElement($favorie)) {
+            // set the owning side to null (unless already changed)
+            if ($favorie->getUser() === $this) {
+                $favorie->setUser(null);
             }
         }
 

@@ -84,10 +84,12 @@
             </li>
         </ul>
         <ul class="navbar-nav ">
-            <button type="button" class="btn btn-outline-success mr-3">connexion</button>
-            <button type="button" class="btn btn-outline-primary">inscription</button>
-            <a  href="{{path('favorie_index')}}" type="button" class="btn btn-danger ml-3">favorie
-                <span  class=" nbselection badge badge-light">{{favories|length}}</span></a>
+            <a href="{{path('app_login')}}" type="button" class="btn btn-outline-success mr-3">connexion</a>
+            <a href="{{path('user_registration')}}" type="button" class="btn btn-outline-primary">inscription</a>
+            {% if app.user.favorie is  defined %}
+            <a href="{{path('favorie_index')}}" type="button" class="btn btn-danger ml-3">favorie
+                <span class=" nbselection badge badge-light">{{ app.user.favorie|length }}</span></a>
+            {% endif %}
 
         </ul>
     </div>

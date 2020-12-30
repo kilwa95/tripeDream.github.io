@@ -24,56 +24,58 @@ class FavorieController extends AbstractController
      */
     public function index(FavorieRepository $favorieRepository, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
-        $favories = $favorieRepository->findAll();
-        $ids = [];
-        $voyages = [];
-        foreach($favories as $favorie){
-            $id =  $favorie->getIdVoyage();
-            array_push($ids,$id);
-        }
+      
+      $favories = $this->getUser()->getFavorie();
+      $ids = [];
+      $voyages = [];
+      foreach($favories as $favorie){
+        $id=  $favorie->getVoyage()->getId();
+        array_push($ids,$id);
+    }
+    foreach($ids as $id){
+        $voyage = $voyageRepository->find($id);
+        array_push($voyages,$voyage);
+       }
 
-        foreach($ids as $id){
-         $voyage = $voyageRepository->find($id);
-         array_push($voyages,$voyage);
-        }
-        
         return $this->render('favorie/index.html.twig', [
-            'favories' =>  $voyages,
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),
             'saison' =>  $SaisonRepository->findAll(),
+            'favories' =>  $voyages,
         ]);
     }
 
     /**
      * @Route("/new/{id}", name="favorie_new", methods={"GET","POST"})
      */
-    public function new(int $id): Response
+    public function new(int $id,VoyageRepository $voyageRepository): Response
     {
         $favorie = new Favorie();
-        $favorie->setIdVoyage($id);
+        $voyage = $voyageRepository->find($id);
+        $favorie->setVoyage($voyage);
+        $user = $this->getUser();
+        $user->addFavorie( $favorie);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($favorie);
         $entityManager->flush();
+
+       
         return $this->redirectToRoute('voyage_show',['id'=> $id]);
 
     }
 
     
-
     /**
-     * @Route("/{id}", name="favorie_delete", methods={"DELETE"})
+     * @Route("/{id}", name="favorie_delete", methods={"DELETE","GET"})
      */
-    public function delete(Request $request, Favorie $favorie): Response
+    public function delete(int $id, FavorieRepository $favorieRepository): Response
     {
-        
-        if ($this->isCsrfTokenValid('delete'.$favorie->getId(), $request->request->get('_token'))) {
+            $favorie = $favorieRepository->findOneBy(['voyage' => $id]);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($favorie);
             $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('favorie_index');
-    }
+            return $this->redirectToRoute('voyage_show',['id'=> $id]);
+        }
   
 }

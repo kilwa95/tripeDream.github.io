@@ -5,8 +5,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 {% endblock %}
 
-
 {% block body %}
+{% set prices = [] %}
+{% set departs = [] %}
+{% set jours = [] %}
 
 <div class="mt-5" style="min-height: 70vh;">
     <div class="container">
@@ -26,8 +28,6 @@
                         <div><a href="{{ path('voyage_show', {'id': voyage.id}) }}"
                                 style="font-size:24px;font-weight:700; color:#61464b;"
                                 class="mt-0 mb-1">{{voyage.name}}</a></div>
-                        {# <div> <a id="favorie_lien" href="{{path('favorie_new',{'id': voyage.id})}}"><i class="far fa fa-heart-o"></i></a>
-                        </div> #}
                     </div>
 
 
@@ -36,18 +36,30 @@
                     </p>
 
                     <div class="d-flex justify-content-between">
-                        <div  style="font-size:24px;font-weight:700;">agence: <span style="color:#61464b"> GoVoyage</span></div>
-                        <div>15 jours</div>
+                        <div style="font-size:24px;font-weight:700;">agence: <span style="color:#61464b">
+                                GoVoyage</span></div>
+                        {% for programe in voyage.programme %}
+                         {% set jours = jours|merge([programe.jour]) %}
+                        {% endfor %}
+                        <div> {{max(jours )}} jours</div>
                     </div>
 
                     <div class="d-flex flex-row justify-content-between ">
-
+                        {% for tarif in voyage.tarif %}
+                        {% set departs  = departs|merge([tarif.depart]) %}
+                        {% endfor %}
                         <div class="text-warning">
-                            prochaine depart: 31/10/2021
+                            prochaine depart: {{min(departs)|date("m/d/Y")}}
+
                         </div>
+
+                        {% for tarif in voyage.tarif %}
+                        {% set prices = prices|merge([tarif.prix]) %}
+                        {% endfor %}
                         <div style="font-weight:700;">
-                            3600€
+                            {{min(prices)}} €
                         </div>
+
                     </div>
             </li>
             <hr>

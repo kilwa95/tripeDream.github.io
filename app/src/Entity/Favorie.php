@@ -17,24 +17,44 @@ class Favorie
      */
     private $id;
 
+   
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="favorie")
      */
-    private $id_voyage;
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Voyage::class, inversedBy="favorie")
+     */
+    private $voyage;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdVoyage(): ?int
+  
+
+    public function getUser(): ?User
     {
-        return $this->id_voyage;
+        return $this->user;
     }
 
-    public function setIdVoyage(int $id_voyage): self
+    public function setUser(?User $user): self
     {
-        $this->id_voyage = $id_voyage;
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getVoyage(): ?Voyage
+    {
+        return $this->voyage;
+    }
+
+    public function setVoyage(?Voyage $voyage): self
+    {
+        $this->voyage = $voyage;
 
         return $this;
     }

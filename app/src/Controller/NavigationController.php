@@ -25,7 +25,7 @@ class NavigationController extends AbstractController
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),
             'saison' =>  $SaisonRepository->findAll(),
-            'favories' =>  $favorieRepository->findAll()
+            // 'favories' =>  $favorieRepository->findAll()
         ]);
     }
 
