@@ -8,6 +8,12 @@
 
 {% block body %}
 
+
+{% set prices = [] %}
+{% set departs = [] %}
+{% set jours = [] %}
+
+
 <div class="mt-5" style="min-height: 100vh;">
     <div class="container">
         <div class="row">
@@ -37,8 +43,14 @@
                 </div>
                 <hr>
                 <div style="background:#fff;border-radius:2px;padding:10px;" class="d-flex justify-content-between">
-                    <div class="text-dark">15 jours</div>
-                    <div class="text-dark">a partir de: <spans style="color:#ff7e00">750 €</span></div>
+                    {% for programe in voyage.programme %}
+                    {% set jours = jours|merge([programe.jour]) %}
+                    {% endfor %}
+                    <div class="text-dark"> {{max(jours )}} jours</div>
+                    {% for tarif in voyage.tarif %}
+                    {% set prices = prices|merge([tarif.prix]) %}
+                    {% endfor %}
+                    <div class="text-dark">a partir de: <spans style="color:#ff7e00"> {{min(prices)}} €</span></div>
                 </div>
                 <div class="mt-5 text-center" style="color:#fff;background:#ff7e00;font-size:22px;padding:10px;">
                     <a class="text-white" href="#">Réserver mon voyage</a>
