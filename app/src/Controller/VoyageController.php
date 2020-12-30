@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Voyage;
 use App\Form\VoyageType;
+use App\Entity\Pays;
+use App\Entity\Activite;
+use App\Entity\Saison;
 use App\Repository\VoyageRepository;
 use App\Repository\ActiviteRepository;
 use App\Repository\PaysRepository;
@@ -55,8 +58,8 @@ class VoyageController extends AbstractController
     /**
      * @Route("/pays/{id}", name="pays_name", methods={"GET"})
      */
-    public function paysById(int $id,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
-        $voyages  =  $voyageRepository->findVoyagesByPaysId($id);
+    public function paysById(Pays $pays,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
+        $voyages = $pays->getVoyages();
         $pagination = $paginator->paginate(
         $voyages, /* query NOT result */
         $request->query->getInt('page', 1)/*page number*/,
@@ -70,15 +73,14 @@ class VoyageController extends AbstractController
             'pays' => $paysRepository->findAll(),
             'saison' => $saisonRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
-            // 'favories' => $favorieRepository->findAll()
         ]);
     }
 
      /**
      * @Route("/activite/{id}", name="activite_name", methods={"GET"})
      */
-    public function activiteById(int $id,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
-        $voyages  =  $voyageRepository->findVoyagesByActivityId($id);
+    public function activiteById(Activite $activite ,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
+        $voyages  =  $activite->getVoyages();
         $pagination = $paginator->paginate(
         $voyages, /* query NOT result */
         $request->query->getInt('page', 1)/*page number*/,
@@ -92,7 +94,6 @@ class VoyageController extends AbstractController
             'pays' => $paysRepository->findAll(),
             'saison' => $saisonRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
-            // 'favories' => $favorieRepository->findAll()
 
         ]);
     }
@@ -100,8 +101,8 @@ class VoyageController extends AbstractController
      /**
      * @Route("/saison/{id}", name="saison_name", methods={"GET"})
      */
-    public function saisonById(int $id,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
-        $voyages  =  $voyageRepository->findVoyagesBySaisonId($id);
+    public function saisonById(Saison $saison, Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
+        $voyages  =  $saison->getVoyages();
         $pagination = $paginator->paginate(
         $voyages, /* query NOT result */
         $request->query->getInt('page', 1)/*page number*/,
@@ -115,7 +116,6 @@ class VoyageController extends AbstractController
             'pays' => $paysRepository->findAll(),
             'saison' => $saisonRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
-            // 'favories' => $favorieRepository->findAll()
 
         ]);
     }
