@@ -21,7 +21,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user = new User();
             $user->setEmail($faker->email());
             $user->setPassword($faker->password());
-            $user->setName($faker->name());
+            $user->setUsername($faker->firstName());
+            $user->setLastName($faker->lastName());
             $user->setAdresse($adresses[array_rand($adresses)]);
             $user->setRoles(['ROLE_USER','ROLE_VOYAGEUR']);
 
@@ -32,8 +33,6 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
             $agence = new User();
             $agence->setEmail($faker->email());
-            $agence->setName($faker->name());
-            $agence->setPrenom($faker->lastName());
             $agence->setPassword($faker->password());
             $agence->setSiret($faker->randomNumber(6));
             $agence->setAdresse($adresses[array_rand($adresses)]);

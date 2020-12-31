@@ -42,6 +42,11 @@ class Avis
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $compteur;
+
    
     public function __construct()
     {
@@ -111,6 +116,18 @@ class Avis
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCompteur(): ?int
+    {
+        return $this->compteur;
+    }
+
+    public function setCompteur(?int $compteur): self
+    {
+        $this->compteur = $compteur;
 
         return $this;
     }
