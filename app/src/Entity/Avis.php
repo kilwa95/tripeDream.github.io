@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AvisRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,12 @@ class Avis
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="avis")
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\LessThan(5)
+     */
+    private $compteur;
 
    
     public function __construct()
@@ -111,6 +119,18 @@ class Avis
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCompteur(): ?int
+    {
+        return $this->compteur;
+    }
+
+    public function setCompteur(?int $compteur): self
+    {
+        $this->compteur = $compteur;
 
         return $this;
     }
