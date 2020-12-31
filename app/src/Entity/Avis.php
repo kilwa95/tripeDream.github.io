@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AvisRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -44,6 +46,7 @@ class Avis
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\LessThan(5)
      */
     private $compteur;
 
