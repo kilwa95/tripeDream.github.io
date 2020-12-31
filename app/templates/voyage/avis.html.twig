@@ -1,21 +1,33 @@
 <div class="tab-pane  mt-5 mb-5 fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
 
-    {% include 'voyage/_form.avis.html.twig' %}
+ <a class="btn btn-info mb-4" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    mettre un commentaire
+  </a>
 
-    {% for avis in avis %}
+<div class="collapse" id="collapseExample">
+      {% include 'voyage/_form.avis.html.twig' %}
+</div>
+   
+
+{% set avisSort = [] %}
+{% for avi in avis %}
+{% set avisSort  = avisSort|merge([avi]) %}
+ {% endfor %}
+
+{% for avi in avisSort|sort((a, b) => a.date < b.date) %}
     <ul class="list-unstyled  ">
         <li class="media w-75  ">
             <div class="media-body ">
                 <div><a style="font-size:24px;font-weight:700; color:green; max-width:64.45px;" class="mr-4 ">
-                  user: {{avis.user.lastName}}</a>
+                        user: {{avi.user.lastName}}</a>
                 </div>
                 <div class="d-flex justify-content-between">
 
                     <div><a href="" style="font-size:24px;font-weight:700; color:#61464b;" class="mt-0 mb-1">
-                            titre: {{avis.titre}}</a>
+                            titre: {{avi.titre}}</a>
                     </div>
                     <div>
-                        {% for i in 1..avis.compteur  %}
+                        {% for i in 1..avi.compteur  %}
                         <i class=" star fa fa-star"></i>
                         {% endfor %}
                     </div>
@@ -23,10 +35,10 @@
                 </div>
 
                 <p style="font-size:16px; color: #61464b;" class="font-weight-light text-justify  ">
-                    {{avis.description}}
+                    {{avi.description}}
                 </p>
                 <p style="font-size:16px; color: #61464b;" class="font-weight-light text-justify  ">
-                    {{avis.date|date("m/d/Y")}}
+                    {{avi.date|date("m/d/Y")}}
                 </p>
         </li>
         <hr>

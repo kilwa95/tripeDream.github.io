@@ -10,8 +10,6 @@ use App\Entity\Voyage;
 use App\Entity\User;
 
 
-
-
 class AvisFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
