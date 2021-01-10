@@ -87,7 +87,7 @@
             <ul class="navbar-nav ">
                 <span > {{  app.user.username}}</span>
                 <a  href="{{path('favorie_index')}}" type="button" class="btn btn-danger ml-3">favorie
-                <span  class=" nbselection badge badge-light">{{favories|length}}</span></a>
+                {# <span  class=" nbselection badge badge-light">{{favories|length}}</span></a> #}
                 <br>
                 <button type="button" class="btn btn-outline-primary"> <a href="{{ path('app_logout') }}">Logout</a></button>
             </ul>
@@ -95,7 +95,7 @@
                  <ul class="navbar-nav ">
                 <span > {{  app.user.username}}</span>
                 <a  href="{{path('favorie_index')}}" type="button" class="btn btn-danger ml-3">favorie
-                <span  class=" nbselection badge badge-light">{{favories|length}}</span></a>
+                {# <span  class=" nbselection badge badge-light">{{favories|length}}</span></a> #}
                 <br>
                  <button type="button" class="btn btn-outline-primary"> <a href="{{ path('app_logout') }}">Logout</a></button>
             </ul>
