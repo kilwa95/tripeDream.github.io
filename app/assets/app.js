@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import 'bootstrap';
 
+import './custom-js/custom-app.js';
+
 import $ from 'jquery';
 
 if ($(window).width() > 992) {

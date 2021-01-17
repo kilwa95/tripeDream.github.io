@@ -8,12 +8,16 @@
     {{ form_row(form.saison) }}
 
     <h3>Programmes</h3>
-    <ul class="programmes">
+    <div class="col-sm-8 col-sm-offset-2" id="programmes" data-prototype="{{ form_widget(form.programme.vars.prototype)|e('html_attr') }}">
         {% for programme in form.programme %}
-            <li>{{ form_row(programme.jour) }}</li>
-            <li>{{ form_row(programme.description) }}</li>
+            <div class="panel panel-warning">
+                <div class="panel-body">
+                    {{ form_row(programme.jour) }}
+                    {{ form_row(programme.description) }}
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 
     <h3>Info pratique</h3>
     {{ form_row(form.infoPratique.rendez_vous) }}
@@ -23,14 +27,18 @@
     {{ form_row(form.infoPratique.covid19) }}
 
     <h3>Tarifs</h3>
-    <ul class="tarifs">
+    <div class="col-sm-8 col-sm-offset-2" id="tarifs" data-prototype="{{ form_widget(form.tarif.vars.prototype)|e('html_attr') }}">
         {% for tarif in form.tarif %}
-            <li>{{ form_row(tarif.prix) }}</li>
-            <li>{{ form_row(tarif.depart) }}</li>
-            <li>{{ form_row(tarif.arrive) }}</li>
-            <li>{{ form_row(tarif.capacite) }}</li>
+            <div class="panel panel-warning">
+                <div class="panel-body">
+                    {{ form_row(tarif.prix) }}
+                    {{ form_row(tarif.depart) }}
+                    {{ form_row(tarif.arrive) }}
+                    {{ form_row(tarif.capacite) }}
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {{ form_end(form) }}
 
 
