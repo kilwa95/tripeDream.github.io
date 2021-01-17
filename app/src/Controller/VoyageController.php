@@ -215,6 +215,7 @@ class VoyageController extends AbstractController
             'pays' => $PaysRepository->findAll(),
             'saison' =>  $SaisonRepository->findAll(),
             'avis' => $voyage->getAvis(),
+            'infosPratiques' => $voyage->getInfoPratique(),
             'programme' => $voyage->getProgramme(),
             'tarifs'  => $voyage->getTarif(),
             'isfavorie' =>  $isfavorie,

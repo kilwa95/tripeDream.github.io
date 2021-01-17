@@ -1,0 +1,22 @@
+<div class="tab-pane mt-5 mb-5 fade" id="v-pills-pratique" role="tabpanel" aria-labelledby="v-pills-pratique-tab">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center" scope="col">Rendez-vous</th>
+                <th class="text-center" scope="col">Fin sejour</th>
+                <th class="text-center" scope="col">Hébergement</th>
+                <th class="text-center" scope="col">Repas</th>
+                <th class="text-center" scope="col">Info COVID-19</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-center">{{infosPratiques.getRendezVous()|date("m/d/Y")}}</td>
+                <td class="text-center">{{infosPratiques.getFinSejour()|date("m/d/Y")}}</td>
+                <td class="text-center">{{infosPratiques.getHebergement()}}</td>
+                <td class="text-center">{{infosPratiques.getRepas()}}</td>
+                <td class="text-center">{{infosPratiques.getCovid19()}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

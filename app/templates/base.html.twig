@@ -5,14 +5,19 @@
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
-    {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css">
+        {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
 
 <body style="font-family: Georgia, serif;">
 
     {% include 'navigation/menu.html.twig' %}
-    {% block body %}{% endblock %}
+
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+
     {% include 'navigation/footer.html.twig' %}
     {% block javascripts %}
     {{ encore_entry_script_tags('app') }}

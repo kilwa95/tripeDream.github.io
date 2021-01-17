@@ -6,6 +6,7 @@ use App\Entity\InfoPratique;
 use App\Entity\Voyage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -33,6 +34,11 @@ class VoyageType extends AbstractType
                 'entry_options' => ['label' => false],
                 'by_reference' => false,
                 'allow_add' => true,
+            ])
+            ->add('save', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-success'
+                ]
             ])
         ;
     }

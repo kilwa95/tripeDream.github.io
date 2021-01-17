@@ -72,8 +72,4 @@ class Programme
 
         return $this;
     }
-
-    public function __toString() {
-        return "jours: ". $this->jour . " description: ". $this->description;
-    }
 }
