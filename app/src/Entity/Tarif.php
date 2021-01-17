@@ -106,4 +106,9 @@ class Tarif
 
         return $this;
     }
+
+    public function __toString() {
+        return "prix: ". $this->prix . " capacité: ". $this->capacite;
+    }
+//. "depart: ". $this->description;
 }

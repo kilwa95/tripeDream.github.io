@@ -1,4 +1,46 @@
+{#
 {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+#}
+
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.pointFort) }}
+    {{ form_row(form.ville) }}
+    {{ form_row(form.pays) }}
+    {{ form_row(form.activity) }}
+    {{ form_row(form.saison) }}
+
+    <h3>Programmes</h3>
+    <ul class="programmes">
+        {% for programme in form.programme %}
+            <li>{{ form_row(programme.jour) }}</li>
+            <li>{{ form_row(programme.description) }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Info pratique</h3>
+    {{ form_row(form.infoPratique.rendez_vous) }}
+    {{ form_row(form.infoPratique.fin_sejour) }}
+    {{ form_row(form.infoPratique.hebergement) }}
+    {{ form_row(form.infoPratique.repas) }}
+    {{ form_row(form.infoPratique.covid19) }}
+
+    <h3>Tarifs</h3>
+    <ul class="tarifs">
+        {% for tarif in form.tarif %}
+            <li>{{ form_row(tarif.prix) }}</li>
+            <li>{{ form_row(tarif.depart) }}</li>
+            <li>{{ form_row(tarif.arrive) }}</li>
+            <li>{{ form_row(tarif.capacite) }}</li>
+        {% endfor %}
+    </ul>
+
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+
