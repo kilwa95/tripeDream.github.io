@@ -35,7 +35,7 @@ class VoyageType extends AbstractType
                 'by_reference' => false,
                 'allow_add' => true,
             ])
-            ->add('save', SubmitType::class, [
+            ->add('Enregistrer', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]

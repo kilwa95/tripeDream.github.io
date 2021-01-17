@@ -58,9 +58,8 @@ class FavorieController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($favorie);
         $entityManager->flush();
-
        
-        return $this->redirectToRoute('voyage_show',['id'=> $id]);
+        return $this->redirectToRoute('voyage_show', ['id'=> $id]);
 
     }
     
@@ -74,6 +73,6 @@ class FavorieController extends AbstractController
         $entityManager->remove($favorie);
         $entityManager->flush();
 
-        return $this->redirectToRoute('voyage_show',['id'=> $id]);
+        return $this->redirectToRoute('voyage_show', ['id'=> $id]);
     }
 }

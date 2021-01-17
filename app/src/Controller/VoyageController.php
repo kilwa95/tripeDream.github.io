@@ -173,7 +173,7 @@ class VoyageController extends AbstractController
             }
             $entityManager->flush();
 
-            return $this->redirectToRoute('voyage_index');
+            return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
         }
 
         return $this->render('voyage/new.html.twig', [
@@ -250,9 +250,9 @@ class VoyageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="voyage_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="trip_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Voyage $voyage): Response
+    public function edit(Request $request, Voyage $voyage, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
         $form = $this->createForm(VoyageType::class, $voyage);
         $form->handleRequest($request);
@@ -260,10 +260,15 @@ class VoyageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('voyage_index');
+            return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
         }
 
         return $this->render('voyage/edit.html.twig', [
+            'voyages' => $voyageRepository->findAll(),
+            'activites' => $activiteRepository->findAll(),
+            'pays' => $PaysRepository->findAll(),
+            'saison' =>  $SaisonRepository->findAll(),
+
             'voyage' => $voyage,
             'form' => $form->createView(),
         ]);
@@ -292,7 +297,7 @@ class VoyageController extends AbstractController
         $entityManager->remove($trip);
         $entityManager->flush();
 
-        return $this->redirectToRoute('voyage_index');
+        return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
 
     }
 }
