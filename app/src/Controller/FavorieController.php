@@ -48,7 +48,7 @@ class FavorieController extends AbstractController
     /**
      * @Route("/new/{id}", name="favorie_new", methods={"GET","POST"})
      */
-    public function new(int $id,VoyageRepository $voyageRepository): Response
+    public function new(int $id, VoyageRepository $voyageRepository): Response
     {
         $favorie = new Favorie();
         $voyage = $voyageRepository->find($id);
@@ -63,19 +63,17 @@ class FavorieController extends AbstractController
         return $this->redirectToRoute('voyage_show',['id'=> $id]);
 
     }
-
     
     /**
      * @Route("/{id}", name="favorie_delete", methods={"DELETE","GET"})
      */
     public function delete(int $id, FavorieRepository $favorieRepository): Response
     {
-            $favorie = $favorieRepository->findOneBy(['voyage' => $id]);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($favorie);
-            $entityManager->flush();
+        $favorie = $favorieRepository->findOneBy(['voyage' => $id]);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($favorie);
+        $entityManager->flush();
 
-            return $this->redirectToRoute('voyage_show',['id'=> $id]);
+        return $this->redirectToRoute('voyage_show',['id'=> $id]);
     }
-  
 }

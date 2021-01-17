@@ -6,6 +6,7 @@
         <div class="container">
             <h1 class="text-center mb-5">Mes voyages</h1>
 
+            <hr><br>
             <div class="container">
                 <div class="row">
                     <div class="col text-center">
@@ -13,8 +14,7 @@
                     </div>
                 </div>
             </div>
-
-            <br><hr><br>
+            <br><hr><br><br>
 
             <div class="row">
                 {% if  myTrips  is defined %}
@@ -36,7 +36,7 @@
                                         <div class="text-white">300 €</div>
                                     </div>
                                     <a href="{{path('voyage_show', {'id': trip.id})}}" class="btn btn-primary">Détails</a>
-                                    <a href="{{path('trip_delete',{'id': trip.id})}}" class="btn btn-danger">Supprimer</a>
+                                    <a href="{{path('trip_delete', {'id': trip.id})}}" class="btn btn-danger">Supprimer</a>
                                 </div>
                             </div>
                         </div>

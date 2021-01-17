@@ -229,7 +229,7 @@ class VoyageController extends AbstractController
             $entityManager->persist($avis);
             $entityManager->flush();
 
-            return $this->redirectToRoute('voyage_show',['id' => $voyage->getId()]);
+            return $this->redirectToRoute('voyage_show', ['id' => $voyage->getId()]);
         }
 
 
@@ -270,16 +270,29 @@ class VoyageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="trip_delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="trip_delete", methods={"DELETE", "GET"})
      */
-    public function delete(Request $request, Voyage $voyage): Response
+    public function delete(int $id, VoyageRepository $tripRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$voyage->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($voyage);
-            $entityManager->flush();
+        $trip = $tripRepository->find($id);
+
+        $programmes = $trip->getProgramme();
+
+        $tarifs = $trip->getTarif();
+
+        foreach($programmes as $programme) {
+            $trip->removeProgramme($programme);
         }
 
+        foreach($tarifs as $tarif) {
+            $trip->removeTarif($tarif);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($trip);
+        $entityManager->flush();
+
         return $this->redirectToRoute('voyage_index');
+
     }
 }
