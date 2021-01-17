@@ -68,10 +68,16 @@ class User implements UserInterface
      */
     private $favorie;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Voyage::class, mappedBy="user")
+     */
+    private $trips;
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
         $this->favorie = new ArrayCollection();
+        $this->trips = new ArrayCollection();
     }
 
 
@@ -248,6 +254,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($favorie->getUser() === $this) {
                 $favorie->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Voyage[]
+     */
+    public function getTrips(): Collection
+    {
+        return $this->trips;
+    }
+
+    public function addTrip(Voyage $trip): self
+    {
+        if (!$this->trips->contains($trip)) {
+            $this->trips[] = $trip;
+            $trip->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrip(Voyage $trip): self
+    {
+        if ($this->trips->removeElement($trip)) {
+            // set the owning side to null (unless already changed)
+            if ($trip->getUser() === $this) {
+                $trip->setUser(null);
             }
         }
 

@@ -128,9 +128,12 @@ class VoyageController extends AbstractController
     /**
      * @Route("/new", name="voyage_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
         $voyage = new Voyage();
+
+        $user = $this->getUser();
+        $voyage->setUser($user);
 
         $programme1 = new Programme();
         $programme1->setJour(4);
@@ -153,6 +156,8 @@ class VoyageController extends AbstractController
         $tarif1->setCapacite(0);
         $voyage->addTarif($tarif1);
 
+        $user->addTrip($voyage);
+
         $form = $this->createForm(VoyageType::class, $voyage);
         $form->handleRequest($request);
 
@@ -172,8 +177,30 @@ class VoyageController extends AbstractController
         }
 
         return $this->render('voyage/new.html.twig', [
+            'voyages' => $voyageRepository->findAll(),
+            'activites' => $activiteRepository->findAll(),
+            'pays' => $PaysRepository->findAll(),
+            'saison' =>  $SaisonRepository->findAll(),
+
             'voyage' => $voyage,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/user_id:{id}", name="show_my_trips", methods={"GET"})
+     */
+    public function showMyTrips(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
+    {
+        $myTrips = $this->getUser()->getTrips();
+
+        return $this->render('my_trips/show.html.twig', [
+            'myTrips' =>  $myTrips,
+
+            'voyages' => $voyageRepository->findAll(),
+            'activites' => $activiteRepository->findAll(),
+            'pays' => $PaysRepository->findAll(),
+            'saison' =>  $SaisonRepository->findAll(),
         ]);
     }
 
@@ -182,10 +209,8 @@ class VoyageController extends AbstractController
      */
     public function show(Request $request,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository,Voyage $voyage): Response
     {
-
         $favories = $this->getUser()->getFavorie();
         $isfavorie = false;
-
        
         foreach($favories as $favorie){
             $voyage_favorie = $favorie->getVoyage();
@@ -245,7 +270,7 @@ class VoyageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="voyage_delete", methods={"DELETE"})
+     * @Route("/{id}", name="trip_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Voyage $voyage): Response
     {

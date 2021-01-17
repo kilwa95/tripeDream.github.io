@@ -24,18 +24,18 @@ class FavorieController extends AbstractController
      */
     public function index(FavorieRepository $favorieRepository, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
-      
-      $favories = $this->getUser()->getFavorie();
-      $ids = [];
-      $voyages = [];
-      foreach($favories as $favorie){
-        $id=  $favorie->getVoyage()->getId();
-        array_push($ids,$id);
-    }
-    foreach($ids as $id){
-        $voyage = $voyageRepository->find($id);
-        array_push($voyages,$voyage);
-       }
+        $favories = $this->getUser()->getFavorie();
+        $ids = [];
+        $voyages = [];
+
+        foreach($favories as $favorie) {
+            $id=  $favorie->getVoyage()->getId();
+            array_push($ids,$id);
+        }
+        foreach($ids as $id){
+            $voyage = $voyageRepository->find($id);
+            array_push($voyages,$voyage);
+        }
 
         return $this->render('favorie/index.html.twig', [
             'activites' => $activiteRepository->findAll(),
@@ -76,6 +76,6 @@ class FavorieController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('voyage_show',['id'=> $id]);
-        }
+    }
   
 }
