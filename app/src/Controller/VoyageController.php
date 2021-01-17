@@ -182,6 +182,7 @@ class VoyageController extends AbstractController
             'pays' => $PaysRepository->findAll(),
             'saison' =>  $SaisonRepository->findAll(),
 
+            'operation' => 'create',
             'voyage' => $voyage,
             'form' => $form->createView(),
         ]);
@@ -270,6 +271,7 @@ class VoyageController extends AbstractController
             'saison' =>  $SaisonRepository->findAll(),
 
             'voyage' => $voyage,
+            'operation' => 'edit',
             'form' => $form->createView(),
         ]);
     }

@@ -8,7 +8,7 @@
     {{ form_row(form.saison) }}
 
     <h3>Programmes</h3>
-    <div class="col-sm-8 col-sm-offset-2" id="programmes" data-prototype="{{ form_widget(form.programme.vars.prototype)|e('html_attr') }}">
+    <div class="col-sm-8 col-sm-offset-2" {% if operation == "create" %} id="programmes" data-prototype="{{ form_widget(form.programme.vars.prototype)|e('html_attr') }}" {% endif %}>
         {% for programme in form.programme %}
             <div class="panel panel-warning">
                 <div class="panel-body">
@@ -27,7 +27,7 @@
     {{ form_row(form.infoPratique.covid19) }}
 
     <h3>Tarifs</h3>
-    <div class="col-sm-8 col-sm-offset-2" id="tarifs" data-prototype="{{ form_widget(form.tarif.vars.prototype)|e('html_attr') }}">
+    <div class="col-sm-8 col-sm-offset-2" {% if operation == "create" %} id="tarifs" data-prototype="{{ form_widget(form.tarif.vars.prototype)|e('html_attr') }}"{% endif %}>
         {% for tarif in form.tarif %}
             <div class="panel panel-warning">
                 <div class="panel-body">
