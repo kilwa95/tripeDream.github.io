@@ -50,7 +50,7 @@
                     {% for tarif in voyage.tarif %}
                     {% set prices = prices|merge([tarif.prix]) %}
                     {% endfor %}
-                    <div class="text-dark">a partir de: <spans style="color:#ff7e00"> {{min(prices)}} €</span></div>
+                    <div class="text-dark">a partir de: <span style="color:#ff7e00"> {{min(prices)}} €</span></div>
                 </div>
                 <div class="mt-5 text-center" style="color:#fff;background:#ff7e00;font-size:22px;padding:10px;">
                     <a class="text-white" href="#">Réserver mon voyage</a>

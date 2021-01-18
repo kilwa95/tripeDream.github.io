@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\InfoPratique;
+use App\Entity\Programme;
+use App\Entity\Tarif;
 use App\Entity\Voyage;
 use App\Form\VoyageType;
 use App\Entity\Pays;
@@ -125,23 +128,80 @@ class VoyageController extends AbstractController
     /**
      * @Route("/new", name="voyage_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
         $voyage = new Voyage();
+
+        $user = $this->getUser();
+        $voyage->setUser($user);
+
+        $programme1 = new Programme();
+        $programme1->setJour(4);
+        $programme1->setDescription('lorem ipsum lorem ipsum');
+        $voyage->addProgramme($programme1);
+
+        $infoPratique = new InfoPratique();
+        $infoPratique->setRendezVous(new \DateTime());
+        $infoPratique->setFinSejour(new \DateTime());
+        $infoPratique->setRendezVous(new \DateTime());
+        $infoPratique->setHebergement('lorem ipsum');
+        $infoPratique->setRepas('lorem ipsum');
+        $infoPratique->setCovid19('lorem ipsum lorem ipsum');
+        $voyage->setInfoPratique($infoPratique);
+
+        $tarif1 = new Tarif();
+        $tarif1->setPrix(0);
+        $tarif1->setDepart(new \DateTime());
+        $tarif1->setArrive(new \DateTime());
+        $tarif1->setCapacite(0);
+        $voyage->addTarif($tarif1);
+
+        $user->addTrip($voyage);
+
         $form = $this->createForm(VoyageType::class, $voyage);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($voyage);
+            foreach ($voyage->getProgramme() as $programme) {
+                $entityManager->persist($programme);
+            }
+            $entityManager->persist($voyage->getInfoPratique());
+            foreach ($voyage->getTarif() as $tarif) {
+                $entityManager->persist($tarif);
+            }
             $entityManager->flush();
 
-            return $this->redirectToRoute('voyage_index');
+            return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
         }
 
         return $this->render('voyage/new.html.twig', [
+            'voyages' => $voyageRepository->findAll(),
+            'activites' => $activiteRepository->findAll(),
+            'pays' => $PaysRepository->findAll(),
+            'saison' =>  $SaisonRepository->findAll(),
+
+            'operation' => 'create',
             'voyage' => $voyage,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/user_id:{id}", name="show_my_trips", methods={"GET"})
+     */
+    public function showMyTrips(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
+    {
+        $myTrips = $this->getUser()->getTrips();
+
+        return $this->render('my_trips/show.html.twig', [
+            'myTrips' =>  $myTrips,
+
+            'voyages' => $voyageRepository->findAll(),
+            'activites' => $activiteRepository->findAll(),
+            'pays' => $PaysRepository->findAll(),
+            'saison' =>  $SaisonRepository->findAll(),
         ]);
     }
 
@@ -150,10 +210,8 @@ class VoyageController extends AbstractController
      */
     public function show(Request $request,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository,Voyage $voyage): Response
     {
-
         $favories = $this->getUser()->getFavorie();
         $isfavorie = false;
-
        
         foreach($favories as $favorie){
             $voyage_favorie = $favorie->getVoyage();
@@ -172,7 +230,7 @@ class VoyageController extends AbstractController
             $entityManager->persist($avis);
             $entityManager->flush();
 
-            return $this->redirectToRoute('voyage_show',['id' => $voyage->getId()]);
+            return $this->redirectToRoute('voyage_show', ['id' => $voyage->getId()]);
         }
 
 
@@ -183,6 +241,7 @@ class VoyageController extends AbstractController
             'pays' => $PaysRepository->findAll(),
             'saison' =>  $SaisonRepository->findAll(),
             'avis' => $voyage->getAvis(),
+            'infosPratiques' => $voyage->getInfoPratique(),
             'programme' => $voyage->getProgramme(),
             'tarifs'  => $voyage->getTarif(),
             'isfavorie' =>  $isfavorie,
@@ -192,9 +251,9 @@ class VoyageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="voyage_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="trip_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Voyage $voyage): Response
+    public function edit(Request $request, Voyage $voyage, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
         $form = $this->createForm(VoyageType::class, $voyage);
         $form->handleRequest($request);
@@ -202,26 +261,45 @@ class VoyageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('voyage_index');
+            return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
         }
 
         return $this->render('voyage/edit.html.twig', [
+            'voyages' => $voyageRepository->findAll(),
+            'activites' => $activiteRepository->findAll(),
+            'pays' => $PaysRepository->findAll(),
+            'saison' =>  $SaisonRepository->findAll(),
+
             'voyage' => $voyage,
+            'operation' => 'edit',
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="voyage_delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="trip_delete", methods={"DELETE", "GET"})
      */
-    public function delete(Request $request, Voyage $voyage): Response
+    public function delete(int $id, VoyageRepository $tripRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$voyage->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($voyage);
-            $entityManager->flush();
+        $trip = $tripRepository->find($id);
+
+        $programmes = $trip->getProgramme();
+
+        $tarifs = $trip->getTarif();
+
+        foreach($programmes as $programme) {
+            $trip->removeProgramme($programme);
         }
 
-        return $this->redirectToRoute('voyage_index');
+        foreach($tarifs as $tarif) {
+            $trip->removeTarif($tarif);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($trip);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
+
     }
 }

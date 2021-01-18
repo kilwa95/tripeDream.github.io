@@ -1,4 +1,44 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.pointFort) }}
+    {{ form_row(form.ville) }}
+    {{ form_row(form.pays) }}
+    {{ form_row(form.activity) }}
+    {{ form_row(form.saison) }}
+
+    <h3>Programmes</h3>
+    <div class="col-sm-8 col-sm-offset-2" {% if operation == "create" %} id="programmes" data-prototype="{{ form_widget(form.programme.vars.prototype)|e('html_attr') }}" {% endif %}>
+        {% for programme in form.programme %}
+            <div class="panel panel-warning">
+                <div class="panel-body">
+                    {{ form_row(programme.jour) }}
+                    {{ form_row(programme.description) }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h3>Info pratique</h3>
+    {{ form_row(form.infoPratique.rendez_vous) }}
+    {{ form_row(form.infoPratique.fin_sejour) }}
+    {{ form_row(form.infoPratique.hebergement) }}
+    {{ form_row(form.infoPratique.repas) }}
+    {{ form_row(form.infoPratique.covid19) }}
+
+    <h3>Tarifs</h3>
+    <div class="col-sm-8 col-sm-offset-2" {% if operation == "create" %} id="tarifs" data-prototype="{{ form_widget(form.tarif.vars.prototype)|e('html_attr') }}"{% endif %}>
+        {% for tarif in form.tarif %}
+            <div class="panel panel-warning">
+                <div class="panel-body">
+                    {{ form_row(tarif.prix) }}
+                    {{ form_row(tarif.depart) }}
+                    {{ form_row(tarif.arrive) }}
+                    {{ form_row(tarif.capacite) }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {{ form_end(form) }}
+
+

@@ -77,8 +77,6 @@
             </li>
             {% endif %}
 
-
-
             <li class="nav-item">
                 <a class="nav-link text-dark ml-4" href="#">About Us</a>
             </li>
@@ -115,7 +113,13 @@
 
             </ul>
             {% endif %}
-
+            {% if app.user.trips is defined %}
+                <a href="{{path('show_my_trips', {'id': app.user.id})}}" type="button" class="btn btn-warning ml-3">
+                    Mes voyages
+                    <span class="nbselection badge badge-light">{{ app.user.trips|length }}</span>
+                </a>
+            {% endif %}
+        </ul>
     </div>
     </div>
 </nav>

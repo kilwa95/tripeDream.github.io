@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes voyages{% endblock %}
+{% block body %}
+    <div class="mt-5" style="min-height: 70vh;">
+        <div class="container">
+            <h1 class="text-center mb-5">Mes voyages</h1>
+
+            <hr><br>
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <a href="{{path('voyage_new')}}" class="btn btn-success">Ajouter un nouveau voyage</a>
+                    </div>
+                </div>
+            </div>
+            <br><hr><br><br>
+
+            <div class="row">
+                {% if  myTrips  is defined %}
+                    {% for trip in myTrips %}
+                        <div class="col-3 mr-4 mb-4">
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top"
+                                     src="https://www.labalaguere.com/sites/default/files/styles/banner_voyage/public/upload_voyages/FP1COLC_1.jpg?itok=pOymZ75X"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{trip.name}}</h5>
+                                    <p style="max-height:200px;" class="card-text text-truncate">{{trip.description}}</p>
+                                    <div style="background:grey;border-radius:2px;padding:10px;" class="d-flex mb-3 justify-content-between">
+                                        <div class="text-white">agence</div>
+                                        <div class="text-white">Go voyage</div>
+                                    </div>
+                                    <div style="background:grey;border-radius:2px;padding:10px;" class="d-flex mb-3 justify-content-between">
+                                        <div class="text-white">Prix</div>
+                                        <div class="text-white">300 €</div>
+                                    </div>
+                                    <a href="{{path('voyage_show', {'id': trip.id})}}" class="btn btn-primary">Détails</a>
+                                    <a href="{{path('trip_edit', {'id': trip.id})}}" class="btn btn-warning">Éditer</a>
+                                    <a href="{{path('trip_delete', {'id': trip.id})}}" class="btn btn-danger">Supprimer</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
