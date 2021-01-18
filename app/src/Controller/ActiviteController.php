@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/activite")
@@ -26,6 +27,7 @@ class ActiviteController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_AGENCE")
      * @Route("/new", name="activite_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -33,8 +35,10 @@ class ActiviteController extends AbstractController
         $activite = new Activite();
         $form = $this->createForm(ActiviteType::class, $activite);
         $form->handleRequest($request);
+        
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() ) {
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($activite);
             $entityManager->flush();
@@ -59,6 +63,7 @@ class ActiviteController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_AGENCE")
      * @Route("/{id}/edit", name="activite_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Activite $activite): Response

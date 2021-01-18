@@ -81,12 +81,37 @@
                 <a class="nav-link text-dark ml-4" href="#">About Us</a>
             </li>
         </ul>
+        {% if is_granted("ROLE_USER") %}
         <ul class="navbar-nav ">
-            <a href="{{path('app_login')}}" type="button" class="btn btn-outline-success mr-3">connexion</a>
-            <a href="{{path('user_registration')}}" type="button" class="btn btn-outline-primary">inscription</a>
+            <span> {{  app.user.username}}</span>
             {% if app.user.favorie is  defined %}
             <a href="{{path('favorie_index')}}" type="button" class="btn btn-danger ml-3">favorie
                 <span class=" nbselection badge badge-light">{{ app.user.favorie|length }}</span></a>
+            {% endif %} {# <span  class=" nbselection badge badge-light">{{favories|length}}</span></a> #}
+            <br>
+            <button type="button" class="btn btn-outline-primary"> <a
+                    href="{{ path('app_logout') }}">Logout</a></button>
+        </ul>
+        {% elseif  is_granted("ROLE_AGENCE") %}
+        <ul class="navbar-nav ">
+            <span> {{  app.user.username}}</span>
+            {% if app.user.favorie is  defined %}
+            <a href="{{path('favorie_index')}}" type="button" class="btn btn-danger ml-3">favorie
+                <span class=" nbselection badge badge-light">{{ app.user.favorie|length }}</span></a>
+            {% endif %} {# <span  class=" nbselection badge badge-light">{{favories|length}}</span></a> #}
+            <br>
+            <button type="button" class="btn btn-outline-primary"> <a
+                    href="{{ path('app_logout') }}">Logout</a></button>
+        </ul>
+        {% else %}
+        <ul class="navbar-nav ">
+
+            <ul class="navbar-nav ">
+                <a href="{{path('app_login')}}" type="button" class="btn btn-outline-success mr-3">connexion</a>
+                <a href="{{path('user_registration')}}" type="button" class="btn btn-outline-primary">inscription</a>
+
+
+            </ul>
             {% endif %}
             {% if app.user.trips is defined %}
                 <a href="{{path('show_my_trips', {'id': app.user.id})}}" type="button" class="btn btn-warning ml-3">
