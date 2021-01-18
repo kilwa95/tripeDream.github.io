@@ -4,6 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Voyage;
 use App\Form\VoyageType;
+use App\Entity\Pays;
+use App\Entity\Activite;
+use App\Entity\Saison;
+use App\Entity\Avis;
+use App\Form\AvisType;
 use App\Repository\VoyageRepository;
 use App\Repository\ActiviteRepository;
 use App\Repository\PaysRepository;
@@ -46,7 +51,7 @@ class VoyageController extends AbstractController
             'pays' => $paysRepository->findAll(),
             'saison' => $saisonRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
-            'favories' => $favorieRepository->findAll()
+            // 'favories' => $favorieRepository->findAll()
 
             
         ]);
@@ -55,8 +60,8 @@ class VoyageController extends AbstractController
     /**
      * @Route("/pays/{id}", name="pays_name", methods={"GET"})
      */
-    public function paysById(int $id,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
-        $voyages  =  $voyageRepository->findVoyagesByPaysId($id);
+    public function paysById(Pays $pays,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
+        $voyages = $pays->getVoyages();
         $pagination = $paginator->paginate(
         $voyages, /* query NOT result */
         $request->query->getInt('page', 1)/*page number*/,
@@ -70,15 +75,14 @@ class VoyageController extends AbstractController
             'pays' => $paysRepository->findAll(),
             'saison' => $saisonRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
-            'favories' => $favorieRepository->findAll()
         ]);
     }
 
      /**
      * @Route("/activite/{id}", name="activite_name", methods={"GET"})
      */
-    public function activiteById(int $id,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
-        $voyages  =  $voyageRepository->findVoyagesByActivityId($id);
+    public function activiteById(Activite $activite ,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
+        $voyages  =  $activite->getVoyages();
         $pagination = $paginator->paginate(
         $voyages, /* query NOT result */
         $request->query->getInt('page', 1)/*page number*/,
@@ -92,7 +96,6 @@ class VoyageController extends AbstractController
             'pays' => $paysRepository->findAll(),
             'saison' => $saisonRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
-            'favories' => $favorieRepository->findAll()
 
         ]);
     }
@@ -100,8 +103,8 @@ class VoyageController extends AbstractController
      /**
      * @Route("/saison/{id}", name="saison_name", methods={"GET"})
      */
-    public function saisonById(int $id,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
-        $voyages  =  $voyageRepository->findVoyagesBySaisonId($id);
+    public function saisonById(Saison $saison, Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
+        $voyages  =  $saison->getVoyages();
         $pagination = $paginator->paginate(
         $voyages, /* query NOT result */
         $request->query->getInt('page', 1)/*page number*/,
@@ -115,7 +118,6 @@ class VoyageController extends AbstractController
             'pays' => $paysRepository->findAll(),
             'saison' => $saisonRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
-            'favories' => $favorieRepository->findAll()
 
         ]);
     }
@@ -144,21 +146,47 @@ class VoyageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="voyage_show", methods={"GET"})
+     * @Route("/{id}", name="voyage_show", methods={"GET","POST"})
      */
-    public function show(ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository,Voyage $voyage): Response
+    public function show(Request $request,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository,Voyage $voyage): Response
     {
 
+        $favories = $this->getUser()->getFavorie();
+        $isfavorie = false;
+
        
+        foreach($favories as $favorie){
+            $voyage_favorie = $favorie->getVoyage();
+            if( $voyage_favorie->getId()==$voyage->getId() ){
+                $isfavorie = true;
+            }
+        }
+        $avis = new Avis();
+        $form = $this->createForm(AvisType::class, $avis);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $avis->setUser($this->getUser());
+            $avis->setVoyage($voyage);        
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($avis);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('voyage_show',['id' => $voyage->getId()]);
+        }
+
+
+ 
         return $this->render('voyage/show.html.twig', [
             'voyage' => $voyage,
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),
             'saison' =>  $SaisonRepository->findAll(),
-            'favories' =>  $favorieRepository->findAll(),
             'avis' => $voyage->getAvis(),
             'programme' => $voyage->getProgramme(),
             'tarifs'  => $voyage->getTarif(),
+            'isfavorie' =>  $isfavorie,
+            'form' => $form->createView(),
             
         ]);
     }

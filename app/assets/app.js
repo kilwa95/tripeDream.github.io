@@ -27,7 +27,25 @@ $('.animated').addClass('delay-1s');
 
 // add au favorie
 
-$('.far.fa').click(function() {
-	debugger;
-	$(this).toggleClass('fa-heart fa-heart-o');
-});
+// $('.far.fa').on('click', function(e) {
+// 	const id = $('#favorie-icon').data('id');
+// 	if ($(this).hasClass('fa-heart-o')) {
+// 		$.ajax({
+// 			type: 'GET',
+// 			url: `/favorie/new/${id}`,
+// 			success: function(data) {
+// 				console.log(data);
+// 			}
+// 		});
+// 	} else {
+// 		$.ajax({
+// 			type: 'GET',
+// 			url: `/favorie/${id}`,
+// 			success: function(data) {
+// 				console.log(data);
+// 			}
+// 		});
+// 	}
+// 	$(this).toggleClass('fa-heart fa-heart-o');
+// 	// document.location.reload();
+// });
