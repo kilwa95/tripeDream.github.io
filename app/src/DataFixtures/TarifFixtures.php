@@ -17,7 +17,7 @@ class TarifFixtures extends Fixture implements DependentFixtureInterface
         $faker = \Faker\Factory::create('FR-fr');
         $voyages = $manager->getRepository(Voyage::class)->findAll();
 
-        for ($i=0; $i<1000; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
             $tarif  = new Tarif();
             $tarif->setPrix($faker->randomNumber(3));
             $tarif->setDepart($faker->dateTime());

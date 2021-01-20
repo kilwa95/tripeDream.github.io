@@ -6,41 +6,41 @@ use App\Entity\Adresse;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\Persistence\ObjectManager;
 
 
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $faker = \Faker\Factory::create('fr-FR');
         $adresses = $manager->getRepository(Adresse::class)->findAll();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
 
             $user = new User();
             $user->setEmail($faker->email());
-            $user->setPassword($faker->password());
             $user->setUsername($faker->firstName());
             $user->setLastName($faker->lastName());
             $user->setAdresse($adresses[array_rand($adresses)]);
-            $user->setRoles(['ROLE_USER','ROLE_VOYAGEUR']);
+            $roles = array_rand(array_flip(['ROLE_USER', 'ROLE_AGENCE']));
+            $user->setRoles(array($roles));
+            $normalUserPwd = $this->encoder->encodePassword($user, 'user');
+            $agencyUserPwd = $this->encoder->encodePassword($user, 'agence');
+            $encodedPassword = in_array("ROLE_USER", $user->getRoles()) ? $normalUserPwd : $agencyUserPwd;
+            $user->setPassword($encodedPassword);
+            $user->setSiret($faker->numberBetween(1000000000, 2147483646));
 
             $manager->persist($user);
-           }
-
-           for ($i = 0; $i < 10; $i++) {
-
-            $agence = new User();
-            $agence->setEmail($faker->email());
-            $agence->setPassword($faker->password());
-            $agence->setSiret($faker->randomNumber(6));
-            $agence->setAdresse($adresses[array_rand($adresses)]);
-            $agence->setRoles(['ROLE_USER','ROLE_AGENCE']);
-
-            $manager->persist($agence);
-           }
-
+        }
 
         $manager->flush();
     }
@@ -52,5 +52,5 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         ];
     }
 
-    
+
 }
