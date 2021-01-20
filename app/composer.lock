@@ -7333,6 +7333,10 @@
                 "Fixture",
                 "persistence"
             ],
+            "support": {
+                "issues": "https://github.com/doctrine/DoctrineFixturesBundle/issues",
+                "source": "https://github.com/doctrine/DoctrineFixturesBundle/tree/3.4.0"
+            },
             "funding": [
                 {
                     "url": "https://www.doctrine-project.org/sponsorship.html",
@@ -7925,5 +7929,5 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
