@@ -35,9 +35,11 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user->setRoles(array($roles));
             $normalUserPwd = $this->encoder->encodePassword($user, 'user');
             $agencyUserPwd = $this->encoder->encodePassword($user, 'agence');
-            $encodedPassword = in_array("ROLE_USER", $user->getRoles()) ? $normalUserPwd : $agencyUserPwd;
+            $isSimpleUser = in_array("ROLE_USER", $user->getRoles());
+            $encodedPassword = $isSimpleUser ? $normalUserPwd : $agencyUserPwd;
             $user->setPassword($encodedPassword);
-            $user->setSiret($faker->numberBetween(1000000000, 2147483646));
+            if (!$isSimpleUser)
+                $user->setSiret($faker->numberBetween(1000000000, 2147483646));
 
             $manager->persist($user);
         }
