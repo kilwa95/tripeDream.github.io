@@ -22,7 +22,7 @@ class FavorieController extends AbstractController
     /**
      * @Route("/", name="favorie_index", methods={"GET"})
      */
-    public function index(FavorieRepository $favorieRepository, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
+    public function index(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
         $favories = $this->getUser()->getFavorie();
         $ids = [];

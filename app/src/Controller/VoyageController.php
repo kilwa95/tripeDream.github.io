@@ -18,7 +18,6 @@ use App\Repository\PaysRepository;
 use App\Repository\SaisonRepository;
 use App\Repository\FavorieRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -284,22 +283,24 @@ class VoyageController extends AbstractController
         $trip = $tripRepository->find($id);
 
         $programmes = $trip->getProgramme();
-
         $tarifs = $trip->getTarif();
+        $avis = $trip->getAvis();
 
         foreach($programmes as $programme) {
             $trip->removeProgramme($programme);
         }
-
         foreach($tarifs as $tarif) {
             $trip->removeTarif($tarif);
+        }
+        foreach($avis as $av) {
+            $trip->removeAvi($av);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($trip);
+
         $entityManager->flush();
 
         return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
-
     }
 }
