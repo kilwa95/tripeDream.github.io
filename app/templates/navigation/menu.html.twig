@@ -113,10 +113,10 @@
 
             </ul>
             {% endif %}
-            {% if app.user.trips is defined %}
+            {% if app.user.voyage is defined %}
                 <a href="{{path('show_my_trips', {'id': app.user.id})}}" type="button" class="btn btn-warning ml-3">
                     Mes voyages
-                    <span class="nbselection badge badge-light">{{ app.user.trips|length }}</span>
+                    <span class="nbselection badge badge-light">{{ app.user.voyage|length }}</span>
                 </a>
             {% endif %}
         </ul>

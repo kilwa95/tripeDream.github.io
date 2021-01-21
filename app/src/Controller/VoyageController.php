@@ -192,7 +192,7 @@ class VoyageController extends AbstractController
      */
     public function showMyTrips(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
-        $myTrips = $this->getUser()->getTrips();
+        $myTrips = $this->getUser()->getVoyage();
 
         return $this->render('my_trips/show.html.twig', [
             'myTrips' =>  $myTrips,

@@ -81,7 +81,6 @@ class Voyage
      */
     private $favorie;
 
-
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="voyage")
      */
@@ -103,19 +102,6 @@ class Voyage
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     public function getName(): ?string
@@ -379,6 +365,18 @@ class Voyage
                 $favorie->setVoyage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
