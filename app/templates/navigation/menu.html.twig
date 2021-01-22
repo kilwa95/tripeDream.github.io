@@ -105,11 +105,21 @@
                 <a href="{{path('user_registration')}}" type="button" class="btn btn-outline-primary">inscription</a>
             </ul>
             {% endif %}
-            {% if app.user.voyage is defined %}
-                <a href="{{path('show_my_trips', {'id': app.user.id})}}" type="button" class="btn btn-warning ml-3">
-                    Mes voyages
-                    {# <span class="nbselection badge badge-light">{{ app.user.voyage|length }}</span> #}
-                </a>
+            {% if is_granted("ROLE_AGENCE") %}
+                {% if app.user.voyage is defined %}
+                    <a href="{{path('show_my_trips', {'id': app.user.id})}}" type="button" class="btn btn-warning ml-3">
+                        Mes voyages
+                        <span class="nbselection badge badge-light">{{ app.user.voyage|length }}</span>
+                    </a>
+                {% endif %}
+            {% endif %}
+              {% if is_granted("ROLE_USER") %}
+                {% if app.user.voyage is defined %}
+                    <a  type="button" class="btn btn-success ml-3">
+                     Mes Reservation
+                        <span class="nbselection badge badge-light">{{ app.user.voyage|length }}</span> 
+                    </a>
+                {% endif %}
             {% endif %}
         </ul>
     </div>

@@ -19,12 +19,14 @@
                         <h5 class="card-title">{{favorie.name}}</h5>
                         <p style="max-height:200px;" class="card-text text-truncate">{{favorie.description}}</p>
                         <div style="background:grey;border-radius:2px;padding:10px;" class="d-flex mb-3 justify-content-between">
-                            <div class="text-white">agence</div>
-                            <div class="text-white">nom_agence</div>
+                            <div class="text-white">Agence</div>
+                            <div class="text-white">{{ favorie.user.username}}</div>
                         </div>
                          <div style="background:grey;border-radius:2px;padding:10px;" class="d-flex mb-3 justify-content-between">
-                            <div class="text-white">Prix</div>
-                            <div class="text-white">300 €</div>
+                            <div class="text-white">A partir de</div>
+                            {# {% for price in favorie.tarif %} #}
+                                <div class="text-white">{{favorie.tarif|first.prix}} euro</div>
+                            {# {% endfor %} #}
                         </div>
                         <a  href="{{path('favorie_delete',{'id': favorie.id})}}" class="btn btn-danger ">remove
                             favorie</a>
@@ -33,8 +35,9 @@
             </div>
             {% endfor %}
             {% endif %}
+         
         </div>
-
+  
     </div>
 </div>
 {% endblock %}
