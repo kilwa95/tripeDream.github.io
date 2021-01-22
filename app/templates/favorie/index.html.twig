@@ -10,6 +10,7 @@
             {% if  favories  is defined %}
             {% for favorie in favories %}
             <div class="col-3 mr-4 mb-4">
+              <a href="{{path('voyage_show',{'id': favorie.id})}}">
                 <div class="card" style="width: 18rem;">
                     <img class="card-img-top"
                         src="https://www.labalaguere.com/sites/default/files/styles/banner_voyage/public/upload_voyages/FP1COLC_1.jpg?itok=pOymZ75X"

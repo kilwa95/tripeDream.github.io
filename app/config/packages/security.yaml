@@ -38,4 +38,4 @@ security:
     #- { path: ^/voyage, roles: ROLE_USER }
     #- { path: ^/favorie, roles: ROLE_USER }
     #- { path: ^/profile, roles: ROLE_USER }
-      - { path: ^/voyage/user_id, roles: ROLE_AGENCE }
+    # - { path: ^/voyage/user_id, roles: ROLE_AGENCE }

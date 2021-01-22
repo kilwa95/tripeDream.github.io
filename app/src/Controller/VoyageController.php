@@ -22,6 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 /**
@@ -54,7 +55,6 @@ class VoyageController extends AbstractController
             'saison' => $saisonRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
             // 'favories' => $favorieRepository->findAll()
-
             
         ]);
     }
@@ -125,6 +125,7 @@ class VoyageController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_AGENCE")
      * @Route("/new", name="voyage_new", methods={"GET","POST"})
      */
     public function new(Request $request, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
@@ -155,7 +156,7 @@ class VoyageController extends AbstractController
         $tarif1->setCapacite(0);
         $voyage->addTarif($tarif1);
 
-        $user->addTrip($voyage);
+        $user->addVoyage($voyage);
 
         $form = $this->createForm(VoyageType::class, $voyage);
         $form->handleRequest($request);
@@ -196,7 +197,6 @@ class VoyageController extends AbstractController
 
         return $this->render('my_trips/show.html.twig', [
             'myTrips' =>  $myTrips,
-
             'voyages' => $voyageRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),
@@ -205,6 +205,7 @@ class VoyageController extends AbstractController
     }
 
     /**
+     * 
      * @Route("/{id}", name="voyage_show", methods={"GET","POST"})
      */
     public function show(Request $request,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository,Voyage $voyage): Response
@@ -232,8 +233,6 @@ class VoyageController extends AbstractController
             return $this->redirectToRoute('voyage_show', ['id' => $voyage->getId()]);
         }
 
-
- 
         return $this->render('voyage/show.html.twig', [
             'voyage' => $voyage,
             'activites' => $activiteRepository->findAll(),
@@ -250,6 +249,7 @@ class VoyageController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_AGENCE")
      * @Route("/{id}/edit", name="trip_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Voyage $voyage, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
@@ -276,6 +276,7 @@ class VoyageController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_AGENCE")
      * @Route("/{id}/delete", name="trip_delete", methods={"DELETE", "GET"})
      */
     public function delete(int $id, VoyageRepository $tripRepository): Response
@@ -300,7 +301,6 @@ class VoyageController extends AbstractController
         $entityManager->remove($trip);
 
         $entityManager->flush();
-
         return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
     }
 }
