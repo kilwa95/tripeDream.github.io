@@ -155,7 +155,7 @@ class VoyageController extends AbstractController
         $tarif1->setCapacite(0);
         $voyage->addTarif($tarif1);
 
-        $user->addTrip($voyage);
+        $user->addVoyage($voyage);
 
         $form = $this->createForm(VoyageType::class, $voyage);
         $form->handleRequest($request);
