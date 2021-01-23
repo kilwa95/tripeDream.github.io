@@ -13,7 +13,7 @@
                 <a class="nav-link text-dark  ml-4" href="{{ path('navigation') }}">Home</a>
             </li>
 
-            {% if is_granted("ROLE_User") %}
+            {% if is_granted("ROLE_User") or not is_granted("ROLE_User") and  not is_granted("ROLE_AGENCE")%}
             {% if pays is defined %}
             <li class="nav-item dropdown has-megamenu">
                 <a class="nav-link text-dark  ml-4  dropdown-toggle" href="{{ path('navigation') }}"
@@ -73,7 +73,7 @@
                 <a class="nav-link text-dark  ml-4 " href="{{ path('voyage_index') }}" 
                     > Toutes les voyages </a>
             </li>
-  {% endif %}
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link text-dark ml-4" href="#">About Us</a>
             </li>
