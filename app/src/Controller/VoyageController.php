@@ -162,7 +162,6 @@ class VoyageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Votre Voyage a etait bien crée');
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($voyage);
             foreach ($voyage->getProgramme() as $programme) {
@@ -173,16 +172,16 @@ class VoyageController extends AbstractController
                 $entityManager->persist($tarif);
             }
             $entityManager->flush();
+            $this->addFlash('success', 'Votre Voyage a etait bien crée');
 
             return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
-        }
+        } 
 
         return $this->render('voyage/new.html.twig', [
             'voyages' => $voyageRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),
             'saison' =>  $SaisonRepository->findAll(),
-
             'operation' => 'create',
             'voyage' => $voyage,
             'form' => $form->createView(),
@@ -301,6 +300,7 @@ class VoyageController extends AbstractController
         $entityManager->remove($trip);
 
         $entityManager->flush();
+        $this->addFlash('success', 'Votre Voyage a etait bien suprimé');
         return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
     }
 }
