@@ -162,6 +162,7 @@ class VoyageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Votre Voyage a etait bien crée');
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($voyage);
             foreach ($voyage->getProgramme() as $programme) {
@@ -222,7 +223,6 @@ class VoyageController extends AbstractController
         $avis = new Avis();
         $form = $this->createForm(AvisType::class, $avis);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $avis->setUser($this->getUser());
             $avis->setVoyage($voyage);        
@@ -259,7 +259,7 @@ class VoyageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash('success', 'Votre Voyage a etait bien editer');
             return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
         }
 
