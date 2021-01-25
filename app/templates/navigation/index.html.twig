@@ -5,6 +5,12 @@
 
 {% block body %}
 
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
 {% include 'navigation/sliders.html.twig' %}
 {# epace #}
 <div style="background: #040E27; height: 10vh;"></div>
