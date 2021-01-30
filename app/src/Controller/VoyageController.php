@@ -172,16 +172,16 @@ class VoyageController extends AbstractController
                 $entityManager->persist($tarif);
             }
             $entityManager->flush();
+            $this->addFlash('success', 'Votre Voyage a etait bien crée');
 
             return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
-        }
+        } 
 
         return $this->render('voyage/new.html.twig', [
             'voyages' => $voyageRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),
             'saison' =>  $SaisonRepository->findAll(),
-
             'operation' => 'create',
             'voyage' => $voyage,
             'form' => $form->createView(),
@@ -222,7 +222,6 @@ class VoyageController extends AbstractController
         $avis = new Avis();
         $form = $this->createForm(AvisType::class, $avis);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $avis->setUser($this->getUser());
             $avis->setVoyage($voyage);        
@@ -259,7 +258,7 @@ class VoyageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash('success', 'Votre Voyage a etait bien editer');
             return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
         }
 
@@ -301,6 +300,7 @@ class VoyageController extends AbstractController
         $entityManager->remove($trip);
 
         $entityManager->flush();
+        $this->addFlash('success', 'Votre Voyage a etait bien suprimé');
         return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
     }
 }
