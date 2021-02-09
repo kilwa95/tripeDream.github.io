@@ -210,6 +210,7 @@ class VoyageController extends AbstractController
      */
     public function show(Request $request,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository,Voyage $voyage): Response
     {
+        $isfavorie = false;
         if($this->getUser()){
             $favories = $this->getUser()->getFavorie();
             $isfavorie = false;
@@ -221,9 +222,8 @@ class VoyageController extends AbstractController
                 }
             }
         }
+        
 
-        $isfavorie = false;
-      
         $avis = new Avis();
         $form = $this->createForm(AvisType::class, $avis);
         $form->handleRequest($request);
