@@ -13,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 /**
  * @Route("/favorie")
@@ -47,6 +49,7 @@ class FavorieController extends AbstractController
 
     /**
      * @Route("/new/{id}", name="favorie_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function new(int $id, VoyageRepository $voyageRepository): Response
     {
