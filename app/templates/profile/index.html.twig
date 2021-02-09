@@ -3,17 +3,24 @@
 {% block title %}Profile{% endblock %}
 
 {% block body %}
+<section style="padding:25px">
+    <div class=" container  d-flex flex-column justify-content-center align-items-center mt-5  mb-5">
+        <div>
+
     <center>
 
-    <h2> Profile </h2>    
+    <h1> Modifier mon profil </h1>    
     <br>
 
-    <li>User Name : {{  app.user.username}}</li>
-    <br>
-    <li>Last Name : {{  app.user.lastname}}</li>
-    <br>
-    <li>Email : {{  app.user.email}}</li>
-    <br>
+    <form method="post" action="{{ path('profile_index', {'id': user.id}) }}" onsubmit="return confirm('Are you sure you want change the information');">
+    User name : <input type="text" name="username" value="{{ app.user.username }}">  <br><br>
+    Last name : <input type="text" name="lastname" value="{{  app.user.lastname }}">  <br><br>
+    Email : <input type="text" name="email" value="{{  app.user.email }}">  <br><br>
+    Password : <input type="password" name="password" value="{{  app.user.password }}">  <br><br>
+    <button class="btn-info">Change</button>
+</form>
 
     </center>
+     </div>
+</section>
 {% endblock %}

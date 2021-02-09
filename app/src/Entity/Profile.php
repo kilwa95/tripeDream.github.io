@@ -58,4 +58,24 @@ class Profile
 
         return $this;
     }
+
+    public function editAction(Request $request, $id)
+  {
+    $userManager = $this->get('fos_user.user_manager');
+
+    $form = $this-> createFormBuilder($user)
+      ->add('username')
+      ->add('email')
+      ->add('save', 'submit')
+      ->getForm();
+
+    $form->handleRequest($request);
+
+    if ($form->isValid())
+    {
+        $userManager->updateUser($user);
+    }
+
+        return $this->render(path('profile_index'));
+  }
 }
