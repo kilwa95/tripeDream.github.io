@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,7 @@ class NavigationController extends AbstractController
     public function index(ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository): Response
     {
         
-        return $this->render('navigation/index.html.twig',[
+        return $this->render('Front/navigation/index.html.twig',[
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),
             'saison' =>  $SaisonRepository->findAll(),
