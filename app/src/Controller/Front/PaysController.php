@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Entity\Pays;
 use App\Form\PaysType;
@@ -20,7 +20,7 @@ class PaysController extends AbstractController
      */
     public function index(PaysRepository $paysRepository): Response
     {
-        return $this->render('pays/index.html.twig', [
+        return $this->render('Front/pays/index.html.twig', [
             'pays' => $paysRepository->findAll(),
         ]);
     }
@@ -42,7 +42,7 @@ class PaysController extends AbstractController
             return $this->redirectToRoute('pays_index');
         }
 
-        return $this->render('pays/new.html.twig', [
+        return $this->render('Front/pays/new.html.twig', [
             'pay' => $pay,
             'form' => $form->createView(),
         ]);
@@ -53,7 +53,7 @@ class PaysController extends AbstractController
      */
     public function show(Pays $pay): Response
     {
-        return $this->render('pays/show.html.twig', [
+        return $this->render('Front/pays/show.html.twig', [
             'pay' => $pay,
         ]);
     }
@@ -72,7 +72,7 @@ class PaysController extends AbstractController
             return $this->redirectToRoute('pays_index');
         }
 
-        return $this->render('pays/edit.html.twig', [
+        return $this->render('Front/pays/edit.html.twig', [
             'pay' => $pay,
             'form' => $form->createView(),
         ]);
