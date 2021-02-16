@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Entity\Activite;
 use App\Form\ActiviteType;
@@ -46,7 +46,7 @@ class ActiviteController extends AbstractController
             return $this->redirectToRoute('activite_index');
         }
 
-        return $this->render('activite/new.html.twig', [
+        return $this->render('Front/activite/new.html.twig', [
             'activite' => $activite,
             'form' => $form->createView(),
         ]);
@@ -57,7 +57,7 @@ class ActiviteController extends AbstractController
      */
     public function show(Activite $activite): Response
     {
-        return $this->render('activite/show.html.twig', [
+        return $this->render('Front/activite/show.html.twig', [
             'activite' => $activite,
         ]);
     }
@@ -77,7 +77,7 @@ class ActiviteController extends AbstractController
             return $this->redirectToRoute('activite_index');
         }
 
-        return $this->render('activite/edit.html.twig', [
+        return $this->render('Front/activite/edit.html.twig', [
             'activite' => $activite,
             'form' => $form->createView(),
         ]);
