@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Entity\Favorie;
 use App\Form\FavorieType;
@@ -39,7 +39,7 @@ class FavorieController extends AbstractController
             array_push($voyages,$voyage);
         }
 
-        return $this->render('favorie/index.html.twig', [
+        return $this->render('Front/favorie/index.html.twig', [
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),
             'saison' =>  $SaisonRepository->findAll(),
