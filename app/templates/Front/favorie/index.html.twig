@@ -1,0 +1,43 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Favorie index{% endblock %}
+{% block body %}
+
+<div class="mt-5" style="min-height: 70vh;">
+    <div class="container">
+        <h1 class="text-center mb-5">My favories</h1>
+        <div class="row">
+            {% if  favories  is defined %}
+            {% for favorie in favories %}
+            <div class="col-3 mr-4 mb-4">
+              <a href="{{path('voyage_show',{'id': favorie.id})}}">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top"
+                        src="https://www.labalaguere.com/sites/default/files/styles/banner_voyage/public/upload_voyages/FP1COLC_1.jpg?itok=pOymZ75X"
+                        alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{favorie.name}}</h5>
+                        <p style="max-height:200px;" class="card-text text-truncate">{{favorie.description}}</p>
+                        <div style="background:grey;border-radius:2px;padding:10px;" class="d-flex mb-3 justify-content-between">
+                            <div class="text-white">Agence</div>
+                            <div class="text-white">{{ favorie.user.username}}</div>
+                        </div>
+                         <div style="background:grey;border-radius:2px;padding:10px;" class="d-flex mb-3 justify-content-between">
+                            <div class="text-white">A partir de</div>
+                            {# {% for price in favorie.tarif %} #}
+                                <div class="text-white">{{favorie.tarif|first.prix}} euro</div>
+                            {# {% endfor %} #}
+                        </div>
+                        <a  href="{{path('favorie_delete',{'id': favorie.id})}}" class="btn btn-danger ">remove
+                            favorie</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+         
+        </div>
+  
+    </div>
+</div>
+{% endblock %}
