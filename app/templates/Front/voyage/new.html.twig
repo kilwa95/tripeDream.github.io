@@ -5,6 +5,6 @@
 {% block body %}
 
     <h1>Create new Voyage</h1>
-    {{ include('voyage/_form.html.twig') }}
+    {{ include('Front/voyage/_form.html.twig') }}
     <a href="{{ path('show_my_trips', {'id': app.user.id}) }}">Retour à mes voyages</a>
 {% endblock %}

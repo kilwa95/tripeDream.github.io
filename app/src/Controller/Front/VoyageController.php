@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Entity\InfoPratique;
 use App\Entity\Programme;
@@ -48,7 +48,7 @@ class VoyageController extends AbstractController
         4/*limit per page*/
         );
 
-        return $this->render('voyage/index.html.twig',[
+        return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyageRepository->findAll(),
             'pays' => $paysRepository->findAll(),
@@ -71,7 +71,7 @@ class VoyageController extends AbstractController
         );
 
 
-        return $this->render('voyage/index.html.twig',[
+        return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyages,
             'pays' => $paysRepository->findAll(),
@@ -92,7 +92,7 @@ class VoyageController extends AbstractController
         );
 
 
-        return $this->render('voyage/index.html.twig',[
+        return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyages,
             'pays' => $paysRepository->findAll(),
@@ -114,7 +114,7 @@ class VoyageController extends AbstractController
         );
 
 
-        return $this->render('voyage/index.html.twig',[
+        return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyages,
             'pays' => $paysRepository->findAll(),
@@ -177,7 +177,7 @@ class VoyageController extends AbstractController
             return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
         } 
 
-        return $this->render('voyage/new.html.twig', [
+        return $this->render('Front/voyage/new.html.twig', [
             'voyages' => $voyageRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),
@@ -195,7 +195,7 @@ class VoyageController extends AbstractController
     {
         $myTrips = $this->getUser()->getVoyage();
 
-        return $this->render('my_trips/show.html.twig', [
+        return $this->render('Front/my_trips/show.html.twig', [
             'myTrips' =>  $myTrips,
             'voyages' => $voyageRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
@@ -237,7 +237,7 @@ class VoyageController extends AbstractController
             return $this->redirectToRoute('voyage_show', ['id' => $voyage->getId()]);
         }
 
-        return $this->render('voyage/show.html.twig', [
+        return $this->render('Front/voyage/show.html.twig', [
             'voyage' => $voyage,
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),
@@ -267,7 +267,7 @@ class VoyageController extends AbstractController
             return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
         }
 
-        return $this->render('voyage/edit.html.twig', [
+        return $this->render('Front/voyage/edit.html.twig', [
             'voyages' => $voyageRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),

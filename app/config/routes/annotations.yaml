@@ -12,6 +12,11 @@ controllers_security:
   type: annotation
   name_prefix: security_
 
+controllers_Agence:
+  resource: ../../src/Controller/Agence
+  type: annotation
+  name_prefix: Agence_
+
 kernel:
   resource: ../../src/Kernel.php
   type: annotation
