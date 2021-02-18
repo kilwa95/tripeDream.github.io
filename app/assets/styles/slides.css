@@ -258,7 +258,7 @@
 	opacity: 1;
 }
 .side-nav {
-	position: absolute;
+	/* position: absolute; */
 	width: 10%;
 	height: 100%;
 	top: 0;
