@@ -2,6 +2,12 @@
     <a href="{{ path('navigation') }}" class="logo"></a>
     <nav class="site-nav">
         <ul>
+
+            <li>
+                <div class="menu-item">
+                    <a class="menu-item-name" href="{{ path('voyage_index') }}">voyages </a>
+                </div>
+            </li>
             <li>
                 <div class="menu-item">
                     <a class="menu-item-name" href="javascript:void(0);">Pays</a>
@@ -9,7 +15,7 @@
                         {% for pays in pays %}
                         <li><a href="{{ path('pays_name',{'id': pays.id}) }}">{{pays.name}}</a></li>
                         {% endfor %}
-                        <li><a class="read-more" href="javascript:void(0);">Read more....</a></li>
+                        <li><a class="read-more" href="{{ path('voyage_index') }}">Read more....</a></li>
                     </ul>
                 </div>
             </li>
@@ -22,7 +28,7 @@
                         {% for activite in activites %}
                         <li><a href="{{ path('activite_name',{'id': activite.id}) }}">{{activite.name}}</a></li>
                         {% endfor %}
-                        <li><a class="read-more" href="javascript:void(0);">Read more....</a></li>
+                        <li><a class="read-more" href="{{ path('voyage_index') }}">Read more....</a></li>
                     </ul>
                 </div>
             </li>
@@ -35,7 +41,7 @@
                         {% for saison in saison %}
                         <li><a href="{{ path('saison_name',{'id': saison.id}) }}">{{saison.name}}</a></li>
                         {% endfor %}
-                        <li><a class="read-more" href="javascript:void(0);">Read more....</a></li>
+                        <li><a class="read-more" href="{{ path('voyage_index') }}">Read more....</a></li>
                     </ul>
                 </div>
             </li>
