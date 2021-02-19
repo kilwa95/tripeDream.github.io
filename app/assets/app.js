@@ -1,10 +1,14 @@
 import './styles/app.css';
+import './styles/menu.css';
+import './styles/slides.css';
+import './styles/best-voyage.css';
+import './styles/idee-voyage.css';
+import './styles/footer.css';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import 'bootstrap';
-
 import './custom-js/custom-app.js';
-
+import './slides.js';
 import $ from 'jquery';
 
 if ($(window).width() > 992) {
@@ -26,28 +30,3 @@ $(document).on('click', '.dropdown-menu', function(e) {
 });
 
 $('.animated').addClass('delay-1s');
-
-// add au favorie
-
-// $('.far.fa').on('click', function(e) {
-// 	const id = $('#favorie-icon').data('id');
-// 	if ($(this).hasClass('fa-heart-o')) {
-// 		$.ajax({
-// 			type: 'GET',
-// 			url: `/favorie/new/${id}`,
-// 			success: function(data) {
-// 				console.log(data);
-// 			}
-// 		});
-// 	} else {
-// 		$.ajax({
-// 			type: 'GET',
-// 			url: `/favorie/${id}`,
-// 			success: function(data) {
-// 				console.log(data);
-// 			}
-// 		});
-// 	}
-// 	$(this).toggleClass('fa-heart fa-heart-o');
-// 	// document.location.reload();
-// });

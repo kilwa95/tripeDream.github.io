@@ -29,6 +29,7 @@
 }
 a:hover {
 	color: #ffc107 !important;
+	text-decoration: none !important;
 }
 .far {
 	font-size: 25px !important;
