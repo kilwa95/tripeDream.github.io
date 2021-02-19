@@ -60,14 +60,16 @@
 	background: rgba(0, 0, 0, 0.3);
 }
 
-.popular-destinations img {
+/* .popular-destinations img {
 	filter: grayscale(100%) blur(3px);
 	transition: transform 0.5s, filter 0.75s;
-}
+} */
 
 .popular-destinations a:hover img {
-	transform: scale(1.25);
-	filter: none;
+	/* transform: scale(1.25);
+	filter: none; */
+	filter: grayscale(100%) blur(3px);
+	transition: transform 0.5s, filter 0.75s;
 }
 
 /* MEDIA QUERIES
