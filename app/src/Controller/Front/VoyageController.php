@@ -51,9 +51,6 @@ class VoyageController extends AbstractController
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyageRepository->findAll(),
-            'pays' => $paysRepository->findAll(),
-            'saison' => $saisonRepository->findAll(),
-            'activites' => $activiteRepository->findAll(),
             // 'favories' => $favorieRepository->findAll()
             
         ]);
@@ -74,9 +71,6 @@ class VoyageController extends AbstractController
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyages,
-            'pays' => $paysRepository->findAll(),
-            'saison' => $saisonRepository->findAll(),
-            'activites' => $activiteRepository->findAll(),
         ]);
     }
 
@@ -95,10 +89,6 @@ class VoyageController extends AbstractController
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyages,
-            'pays' => $paysRepository->findAll(),
-            'saison' => $saisonRepository->findAll(),
-            'activites' => $activiteRepository->findAll(),
-
         ]);
     }
 
@@ -117,10 +107,6 @@ class VoyageController extends AbstractController
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyages,
-            'pays' => $paysRepository->findAll(),
-            'saison' => $saisonRepository->findAll(),
-            'activites' => $activiteRepository->findAll(),
-
         ]);
     }
 

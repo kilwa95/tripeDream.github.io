@@ -21,12 +21,7 @@ class NavigationController extends AbstractController
     public function index(ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository): Response
     {
         
-        return $this->render('Front/navigation/index.html.twig',[
-            'activites' => $activiteRepository->findAll(),
-            'pays' => $PaysRepository->findAll(),
-            'saison' =>  $SaisonRepository->findAll(),
-            // 'favories' =>  $favorieRepository->findAll()
-        ]);
+        return $this->render('Front/navigation/index.html.twig');
     }
 
     
