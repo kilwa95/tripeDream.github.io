@@ -3,29 +3,76 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<div id="back">
+    <canvas id="canvas" class="canvas-back"></canvas>
+    <div class="backRight">
+    </div>
+    <div class="backLeft">
+    </div>
+</div>
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+<div id="slideBox">
+    <div class="topLayer">
+        <div class="left">
+            <div class="content">
+                <h2>Sign Up</h2>
+                <form id="form-signup" method="post" onsubmit="return false;">
+                    <div class="form-element form-stack">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="email" type="email" name="email">
+                    </div>
+                    <div class="form-element form-stack">
+                        <label for="username-signup" class="form-label">Username</label>
+                        <input id="username-signup" type="text" name="username">
+                    </div>
+                    <div class="form-element form-stack">
+                        <label for="password-signup" class="form-label">Password</label>
+                        <input id="password-signup" type="password" name="password">
+                    </div>
+                    <div class="form-element form-checkbox">
+                        <input id="confirm-terms" type="checkbox" name="confirm" value="yes" class="checkbox">
+                        <label for="confirm-terms">I agree to the <a href="#">Terms of Service</a> and <a
+                                href="#">Privacy Policy</a></label>
+                    </div>
+                    <div class="form-element form-submit">
+                        <button id="signUp" class="signup" type="submit" name="signup">Sign up</button>
+                        <button id="goLeft" class="signup off">Log In</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    {% endif %}
+        <div class="right">
+            <div class="content">
+                <h2>Login</h2>
+                <form id="form-login" method="post" action="{{path('app_login')}}">
+                    {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                    {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                    {% endif %}
+                    <div class="form-element form-stack">
+                        <label for="inputEmail" value="{{ last_username }}" class="form-label">email</label>
+                        <input type="email" id="inputEmail" name="email">
+                    </div>
+                    <div class="form-element form-stack">
+                        <label for="inputPassword" class="form-label">Password</label>
+                        <input id="inputPassword" type="password" name="password">
+                    </div>
+                    <div class="form-element form-stack">
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"> </div>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+                    <div class="form-element form-submit">
+                        <button id="logIn" class="login" type="submit" name="login">Log In</button>
+                        <a id="goRight" class="login off" name="signup">Sign Up</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
 {% endblock %}
