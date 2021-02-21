@@ -40,9 +40,6 @@ class FavorieController extends AbstractController
         }
 
         return $this->render('Front/favorie/index.html.twig', [
-            'activites' => $activiteRepository->findAll(),
-            'pays' => $PaysRepository->findAll(),
-            'saison' =>  $SaisonRepository->findAll(),
             'favories' =>  $voyages,
         ]);
     }

@@ -10,7 +10,8 @@
 </head>
 
 <body style="font-family: Georgia, serif;">
-    {% include 'Front/navigation/menu.html.twig' %}
+     {{menu()}}
+    {# {% include 'Front/navigation/menu.html.twig' %} #}
     {% block body %}{% endblock %}
     {% include 'Front/navigation/footer.html.twig' %}
     {% block javascripts %}
