@@ -16,9 +16,19 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if ($this->getUser()) {
+        $hasAccessFront = $this->isGranted('ROLE_USER');
+        $hasAccessAdmin = $this->isGranted('ROLE_ADMIN');
+        $hasAccessAgence = $this->isGranted('ROLE_AGENCE');
+        $user = $this->getUser();
+
+        if ($user && $hasAccessFront ) {
             return $this->redirectToRoute('navigation');
+        } elseif($user && $hasAccessAdmin ){
+            return $this->redirectToRoute('admin');
+        } elseif($user && $hasAccessAgence ){
+            return $this->redirectToRoute('agence');
         }
+        
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
