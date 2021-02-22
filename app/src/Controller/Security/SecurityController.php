@@ -16,14 +16,21 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if ($this->getUser()) {
-                die();
-            return $this->redirectToRoute('navigation');
-        }
+        $hasAccessFront = $this->isGranted('ROLE_USER');
+        $hasAccessAdmin = $this->isGranted('ROLE_ADMIN');
+        $hasAccessAgence = $this->isGranted('ROLE_AGENCE');
+        $user = $this->getUser();
 
-        // get the login error if there is one
+        if ($user && $hasAccessFront ) {
+            return $this->redirectToRoute('navigation');
+        } elseif($user && $hasAccessAdmin ){
+            return $this->redirectToRoute('admin');
+        } elseif($user && $hasAccessAgence ){
+            return $this->redirectToRoute('agence');
+        }
+        
+
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
