@@ -27,6 +27,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class AgenceController extends AbstractController
 {
+
+    /**
+     * @Route("/agence", name="agence_index", methods={"GET","POST"})
+     */
+
+    public function index(){
+        return $this->render('agence/index.html.twig');
+    }
+
     /**
      * @IsGranted("ROLE_AGENCE")
      * @Route("/new", name="voyage_new", methods={"GET","POST"})
