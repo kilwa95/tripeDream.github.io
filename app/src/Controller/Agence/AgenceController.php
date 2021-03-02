@@ -33,8 +33,8 @@ class AgenceController extends AbstractController
      */
 
     public function index(){
-        return $this->render('agence/index.html.twig');
-    }
+        return $this->redirectToRoute('show_my_trips',['id' => $this->getUser()->getId()]); 
+       }
 
     /**
      * @Route("/agence/new", name="voyage_new", methods={"GET","POST"})
