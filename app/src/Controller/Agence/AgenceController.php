@@ -101,7 +101,7 @@ class AgenceController extends AbstractController
 
 
     /**
-     * @Route("/agence/user_id:{id}", name="show_my_trips", methods={"GET"})
+     * @Route("/agence/user/{id}", name="show_my_trips", methods={"GET"})
      */
     public function showMyTrips(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
@@ -144,9 +144,8 @@ class AgenceController extends AbstractController
         ]);
     }
 
-      /**
-     * @IsGranted("ROLE_AGENCE")
-     * @Route("/{id}/delete", name="trip_delete", methods={"DELETE", "GET"})
+    /**
+     * @Route("agence/voyage/delete/{id}", name="trip_delete", methods={"DELETE", "GET"})
      */
     public function delete(int $id, VoyageRepository $tripRepository): Response
     {
