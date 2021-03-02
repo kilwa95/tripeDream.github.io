@@ -37,8 +37,7 @@ class AgenceController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_AGENCE")
-     * @Route("/new", name="voyage_new", methods={"GET","POST"})
+     * @Route("/agence/new", name="voyage_new", methods={"GET","POST"})
      */
     public function new(Request $request, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
@@ -89,7 +88,7 @@ class AgenceController extends AbstractController
             return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
         } 
 
-        return $this->render('Front/voyage/new.html.twig', [
+        return $this->render('agence/new.html.twig', [
             'voyages' => $voyageRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
             'pays' => $PaysRepository->findAll(),

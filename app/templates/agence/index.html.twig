@@ -4,11 +4,12 @@
 {% block body %}
 {% include 'agence/sidebar.html.twig' %}
 <div class="c-wrapper">
-   
-{% include 'agence/header.html.twig' %}
+
+    {% include 'agence/header.html.twig' %}
 
     <div class="c-body">
         <main class="c-main">
+    {% block core %}{% endblock %}
         </main>
     </div>
     <footer class="c-footer">
