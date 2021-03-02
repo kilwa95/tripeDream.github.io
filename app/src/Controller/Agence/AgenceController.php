@@ -101,13 +101,13 @@ class AgenceController extends AbstractController
 
 
     /**
-     * @Route("/user_id:{id}", name="show_my_trips", methods={"GET"})
+     * @Route("/agence/user_id:{id}", name="show_my_trips", methods={"GET"})
      */
     public function showMyTrips(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
         $myTrips = $this->getUser()->getVoyage();
 
-        return $this->render('Front/my_trips/show.html.twig', [
+        return $this->render('agence/show.html.twig', [
             'myTrips' =>  $myTrips,
             'voyages' => $voyageRepository->findAll(),
             'activites' => $activiteRepository->findAll(),
