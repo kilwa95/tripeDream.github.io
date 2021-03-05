@@ -25,13 +25,9 @@ class VoyageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',TextType::class,[
-                'help' => 'nom de voyage',
-            ])
+            ->add('name',TextType::class)
 
-            ->add('description',TextareaType::class,[
-                'help' => 'description',
-            ])
+            ->add('description',TextareaType::class)
 
             ->add('pointFort',TextareaType::class,[
                 'required' => false,

@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 $(document).ready(function() {
-	var $tagsCollectionHolder = $('ul.programme');
+	var $tagsCollectionHolder = $('div.programme');
 
 	$tagsCollectionHolder.data('index', $tagsCollectionHolder.find('input').length);
 	console.log($tagsCollectionHolder);

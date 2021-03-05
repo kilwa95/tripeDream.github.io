@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <div class="card">
         <div class="card-header">
             <h3>Ajouter un nouveux voyage</h3>
@@ -10,53 +10,35 @@
             </div>
 
             <div class="row">
-                <div class="col-3">
+                <div class="col-4">
+                <h4>Voyage</h4>
                     {{ form_row(form.name) }}
-
-                </div>
-                <div class="col-12">
                     {{ form_row(form.description) }}
-                </div>
-                <div class="col-12">
                     {{ form_row(form.pointFort) }}
-                </div>
-                <div class="col-12">
                     {{ form_row(form.ville) }}
-                </div>
-                <div class="col-12">
                     {{ form_row(form.pays) }}
-                </div>
-
-                <div class="col-12">
                     {{ form_row(form.saison) }}
-                </div>
-
-                <div class="col-12">
                     {{ form_row(form.activity) }}
                 </div>
 
-        
 
-                <div class="col-6 mb-5">
-                    <ul class="programme" data-prototype="{{ form_row(form.programme.vars.prototype)|e('html_attr') }}">
-                     {% for programme in form.programme %}
-                    <div class="panel panel-warning">
-                        <div class="panel-body">
-                            {{ form_row(programme.jour) }}
-                            {{ form_row(programme.description) }}
-                        </div>
-                    </div>
+
+                <div class="programme col-4 mb-5"
+                    data-prototype="{{ form_row(form.programme.vars.prototype)|e('html_attr') }}">
+                    <h4>Programmes</h4>
+                    {% for programme in form.programme %}
+                    {{ form_row(programme.jour) }}
+                    {{ form_row(programme.description) }}
                     {% endfor %}
-                    </ul>
-                    <button type="button" class=" btn btn-info add_item_link"
+                    <button type="button" class=" btn btn-info mb-2 add_item_link"
                         data-collection-holder-class="programme">Add a porgramme</button>
                 </div>
-
             </div>
 
-            <div class="card-footer">
-             {{ form_row(form.submit) }}
-            </div
-            {{ form_end(form) }}
+
         </div>
 
+        <div class="card-footer">
+            {{ form_row(form.submit) }}
+        </div>
+         {{form_end(form) }}

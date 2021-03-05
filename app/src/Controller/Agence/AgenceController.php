@@ -57,7 +57,6 @@ class AgenceController extends AbstractController
 
         return $this->render('agence/new.html.twig', [
             'operation' => 'create',
-            'voyage' => $voyage,
             'form' => $form->createView(),
         ]);
     }
