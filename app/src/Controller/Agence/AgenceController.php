@@ -46,6 +46,7 @@ class AgenceController extends AbstractController
         $tarif = new Tarif();
         $voyage->addProgramme($programme);
         $voyage->addTarif($tarif);
+        $voyage->setUser($this->getUser());
         $form = $this->createForm(VoyageType::class, $voyage, ['new' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -58,7 +59,7 @@ class AgenceController extends AbstractController
         } 
 
         return $this->render('agence/new.html.twig', [
-            'operation' => 'create',
+            'voyage' => $voyage,
             'form' => $form->createView(),
         ]);
     }
@@ -82,7 +83,6 @@ class AgenceController extends AbstractController
 
 
     /**
-     * @IsGranted("ROLE_AGENCE")
      * @Route("/{id}/edit", name="trip_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Voyage $voyage, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
@@ -96,12 +96,7 @@ class AgenceController extends AbstractController
             return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
         }
 
-        return $this->render('Front/voyage/edit.html.twig', [
-            'voyages' => $voyageRepository->findAll(),
-            'activites' => $activiteRepository->findAll(),
-            'pays' => $PaysRepository->findAll(),
-            'saison' =>  $SaisonRepository->findAll(),
-
+        return $this->render('agence/new.html.twig', [
             'voyage' => $voyage,
             'operation' => 'edit',
             'form' => $form->createView(),

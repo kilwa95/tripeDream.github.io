@@ -62,7 +62,7 @@ class Voyage
     private $saison;
 
     /**
-     * @ORM\OneToMany(targetEntity=Tarif::class, mappedBy="voyage")
+     * @ORM\OneToMany(targetEntity=Tarif::class, mappedBy="voyage",cascade={"persist"})
      */
     private $tarif;
 
