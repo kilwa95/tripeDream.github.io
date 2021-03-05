@@ -42,10 +42,12 @@ class AgenceController extends AbstractController
     public function new(Request $request, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
         $voyage = new Voyage();
+        $programme = new Programme();
+        $voyage->addProgramme($programme);
         $form = $this->createForm(VoyageType::class, $voyage, ['new' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->getData());
+            // dd($form->getData());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($voyage);
             $entityManager->flush();

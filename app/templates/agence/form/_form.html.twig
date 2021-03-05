@@ -35,20 +35,28 @@
                     {{ form_row(form.activity) }}
                 </div>
 
+        
+
                 <div class="col-6 mb-5">
-                    {{ form_row(form.programme.vars.prototype) }}
-                    {# <h4>ajouter un noveux programme</h4>
-                    <ul class="programme" data-prototype="{{ form_row(form.programme.vars.prototype)|e('html_attr') }}"></ul>
-                    <button type="button" class=" btn btn-info add_item_link" data-collection-holder-class="programme">Add a programme</button> #}
+                    <ul class="programme" data-prototype="{{ form_row(form.programme.vars.prototype)|e('html_attr') }}">
+                     {% for programme in form.programme %}
+                    <div class="panel panel-warning">
+                        <div class="panel-body">
+                            {{ form_row(programme.jour) }}
+                            {{ form_row(programme.description) }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    </ul>
+                    <button type="button" class=" btn btn-info add_item_link"
+                        data-collection-holder-class="programme">Add a porgramme</button>
                 </div>
 
             </div>
+
             <div class="card-footer">
-                {{ form_row(form.submit) }}
-            </div>
-          {{ form_end(form) }}
-
-
+             {{ form_row(form.submit) }}
+            </div
+            {{ form_end(form) }}
         </div>
 
-     
