@@ -42,57 +42,19 @@ class AgenceController extends AbstractController
     public function new(Request $request, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
         $voyage = new Voyage();
-
-        $user = $this->getUser();
-        $voyage->setUser($user);
-
-        $programme1 = new Programme();
-        $programme1->setJour(4);
-        $programme1->setDescription('lorem ipsum lorem ipsum');
-        $voyage->addProgramme($programme1);
-
-        $infoPratique = new InfoPratique();
-        $infoPratique->setRendezVous(new \DateTime());
-        $infoPratique->setFinSejour(new \DateTime());
-        $infoPratique->setRendezVous(new \DateTime());
-        $infoPratique->setHebergement('lorem ipsum');
-        $infoPratique->setRepas('lorem ipsum');
-        $infoPratique->setCovid19('lorem ipsum lorem ipsum');
-        $voyage->setInfoPratique($infoPratique);
-
-        $tarif1 = new Tarif();
-        $tarif1->setPrix(0);
-        $tarif1->setDepart(new \DateTime());
-        $tarif1->setArrive(new \DateTime());
-        $tarif1->setCapacite(0);
-        $voyage->addTarif($tarif1);
-
-        $user->addVoyage($voyage);
-
         $form = $this->createForm(VoyageType::class, $voyage);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // dd($form->getData());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($voyage);
-            foreach ($voyage->getProgramme() as $programme) {
-                $entityManager->persist($programme);
-            }
-            $entityManager->persist($voyage->getInfoPratique());
-            foreach ($voyage->getTarif() as $tarif) {
-                $entityManager->persist($tarif);
-            }
             $entityManager->flush();
             $this->addFlash('success', 'Votre Voyage a etait bien crée');
-
             return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
         } 
 
         return $this->render('agence/new.html.twig', [
-            'voyages' => $voyageRepository->findAll(),
-            'activites' => $activiteRepository->findAll(),
-            'pays' => $PaysRepository->findAll(),
-            'saison' =>  $SaisonRepository->findAll(),
             'operation' => 'create',
             'voyage' => $voyage,
             'form' => $form->createView(),
