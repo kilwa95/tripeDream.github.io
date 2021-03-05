@@ -70,15 +70,18 @@ class VoyageType extends AbstractType
                 'prototype' => true,
             ])
 
-            // ->add('infoPratique', InfoPratiqueType::class)
 
+            ->add('tarif', CollectionType::class, [
+                'entry_type' => TarifType::class,
+                'entry_options' => ['label' => false],
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype' => true,
+            ])
 
-            // ->add('tarif', CollectionType::class, [
-            //     'entry_type' => TarifType::class,
-            //     'entry_options' => ['label' => false],
-            //     'by_reference' => false,
-            //     'allow_add' => true,
-            // ])
+            ->add('infoPratique', InfoPratiqueType::class)
+
 
             ->add('submit', SubmitType::class, [
                 'attr' => [
