@@ -70,6 +70,7 @@ class VoyageType extends AbstractType
                 'entry_options' => ['label' => false],
                 'by_reference' => false,
                 'allow_add' => true,
+                'prototype' => true,
             ])
 
             // ->add('infoPratique', InfoPratiqueType::class)

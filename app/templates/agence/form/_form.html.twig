@@ -36,9 +36,10 @@
                 </div>
 
                 <div class="col-6 mb-5">
-                    <h4>ajouter un noveux programme</h4>
+                    {{ form_row(form.programme.vars.prototype) }}
+                    {# <h4>ajouter un noveux programme</h4>
                     <ul class="programme" data-prototype="{{ form_row(form.programme.vars.prototype)|e('html_attr') }}"></ul>
-                    <button type="button" class=" btn btn-info add_item_link" data-collection-holder-class="programme">Add a programme</button>
+                    <button type="button" class=" btn btn-info add_item_link" data-collection-holder-class="programme">Add a programme</button> #}
                 </div>
 
             </div>
