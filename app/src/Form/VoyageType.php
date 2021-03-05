@@ -25,11 +25,17 @@ class VoyageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',TextType::class)
+            ->add('name',TextType::class,[
+                'help' => 'nom de voyage',
+            ])
 
-            ->add('description',TextareaType::class)
+            ->add('description',TextareaType::class,[
+                'help' => 'description',
+            ])
 
-            ->add('pointFort',TextareaType::class)
+            ->add('pointFort',TextareaType::class,[
+                'required' => false,
+            ])
 
             ->add('ville',EntityType::class,[
                 'class' => Ville::class,
@@ -59,24 +65,24 @@ class VoyageType extends AbstractType
                 'expanded' => true,
             ])
             
-            ->add('programme', CollectionType::class, [
+            ->add('programme', CollectionType::class,[
                 'entry_type' => ProgrammeType::class,
-                'entry_options' => ['label' => true],
-                'allow_add' => true,
-                'prototype' => true,
-            ])
-
-
-            ->add('infoPratique', InfoPratiqueType::class)
-
-
-            ->add('tarif', CollectionType::class, [
-                'entry_type' => TarifType::class,
                 'entry_options' => ['label' => false],
                 'by_reference' => false,
                 'allow_add' => true,
             ])
-            ->add('Enregistrer', SubmitType::class, [
+
+            // ->add('infoPratique', InfoPratiqueType::class)
+
+
+            // ->add('tarif', CollectionType::class, [
+            //     'entry_type' => TarifType::class,
+            //     'entry_options' => ['label' => false],
+            //     'by_reference' => false,
+            //     'allow_add' => true,
+            // ])
+
+            ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]
@@ -88,6 +94,7 @@ class VoyageType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Voyage::class,
+            'new' => false
         ]);
     }
 }
