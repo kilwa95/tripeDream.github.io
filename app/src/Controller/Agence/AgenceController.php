@@ -27,90 +27,60 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class AgenceController extends AbstractController
 {
+
     /**
-     * @IsGranted("ROLE_AGENCE")
-     * @Route("/new", name="voyage_new", methods={"GET","POST"})
+     * @Route("/agence", name="agence_index", methods={"GET","POST"})
+     */
+
+    public function index(){
+        return $this->redirectToRoute('agence_voyage_show',['id' => $this->getUser()->getId()]); 
+       }
+
+    /**
+     * @Route("/agence/new", name="voyage_new", methods={"GET","POST"})
      */
     public function new(Request $request, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
         $voyage = new Voyage();
-
-        $user = $this->getUser();
-        $voyage->setUser($user);
-
-        $programme1 = new Programme();
-        $programme1->setJour(4);
-        $programme1->setDescription('lorem ipsum lorem ipsum');
-        $voyage->addProgramme($programme1);
-
-        $infoPratique = new InfoPratique();
-        $infoPratique->setRendezVous(new \DateTime());
-        $infoPratique->setFinSejour(new \DateTime());
-        $infoPratique->setRendezVous(new \DateTime());
-        $infoPratique->setHebergement('lorem ipsum');
-        $infoPratique->setRepas('lorem ipsum');
-        $infoPratique->setCovid19('lorem ipsum lorem ipsum');
-        $voyage->setInfoPratique($infoPratique);
-
-        $tarif1 = new Tarif();
-        $tarif1->setPrix(0);
-        $tarif1->setDepart(new \DateTime());
-        $tarif1->setArrive(new \DateTime());
-        $tarif1->setCapacite(0);
-        $voyage->addTarif($tarif1);
-
-        $user->addVoyage($voyage);
-
-        $form = $this->createForm(VoyageType::class, $voyage);
+        $programme = new Programme();
+        $tarif = new Tarif();
+        $voyage->addProgramme($programme);
+        $voyage->addTarif($tarif);
+        $voyage->setUser($this->getUser());
+        $form = $this->createForm(VoyageType::class, $voyage, ['new' => true]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            // dd($form->getData());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($voyage);
-            foreach ($voyage->getProgramme() as $programme) {
-                $entityManager->persist($programme);
-            }
-            $entityManager->persist($voyage->getInfoPratique());
-            foreach ($voyage->getTarif() as $tarif) {
-                $entityManager->persist($tarif);
-            }
             $entityManager->flush();
             $this->addFlash('success', 'Votre Voyage a etait bien crée');
-
-            return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
+            return $this->redirectToRoute('agence_voyage_show', ['id' => $this->getUser()->getId()]);
         } 
 
-        return $this->render('Front/voyage/new.html.twig', [
-            'voyages' => $voyageRepository->findAll(),
-            'activites' => $activiteRepository->findAll(),
-            'pays' => $PaysRepository->findAll(),
-            'saison' =>  $SaisonRepository->findAll(),
-            'operation' => 'create',
+        return $this->render('agence/new.html.twig', [
             'voyage' => $voyage,
             'form' => $form->createView(),
         ]);
     }
 
+    
+
 
     /**
-     * @Route("/user_id:{id}", name="show_my_trips", methods={"GET"})
+     * @Route("/agence/user/{id}", name="agence_voyage_show", methods={"GET"})
      */
-    public function showMyTrips(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
+    public function show(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
-        $myTrips = $this->getUser()->getVoyage();
+        $voyages = $this->getUser()->getVoyage();
 
-        return $this->render('Front/my_trips/show.html.twig', [
-            'myTrips' =>  $myTrips,
-            'voyages' => $voyageRepository->findAll(),
-            'activites' => $activiteRepository->findAll(),
-            'pays' => $PaysRepository->findAll(),
-            'saison' =>  $SaisonRepository->findAll(),
+        return $this->render('agence/tableVoyages.html.twig', [
+            'voyages' =>  $voyages,
         ]);
     }
 
 
     /**
-     * @IsGranted("ROLE_AGENCE")
      * @Route("/{id}/edit", name="trip_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Voyage $voyage, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
@@ -121,24 +91,18 @@ class AgenceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Votre Voyage a etait bien editer');
-            return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
+            return $this->redirectToRoute('agence_voyage_show', ['id' => $this->getUser()->getId()]);
         }
 
-        return $this->render('Front/voyage/edit.html.twig', [
-            'voyages' => $voyageRepository->findAll(),
-            'activites' => $activiteRepository->findAll(),
-            'pays' => $PaysRepository->findAll(),
-            'saison' =>  $SaisonRepository->findAll(),
-
+        return $this->render('agence/new.html.twig', [
             'voyage' => $voyage,
             'operation' => 'edit',
             'form' => $form->createView(),
         ]);
     }
 
-      /**
-     * @IsGranted("ROLE_AGENCE")
-     * @Route("/{id}/delete", name="trip_delete", methods={"DELETE", "GET"})
+    /**
+     * @Route("agence/voyage/delete/{id}", name="trip_delete", methods={"DELETE", "GET"})
      */
     public function delete(int $id, VoyageRepository $tripRepository): Response
     {
@@ -163,6 +127,6 @@ class AgenceController extends AbstractController
 
         $entityManager->flush();
         $this->addFlash('success', 'Votre Voyage a etait bien suprimé');
-        return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
+        return $this->redirectToRoute('agence_voyage_show', ['id' => $this->getUser()->getId()]);
     }
 }

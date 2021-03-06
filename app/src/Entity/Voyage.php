@@ -5,10 +5,13 @@ namespace App\Entity;
 use App\Repository\VoyageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=VoyageRepository::class)
+ * @Vich\Uploadable
  */
 class Voyage
 {
@@ -34,8 +37,35 @@ class Voyage
      */
     private $pointFort;
 
-  
 
+    /**
+     * @Vich\UploadableField(mapping="voyage_image", fileNameProperty="imageName",size="imageSize")
+     * @var File|null
+     */
+    private $imageFile;
+
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string|null
+     */
+    private $imageName;
+
+
+    /**
+     * @ORM\Column(type="integer")
+     * @var int|null
+     */
+    private $imageSize;
+
+
+   /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+  
     /**
      * @ORM\OneToMany(targetEntity=Avis::class, mappedBy="voyage")
      */
@@ -62,12 +92,12 @@ class Voyage
     private $saison;
 
     /**
-     * @ORM\OneToMany(targetEntity=Tarif::class, mappedBy="voyage")
+     * @ORM\OneToMany(targetEntity=Tarif::class, mappedBy="voyage",cascade={"persist"})
      */
     private $tarif;
 
     /**
-     * @ORM\OneToMany(targetEntity=Programme::class, mappedBy="voyage")
+     * @ORM\OneToMany(targetEntity=Programme::class, mappedBy="voyage",cascade={"persist"})
      */
     private $programme;
 
@@ -379,6 +409,41 @@ class Voyage
         $this->user = $user;
 
         return $this;
+    }
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageSize(?int $imageSize): void
+    {
+        $this->imageSize = $imageSize;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
     }
 
 

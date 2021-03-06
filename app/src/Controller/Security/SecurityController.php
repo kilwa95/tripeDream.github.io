@@ -26,7 +26,7 @@ class SecurityController extends AbstractController
         } elseif($user && $hasAccessAdmin ){
             return $this->redirectToRoute('admin');
         } elseif($user && $hasAccessAgence ){
-            return $this->redirectToRoute('agence');
+            return $this->redirectToRoute('agence_index');
         }
         
 

@@ -1,0 +1,53 @@
+{% extends 'agence/index.html.twig' %}
+
+{% block title %}Mes voyages{% endblock %}
+
+{% block core %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">mes voyages</div>
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center" scope="col">Name</th>
+                        <th class="text-center" scope="col">decription</th>
+                        <th class="text-center" scope="col">image</th>
+                        <th class="text-center" scope="col">Détails</th>
+                        <th class="text-center" scope="col">edit</th>
+                        <th class="text-center" scope="col">delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for voyage in voyages %}
+                    
+
+
+                    <tr>
+                        <th class="text-center" style="max-width:181px;" scope="row">{{voyage.name}}</th>
+                        <td class="text-center" style="max-width:181px;">{{voyage.description}}</td>
+                        <td class="text-center"><img style="max-width:181px;"
+                                src="https://www.labalaguere.com/sites/default/files/styles/banner_voyage/public/upload_voyages/FP1COLC_1.jpg?itok=pOymZ75X"
+                                alt="Card image cap"></td>
+                        <td class="text-center"><a href="{{path('voyage_show', {'id': voyage.id})}}"
+                                class="btn btn-outline-primary">Détails</a></td>
+                        <td class="text-center" class="text-center"><a href="{{path('trip_edit', {'id': voyage.id})}}"
+                                class="btn btn-outline-warning">Éditer</a></td>
+                        <td class="text-center"><a href="{{path('trip_delete', {'id': voyage.id})}}"
+                                class="btn btn-outline-danger">Supprimer</a></td>
+                    </tr>
+                    {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+        <div>
+        </div>
+    </div>
+    {% endblock %}
