@@ -18,9 +18,7 @@
             {% for voyage in voyages %}
             <li class="media w-75  ">
                 <a href="{{ path('voyage_show', {'id': voyage.id}) }}">
-                    <img width="300" class="mr-3"
-                        src="https://www.labalaguere.com/sites/default/files/styles/banner_voyage/public/upload_voyages/FP1COLC_1.jpg?itok=pOymZ75X"
-                        alt="Generic placeholder image">
+                    <img width="300" class="mr-3" src="{{ vich_uploader_asset(voyage) }}" alt="{{ voyage.name }}" />
                 </a>
 
                 <div class="media-body ">
@@ -39,9 +37,9 @@
                         <div style="font-size:24px;font-weight:700;">agence: <span style="color:#61464b">
                                 GoVoyage</span></div>
                         {% for programe in voyage.programme %}
-                         {% set jours = jours|merge([programe.jour]) %}
+                        {% set jours = jours|merge([programe.jour]) %}
                         {% endfor %}
-                        <div> {{max(jours )}} jours</div>
+                        <div> {{random(jours)}} jours</div>
                     </div>
 
                     <div class="d-flex flex-row justify-content-between ">
@@ -49,7 +47,7 @@
                         {% set departs  = departs|merge([tarif.depart]) %}
                         {% endfor %}
                         <div class="text-warning">
-                            prochaine depart: {{min(departs)|date("m/d/Y")}}
+                            prochaine depart: {{random(departs)|date("m/d/Y")}}
 
                         </div>
 
@@ -57,7 +55,7 @@
                         {% set prices = prices|merge([tarif.prix]) %}
                         {% endfor %}
                         <div style="font-weight:700;">
-                            {{min(prices)}} €
+                            {{random(prices)}} €
                         </div>
 
                     </div>

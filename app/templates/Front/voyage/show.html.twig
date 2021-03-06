@@ -18,9 +18,8 @@
     <div class="container">
         <div class="row">
             <div class="col-6  ">
-                <img width="570" height="500" class="mr-3"
-                    src="https://www.labalaguere.com/sites/default/files/styles/banner_voyage/public/upload_voyages/FP1COLC_1.jpg?itok=pOymZ75X"
-                    alt="Generic placeholder image">
+                <img width="570" height="500" class="mr-3" src="{{ vich_uploader_asset(voyage) }}"
+                    alt="{{ voyage.name }}" />
             </div>
             <div style="background-color:#040E27;" class="col-6 ">
                 <div class="d-flex justify-content-between mt-2">
