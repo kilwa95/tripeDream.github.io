@@ -33,7 +33,7 @@ class AgenceController extends AbstractController
      */
 
     public function index(){
-        return $this->redirectToRoute('show_my_trips',['id' => $this->getUser()->getId()]); 
+        return $this->redirectToRoute('agence_voyage_show',['id' => $this->getUser()->getId()]); 
        }
 
     /**
@@ -55,7 +55,7 @@ class AgenceController extends AbstractController
             $entityManager->persist($voyage);
             $entityManager->flush();
             $this->addFlash('success', 'Votre Voyage a etait bien crée');
-            return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
+            return $this->redirectToRoute('agence_voyage_show', ['id' => $this->getUser()->getId()]);
         } 
 
         return $this->render('agence/new.html.twig', [
@@ -64,20 +64,18 @@ class AgenceController extends AbstractController
         ]);
     }
 
+    
+
 
     /**
-     * @Route("/agence/user/{id}", name="show_my_trips", methods={"GET"})
+     * @Route("/agence/user/{id}", name="agence_voyage_show", methods={"GET"})
      */
-    public function showMyTrips(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
+    public function show(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
-        $myTrips = $this->getUser()->getVoyage();
+        $voyages = $this->getUser()->getVoyage();
 
-        return $this->render('agence/show.html.twig', [
-            'myTrips' =>  $myTrips,
-            'voyages' => $voyageRepository->findAll(),
-            'activites' => $activiteRepository->findAll(),
-            'pays' => $PaysRepository->findAll(),
-            'saison' =>  $SaisonRepository->findAll(),
+        return $this->render('agence/tableVoyages.html.twig', [
+            'voyages' =>  $voyages,
         ]);
     }
 
@@ -93,7 +91,7 @@ class AgenceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Votre Voyage a etait bien editer');
-            return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
+            return $this->redirectToRoute('agence_voyage_show', ['id' => $this->getUser()->getId()]);
         }
 
         return $this->render('agence/new.html.twig', [
@@ -129,6 +127,6 @@ class AgenceController extends AbstractController
 
         $entityManager->flush();
         $this->addFlash('success', 'Votre Voyage a etait bien suprimé');
-        return $this->redirectToRoute('show_my_trips', ['id' => $this->getUser()->getId()]);
+        return $this->redirectToRoute('agence_voyage_show', ['id' => $this->getUser()->getId()]);
     }
 }
