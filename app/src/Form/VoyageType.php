@@ -86,6 +86,7 @@ class VoyageType extends AbstractType
 
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
+                'label' => 'veiller choisir une image',
                 'allow_delete' => true,
                 'download_uri' => true,
                 'image_uri' => true
