@@ -32,11 +32,11 @@
                                 src="https://www.labalaguere.com/sites/default/files/styles/banner_voyage/public/upload_voyages/FP1COLC_1.jpg?itok=pOymZ75X"
                                 alt="Card image cap"></td>
                         <td class="text-center"><a href="{{path('voyage_show', {'id': voyage.id})}}"
-                                class="btn btn-primary">Détails</a></td>
+                                class="btn btn-outline-primary">Détails</a></td>
                         <td class="text-center" class="text-center"><a href="{{path('trip_edit', {'id': voyage.id})}}"
-                                class="btn btn-warning">Éditer</a></td>
+                                class="btn btn-outline-warning">Éditer</a></td>
                         <td class="text-center"><a href="{{path('trip_delete', {'id': voyage.id})}}"
-                                class="btn btn-danger">Supprimer</a></td>
+                                class="btn btn-outline-danger">Supprimer</a></td>
                     </tr>
                     {% endfor %}
 
