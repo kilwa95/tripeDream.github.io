@@ -209,7 +209,7 @@
 	background-position: 0px center, 0px center;
 	background-size: cover;
 }
-.nav {
+.naver {
 	position: absolute;
 	bottom: 25px;
 	left: 50%;
@@ -217,7 +217,7 @@
 	list-style-type: none;
 	z-index: 10;
 }
-.nav__slide {
+.naver__slide {
 	position: relative;
 	display: inline-block;
 	width: 28px;
@@ -228,16 +228,16 @@
 	cursor: pointer;
 }
 @media screen and (max-width: 400px) {
-	.nav__slide {
+	.naver__slide {
 		width: 22px;
 		height: 22px;
 	}
 }
-.nav__slide:hover:after {
+.naver__slide:hover:after {
 	transform: translate(-50%, -50%) scale(1, 1);
 	opacity: 1;
 }
-.nav__slide:after {
+.naver__slide:after {
 	content: '';
 	position: absolute;
 	top: 50%;
@@ -250,14 +250,14 @@
 	opacity: 0;
 	transition: 300ms;
 }
-.nav__slide--1 {
+.naver__slide--1 {
 	margin-left: 0;
 }
-.nav-active:after {
+.naver-active:after {
 	transform: translate(-50%, -50%) scale(1, 1);
 	opacity: 1;
 }
-.side-nav {
+.side-naver {
 	/* position: absolute; */
 	width: 10%;
 	height: 100%;
@@ -267,14 +267,14 @@
 	opacity: 0;
 	transition: 300ms;
 }
-.side-nav:hover {
+.side-naver:hover {
 	opacity: 0.1;
 }
-.side-nav--right {
+.side-naver--right {
 	right: 0;
 	background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #eed7ff 100%);
 }
-.side-nav--left {
+.side-naver--left {
 	left: 0;
 	background-image: linear-gradient(to left, rgba(255, 255, 255, 0) 0%, #eed7ff 100%);
 }

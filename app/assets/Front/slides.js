@@ -3,7 +3,7 @@ import $ from 'jquery';
 $(document).ready(function() {
 	const $cont = $('.cont');
 	const $slider = $('.slider');
-	const $nav = $('.nav');
+	const $naver = $('.naver');
 	const winW = $(window).width();
 	const animSpd = 750; // Change also in CSS
 	const distOfLetGo = winW * 0.2;
@@ -47,9 +47,9 @@ $(document).ready(function() {
 			frag1.append(text);
 		}
 
-		const navSlide = $(`<li data-target="${numSlide}" class="nav__slide nav__slide--${numSlide}"></li>`);
-		frag2.append(navSlide);
-		$nav.append(frag2);
+		const naverSlide = $(`<li data-target="${numSlide}" class="naver__slide naver__slide--${numSlide}"></li>`);
+		frag2.append(naverSlide);
+		$naver.append(frag2);
 
 		$slide.find(`.slide--${numSlide}__text-wrapper`).append(letter).append(frag1);
 		$slider.append($slide);
@@ -63,12 +63,12 @@ $(document).ready(function() {
 		generateSlide(i);
 	}
 
-	$('.nav__slide--1').addClass('nav-active');
+	$('.naver__slide--1').addClass('naver-active');
 
-	// Navigation
+	// naverigation
 	function bullets(dir) {
-		$('.nav__slide--' + curSlide).removeClass('nav-active');
-		$('.nav__slide--' + dir).addClass('nav-active');
+		$('.naver__slide--' + curSlide).removeClass('naver-active');
+		$('.naver__slide--' + dir).addClass('naver-active');
 	}
 
 	function timeout() {
@@ -96,7 +96,7 @@ $(document).ready(function() {
 		});
 	}
 
-	function navigateRight() {
+	function naverigateRight() {
 		if (!autoScrollVar) return;
 		if (curSlide >= numOfCities) return;
 		pagination(0);
@@ -105,7 +105,7 @@ $(document).ready(function() {
 		curSlide++;
 	}
 
-	function navigateLeft() {
+	function naverigateLeft() {
 		if (curSlide <= 1) return;
 		pagination(2);
 		setTimeout(timeout, animSpd);
@@ -154,38 +154,38 @@ $(document).ready(function() {
 		if (animation) return;
 
 		if (diff >= distOfLetGo) {
-			navigateRight();
+			naverigateRight();
 		} else if (diff <= -distOfLetGo) {
-			navigateLeft();
+			naverigateLeft();
 		} else {
 			toDefault();
 		}
 	});
 
-	$(document).on('click', '.nav__slide:not(.nav-active)', function() {
+	$(document).on('click', '.naver__slide:not(.naver-active)', function() {
 		let target = +$(this).attr('data-target');
 		bullets(target);
 		curSlide = target;
 		pagination(1);
 	});
 
-	$(document).on('click', '.side-nav', function() {
+	$(document).on('click', '.side-naver', function() {
 		let target = $(this).attr('data-target');
 
-		if (target === 'right') navigateRight();
-		if (target === 'left') navigateLeft();
+		if (target === 'right') naverigateRight();
+		if (target === 'left') naverigateLeft();
 	});
 
 	$(document).on('keydown', function(e) {
-		if (e.which === 39) navigateRight();
-		if (e.which === 37) navigateLeft();
+		if (e.which === 39) naverigateRight();
+		if (e.which === 37) naverigateLeft();
 	});
 
 	$(document).on('mousewheel DOMMouseScroll', function(e) {
 		if (animation) return;
 		let delta = e.originalEvent.wheelDelta;
 
-		if (delta > 0 || e.originalEvent.detail < 0) navigateLeft();
-		if (delta < 0 || e.originalEvent.detail > 0) navigateRight();
+		if (delta > 0 || e.originalEvent.detail < 0) naverigateLeft();
+		if (delta < 0 || e.originalEvent.detail > 0) naverigateRight();
 	});
 });
