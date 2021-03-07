@@ -20,7 +20,6 @@ class NavigationController extends AbstractController
      */
     public function index(ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository): Response
     {
-        
         return $this->render('Front/navigation/index.html.twig');
     }
 
