@@ -20,7 +20,7 @@
 
                     </div>
                     <div class="d-flex flex-column pt-2">
-                    <a style="color:#a435f0;" href="#">Supprimer</a>
+                    <a style="color:#a435f0;" href="{{path('panier_delete',{'id': panier.id})}}">Supprimer</a>
                     <a style="color:#a435f0;" href="{{path('voyage_show',{'id': panier.id})}}">Fiche produit</a>
                     </div>
                     <div class="pr-2 pt-2"style="color:#a435f0; ">{{panier.tarif|first.prix}} €</div>

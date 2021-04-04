@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Panier;
 use App\Repository\VoyageRepository;
+use App\Repository\PanierRepository;
 
 
 
@@ -56,5 +57,18 @@ class PanierController extends AbstractController
         $entityManager->flush();
        
         return $this->redirectToRoute('voyage_show', ['id'=> $id]);
+    }
+
+     /**
+     * @Route("/{id}", name="panier_delete", methods={"DELETE","GET"})
+     */
+    public function delete(int $id, PanierRepository $panierRepository): Response
+    {
+        $panier = $panierRepository->findOneBy(['voyage' => $id]);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($panier);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('panier_index');
     }
 }
