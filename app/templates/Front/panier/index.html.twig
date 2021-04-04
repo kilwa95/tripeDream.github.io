@@ -3,6 +3,18 @@
 {% block title %}Panier index{% endblock %}
 
 {% block body %}
+{% set totale = 0 %}
+{% set tarifs = [] %}
+
+{% for panier in paniers %}
+{% set tarifs = tarifs|merge([panier.tarif|first.prix]) %}
+ {% endfor %}
+
+ {% for i in tarifs %}
+ {% set totale = totale + i %}
+  {% endfor %}
+
+
 <div class="d-flex align-items-center" style="height: 137px; background: #1c1d1f; color: white;">
     <div style="font-size:30px;font-weight: 400;padding-left:195px;">Panier</div>
 </div>
@@ -31,7 +43,7 @@
         </div>
         <div style="height:600px;" class="col d-flex flex-column">
             <div>Total: </div>
-            <div style="font-size:36px;font-weight:700;">589,95 €</div>
+            <div style="font-size:36px;font-weight:700;">{{totale}} €</div>
             <button style="color:white;background-color:#a435f0;border: 1px solid transparent;" class="mt-1 w-100 btn">Validations</button>
         </div>
     </div>
