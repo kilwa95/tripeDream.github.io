@@ -20,9 +20,25 @@ class PanierController extends AbstractController
     /**
      * @Route("/", name="panier_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(VoyageRepository $voyageRepository): Response
     {
-        return $this->render('Front/panier/index.html.twig');
+        $paniers = $this->getUser()->getPaniers();
+        $ids = [];
+        $voyages = [];
+
+        foreach($paniers as $panier) {
+            $id=  $panier->getVoyage()->getId();
+            array_push($ids,$id);
+        }
+        foreach($ids as $id){
+            $voyage = $voyageRepository->find($id);
+            array_push($voyages,$voyage);
+        }
+
+
+        return $this->render('Front/panier/index.html.twig',[
+            'paniers' =>  $voyages,
+        ]);
     }
     /**
      * @Route("/new/{id}", name="panier_new", methods={"GET","POST"})
