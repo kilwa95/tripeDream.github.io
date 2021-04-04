@@ -51,8 +51,8 @@
                     {% endfor %}
                     <div class="text-dark">a partir de: <span style="color:#ff7e00"> {{min(prices)}} €</span></div>
                 </div>
-                <div class="mt-5 text-center" style="color:#fff;background:#ff7e00;font-size:22px;padding:10px;">
-                    <a class="text-white" href="#">Réserver mon voyage</a>
+                <div class="mt-5 text-center w-50" style="color:#fff;background:#ff7e00;font-size:22px;padding:10px;">
+                    <a class="text-white" href="{{path('panier_new',{'id': voyage.id})}}">Ajouter au panier</a>
                 </div>
                 <div style="background:#fff;border-radius:2px;padding:10px;"
                     class="d-flex mt-5 justify-content-between">
