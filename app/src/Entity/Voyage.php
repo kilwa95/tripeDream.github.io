@@ -115,6 +115,11 @@ class Voyage
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="voyage")
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Panier::class, mappedBy="voyage")
+     */
+    private $paniers;
  
 
     public function __construct()
@@ -127,6 +132,7 @@ class Voyage
         $this->tarif = new ArrayCollection();
         $this->programme = new ArrayCollection();
         $this->favorie = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -444,6 +450,36 @@ class Voyage
     public function getImageSize(): ?int
     {
         return $this->imageSize;
+    }
+
+    /**
+     * @return Collection|Panier[]
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): self
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->setVoyage($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): self
+    {
+        if ($this->paniers->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getVoyage() === $this) {
+                $panier->setVoyage(null);
+            }
+        }
+
+        return $this;
     }
 
 

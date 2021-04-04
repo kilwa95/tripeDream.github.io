@@ -73,11 +73,17 @@ class User implements UserInterface
      */
     private $voyage;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Panier::class, mappedBy="user")
+     */
+    private $paniers;
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
         $this->favorie = new ArrayCollection();
         $this->voyage = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
     }
 
 
@@ -283,6 +289,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($voyage->getUser() === $this) {
                 $voyage->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Panier[]
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): self
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): self
+    {
+        if ($this->paniers->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getUser() === $this) {
+                $panier->setUser(null);
             }
         }
 

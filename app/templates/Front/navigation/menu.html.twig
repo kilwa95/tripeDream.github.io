@@ -54,7 +54,10 @@
             {{  app.user.username}}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="{{path('favorie_index')}}">favorie <span
+            <a class="dropdown-item" href="{{path('favorie_index')}}">Mon favorie <span
+              class=" nbselection badge badge-danger">{{ app.user.favorie|length }}</span>
+            </a>
+            <a class="dropdown-item" href="{{path('favorie_index')}}">Mon panier <span
               class=" nbselection badge badge-danger">{{ app.user.favorie|length }}</span>
             </a>
             <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
