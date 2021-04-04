@@ -13,7 +13,6 @@
 {% set departs = [] %}
 {% set jours = [] %}
 
-
 <div class="mt-5" style="min-height: 100vh;">
     <div class="container">
         <div class="row">
@@ -51,9 +50,16 @@
                     {% endfor %}
                     <div class="text-dark">a partir de: <span style="color:#ff7e00"> {{min(prices)}} €</span></div>
                 </div>
+                {% if isPanier == true %}
+                <div class="mt-5 text-center w-100" style="color:#fff;background:#2ecc71;font-size:22px;padding:10px;">
+                    <a class="text-white" href="{{path('panier_new',{'id': voyage.id})}}">cette voyage est déja dans votre panier</a>
+                </div>
+                {% else %}
                 <div class="mt-5 text-center w-50" style="color:#fff;background:#ff7e00;font-size:22px;padding:10px;">
                     <a class="text-white" href="{{path('panier_new',{'id': voyage.id})}}">Ajouter au panier</a>
                 </div>
+                 {% endif %}
+
                 <div style="background:#fff;border-radius:2px;padding:10px;"
                     class="d-flex mt-5 justify-content-between">
                     <div class="text-dark">Agence</div>

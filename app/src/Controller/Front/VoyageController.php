@@ -128,6 +128,18 @@ class VoyageController extends AbstractController
                 }
             }
         }
+        $isPanier= false;
+        if($this->getUser()){
+            $paniers= $this->getUser()->getPaniers();
+            $isPanier = false;
+           
+            foreach( $paniers as  $panier){
+                $voyage_panier = $panier->getVoyage();
+                if( $voyage_panier->getId()==$voyage->getId() ){
+                    $isPanier = true;
+                }
+            }
+        }
         
 
         $avis = new Avis();
@@ -153,6 +165,7 @@ class VoyageController extends AbstractController
             'programme' => $voyage->getProgramme(),
             'tarifs'  => $voyage->getTarif(),
             'isfavorie' =>  $isfavorie,
+            'isPanier' =>  $isPanier,
             'form' => $form->createView(),
             
         ]);
