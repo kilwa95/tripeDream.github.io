@@ -94,7 +94,7 @@ class PanierController extends AbstractController
               'quantity' => 1,
             ]],
             'mode' => 'payment',
-             'success_url' => $YOUR_DOMAIN . '/success.html',
+             'success_url' => $YOUR_DOMAIN . '/panier/payementy/success',
             'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
           ]);
 
@@ -107,6 +107,13 @@ class PanierController extends AbstractController
         return $this->render('Front/payement/checkout.html.twig',[
             'id' => $checkout_session->id
         ]);
+    }
+     /**
+     * @Route("/payementy/success", name="panier_success", methods={"GET"})
+     */
+    public function success(Request $request): Response
+    {
+        return $this->render('Front/payement/success.html.twig');
     }
     
 }
