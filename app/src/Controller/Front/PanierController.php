@@ -75,7 +75,7 @@ class PanierController extends AbstractController
      /**
      * @Route("/validation/create-checkout-session", name="panier_validation", methods={"POST","GET"})
      */
-    public function validate(Request $request): Response
+    public function validate(Request $request, VoyageRepository $voyageRepository): Response
     {
         \Stripe\Stripe::setApiKey('sk_test_51IrUFOIPqsC3XcMtWqQrKCcHNcaQBh3qjY5CDNRhLgYLzYlCxS3VGDYUQjVdJsK9sZCnvOq1EuT5dBGezn1H04Ns00ZrM6FeNX');
         header('Content-Type: application/json');
@@ -104,8 +104,22 @@ class PanierController extends AbstractController
               ]);
           }
 
+
+        $paniers = $this->getUser()->getPaniers();
+        $ids = [];
+        $voyages = [];
+
+        foreach($paniers as $panier) {
+            $id=  $panier->getVoyage()->getId();
+            array_push($ids,$id);
+        }
+        foreach($ids as $id){
+            $voyage = $voyageRepository->find($id);
+            array_push($voyages,$voyage);
+        }
+
         return $this->render('Front/payement/checkout.html.twig',[
-            'id' => $checkout_session->id
+            'paniers' =>  $voyages,
         ]);
     }
      /**

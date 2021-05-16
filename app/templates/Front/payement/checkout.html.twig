@@ -3,16 +3,48 @@
 {% block title %}Buy cool new product{% endblock %}
 
 {% block body %}
-<section>
-    <div class="product">
-        <img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" />
-        <div class="description">
-            <h3>Stubborn Attachments</h3>
-            <h5>$20.00</h5>
+<div style="min-height:500px;" class="container d-flex mt-5">
+    <div style="width:667px;">
+        <div style="font-size:24px;font-weight:700;"> Détails de la commande</div>
+        {% if  paniers is defined %}
+        {% for panier in paniers %}
+        <div style=" height:90px;" class="d-flex flex-row justify-content-between  card">
+            <div class="d-flex flex-row" style="max-width:320px; min-width:320px; ">
+                <img src="{{ vich_uploader_asset(panier) }}" alt="{{ panier.name }}" />
+                <div style="color:#1c1d1f;font-weight:700;" class="pl-1">{{panier.name}}</div>
+
+            </div>
+            <div class="d-flex flex-column pt-2">
+                <a style="color:#a435f0;" href="{{path('panier_delete',{'id': panier.id})}}">Supprimer</a>
+                <a style="color:#a435f0;" href="{{path('voyage_show',{'id': panier.id})}}">Fiche produit</a>
+            </div>
+            <div class="pr-2 pt-2" style="color:#a435f0; ">{{panier.tarif|first.prix}} €</div>
         </div>
+        {% endfor %}
+        {% endif %}
     </div>
-    <button type="button" id="checkout-button">Checkout</button>
-</section>
+    <div class="card ml-3" style="width:393px;">
+        <div style="font-size:24px;font-weight:700;"> Résumé</div>
+        <div class="d-flex justify-content-between p-2">
+            <div>Prix d'origine :</div>
+            <div>59,99 €</div>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-between p-2">
+            <div>Crédits appliqués :</div>
+            <div>0 €</div>
+        </div>
+        <div style="font-size:24px;font-weight:700;" class="d-flex justify-content-between p-2">
+            <div>Total a payer :</div>
+            <div>59,99 €</div>
+        </div>
+        <hr>
+        <p class="pl-2">Comme exigé par la loi, Tripdream prélève les taxes sur les transactions applicables aux achats
+            réalisés dans certaines juridictions fiscales.<p>
+                <hr>
+        <button  class="mt-1 w-100 btn" type="button" id="checkout-button">Payer</button>
+
+    </div>
+</div>
 
 {% endblock %}
-
