@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Panier;
 use App\Repository\VoyageRepository;
@@ -71,4 +72,41 @@ class PanierController extends AbstractController
 
         return $this->redirectToRoute('panier_index');
     }
+     /**
+     * @Route("/validation/create-checkout-session", name="panier_validation", methods={"POST","GET"})
+     */
+    public function validate(Request $request): Response
+    {
+        \Stripe\Stripe::setApiKey('sk_test_51IrUFOIPqsC3XcMtWqQrKCcHNcaQBh3qjY5CDNRhLgYLzYlCxS3VGDYUQjVdJsK9sZCnvOq1EuT5dBGezn1H04Ns00ZrM6FeNX');
+        header('Content-Type: application/json');
+        $YOUR_DOMAIN = 'http://localhost:8082';
+        $checkout_session = \Stripe\Checkout\Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+              'price_data' => [
+                'currency' => 'usd',
+                'unit_amount' => 5000,
+                'product_data' => [
+                  'name' => 'Stubborn Attachments',
+                  'images' => ["https://i.imgur.com/EHyR2nP.png"],
+                ],
+              ],
+              'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+             'success_url' => $YOUR_DOMAIN . '/success.html',
+            'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
+          ]);
+
+          if ($request->isMethod('POST')) {
+              return $this->json([
+                'id' => $checkout_session->id
+              ]);
+          }
+
+        return $this->render('Front/payement/checkout.html.twig',[
+            'id' => $checkout_session->id
+        ]);
+    }
+    
 }
