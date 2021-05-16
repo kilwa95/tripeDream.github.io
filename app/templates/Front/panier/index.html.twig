@@ -44,7 +44,7 @@
         <div style="height:600px;" class="col d-flex flex-column">
             <div>Total: </div>
             <div style="font-size:36px;font-weight:700;">{{totale}} €</div>
-            <button style="color:white;background-color:#a435f0;border: 1px solid transparent;" class="mt-1 w-100 btn">Validations</button>
+            <a  id="panier-total" href="{{path('panier_validation',{'total': totale})}}" type="button" style="color:white;background-color:#a435f0;border: 1px solid transparent;" class="mt-1 w-100 btn">Validations</a>
         </div>
     </div>
    

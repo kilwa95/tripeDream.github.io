@@ -5,10 +5,13 @@ namespace App\Controller\Front;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Panier;
 use App\Repository\VoyageRepository;
 use App\Repository\PanierRepository;
+use App\Services\Payement;
+
 
 
 
@@ -71,4 +74,46 @@ class PanierController extends AbstractController
 
         return $this->redirectToRoute('panier_index');
     }
+     /**
+     * @Route("/validation/create-checkout-session/{total}", name="panier_validation", methods={"POST","GET"})
+     */
+    public function validate(string $total,Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
+    {
+        $checkout_session =  $payement->checkout($total);
+
+
+        $paniers = $this->getUser()->getPaniers();
+        $ids = [];
+        $voyages = [];
+
+        foreach($paniers as $panier) {
+            $id=  $panier->getVoyage()->getId();
+            array_push($ids,$id);
+        }
+        foreach($ids as $id){
+            $voyage = $voyageRepository->find($id);
+            array_push($voyages,$voyage);
+        }
+
+        if ($request->isMethod('POST')) {
+            return $this->json([
+              'id' => $checkout_session->id
+            ]);
+        }
+        dump( $paniers);
+
+        return $this->render('Front/payement/checkout.html.twig',[
+            'paniers' =>  $voyages,
+            'total' => $total
+        ]);
+
+    }
+     /**
+     * @Route("/payementy/success", name="panier_success", methods={"GET"})
+     */
+    public function success(Request $request): Response
+    {
+        return $this->render('Front/payement/success.html.twig');
+    }
+    
 }

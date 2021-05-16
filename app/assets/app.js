@@ -8,3 +8,4 @@ import './styles/footer.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import './Front/slides.js';
+import './Front/checkout.js';
