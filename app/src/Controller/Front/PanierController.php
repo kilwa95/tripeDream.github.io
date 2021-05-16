@@ -10,6 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Panier;
 use App\Repository\VoyageRepository;
 use App\Repository\PanierRepository;
+use App\Services\Payement;
+
 
 
 
@@ -75,34 +77,9 @@ class PanierController extends AbstractController
      /**
      * @Route("/validation/create-checkout-session", name="panier_validation", methods={"POST","GET"})
      */
-    public function validate(Request $request, VoyageRepository $voyageRepository): Response
+    public function validate(Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
     {
-        \Stripe\Stripe::setApiKey('sk_test_51IrUFOIPqsC3XcMtWqQrKCcHNcaQBh3qjY5CDNRhLgYLzYlCxS3VGDYUQjVdJsK9sZCnvOq1EuT5dBGezn1H04Ns00ZrM6FeNX');
-        header('Content-Type: application/json');
-        $YOUR_DOMAIN = 'http://localhost:8082';
-        $checkout_session = \Stripe\Checkout\Session::create([
-            'payment_method_types' => ['card'],
-            'line_items' => [[
-              'price_data' => [
-                'currency' => 'usd',
-                'unit_amount' => 5000,
-                'product_data' => [
-                  'name' => 'Stubborn Attachments',
-                  'images' => ["https://i.imgur.com/EHyR2nP.png"],
-                ],
-              ],
-              'quantity' => 1,
-            ]],
-            'mode' => 'payment',
-             'success_url' => $YOUR_DOMAIN . '/panier/payementy/success',
-            'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
-          ]);
-
-          if ($request->isMethod('POST')) {
-              return $this->json([
-                'id' => $checkout_session->id
-              ]);
-          }
+        $checkout_session =  $payement->checkout(5000);
 
 
         $paniers = $this->getUser()->getPaniers();
@@ -118,9 +95,17 @@ class PanierController extends AbstractController
             array_push($voyages,$voyage);
         }
 
+        if ($request->isMethod('POST')) {
+            return $this->json([
+              'id' => $checkout_session->id
+            ]);
+        }
+        dump( $paniers);
+
         return $this->render('Front/payement/checkout.html.twig',[
             'paniers' =>  $voyages,
         ]);
+
     }
      /**
      * @Route("/payementy/success", name="panier_success", methods={"GET"})
