@@ -13,7 +13,7 @@ class Payement {
             'payment_method_types' => ['card'],
             'line_items' => [[
                 'price_data' => [
-                'currency' => 'usd',
+                'currency' => 'EUR',
                 'unit_amount' => $total,
                 'product_data' => [
                     'name' => 'Stubborn Attachments',
@@ -23,8 +23,8 @@ class Payement {
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-                'success_url' => $YOUR_DOMAIN . '/panier/payementy/success',
-            'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
+                'success_url' => $YOUR_DOMAIN . '/panier',
+            'cancel_url' => $YOUR_DOMAIN . '/panier',
             ]);
 
             return $checkout_session;

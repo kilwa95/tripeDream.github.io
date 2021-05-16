@@ -75,11 +75,11 @@ class PanierController extends AbstractController
         return $this->redirectToRoute('panier_index');
     }
      /**
-     * @Route("/validation/create-checkout-session", name="panier_validation", methods={"POST","GET"})
+     * @Route("/validation/create-checkout-session/{total}", name="panier_validation", methods={"POST","GET"})
      */
-    public function validate(Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
+    public function validate(string $total,Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
     {
-        $checkout_session =  $payement->checkout(5000);
+        $checkout_session =  $payement->checkout($total);
 
 
         $paniers = $this->getUser()->getPaniers();
@@ -104,6 +104,7 @@ class PanierController extends AbstractController
 
         return $this->render('Front/payement/checkout.html.twig',[
             'paniers' =>  $voyages,
+            'total' => $total
         ]);
 
     }

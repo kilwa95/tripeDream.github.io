@@ -27,7 +27,7 @@
         <div style="font-size:24px;font-weight:700;"> Résumé</div>
         <div class="d-flex justify-content-between p-2">
             <div>Prix d'origine :</div>
-            <div>59,99 €</div>
+            <div>{{total}} €</div>
         </div>
         <hr>
         <div class="d-flex justify-content-between p-2">
@@ -36,13 +36,13 @@
         </div>
         <div style="font-size:24px;font-weight:700;" class="d-flex justify-content-between p-2">
             <div>Total a payer :</div>
-            <div>59,99 €</div>
+            <div>{{total}} €</div>
         </div>
         <hr>
         <p class="pl-2">Comme exigé par la loi, Tripdream prélève les taxes sur les transactions applicables aux achats
             réalisés dans certaines juridictions fiscales.<p>
                 <hr>
-        <button  class="mt-1 w-100 btn" type="button" id="checkout-button">Payer</button>
+        <button data-total="{{total}}" class="mt-1 w-100 btn" type="button" id="checkout-button">Payer</button>
 
     </div>
 </div>
