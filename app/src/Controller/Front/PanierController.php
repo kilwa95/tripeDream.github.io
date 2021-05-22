@@ -25,7 +25,14 @@ class PanierController extends AbstractController
      * @Route("/", name="panier_index", methods={"GET"})
      */
     public function index(VoyageRepository $voyageRepository): Response
-    {
+    {   
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         $paniers = $this->getUser()->getPaniers();
         $ids = [];
         $voyages = [];
@@ -66,7 +73,14 @@ class PanierController extends AbstractController
      * @Route("/{id}", name="panier_delete", methods={"DELETE","GET"})
      */
     public function delete(int $id, PanierRepository $panierRepository): Response
-    {
+    {  
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         $panier = $panierRepository->findOneBy(['voyage' => $id]);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($panier);
@@ -79,6 +93,13 @@ class PanierController extends AbstractController
      */
     public function validate(string $total,Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
     {
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         $checkout_session =  $payement->checkout($total);
 
 
@@ -112,7 +133,14 @@ class PanierController extends AbstractController
      * @Route("/payementy/success", name="panier_success", methods={"GET"})
      */
     public function success(Request $request): Response
-    {
+    {  
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         return $this->render('Front/payement/success.html.twig');
     }
     

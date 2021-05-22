@@ -20,7 +20,6 @@ class SecurityController extends AbstractController
         $hasAccessAdmin = $this->isGranted('ROLE_ADMIN');
         $hasAccessAgence = $this->isGranted('ROLE_AGENCE');
         $user = $this->getUser();
-
         if ($user && $hasAccessFront ) {
             return $this->redirectToRoute('navigation');
         } elseif($user && $hasAccessAdmin ){
@@ -43,8 +42,6 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
-
-
 
 
 }

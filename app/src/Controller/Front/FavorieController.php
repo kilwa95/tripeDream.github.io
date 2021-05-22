@@ -25,7 +25,14 @@ class FavorieController extends AbstractController
      * @Route("/", name="favorie_index", methods={"GET"})
      */
     public function index(VoyageRepository $voyageRepository): Response
-    {
+    {   
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         $favories = $this->getUser()->getFavorie();
         $ids = [];
         $voyages = [];
@@ -49,7 +56,14 @@ class FavorieController extends AbstractController
      * @IsGranted("ROLE_USER")
      */
     public function new(int $id, VoyageRepository $voyageRepository): Response
-    {
+    {  
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         $favorie = new Favorie();
         $voyage = $voyageRepository->find($id);
         $favorie->setVoyage($voyage);
@@ -67,7 +81,14 @@ class FavorieController extends AbstractController
      * @Route("/{id}", name="favorie_delete", methods={"DELETE","GET"})
      */
     public function delete(int $id, FavorieRepository $favorieRepository): Response
-    {
+    {   
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         $favorie = $favorieRepository->findOneBy(['voyage' => $id]);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($favorie);

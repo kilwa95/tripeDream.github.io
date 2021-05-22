@@ -20,7 +20,14 @@ class ActiviteController extends AbstractController
      * @Route("/", name="activite_index", methods={"GET"})
      */
     public function index(ActiviteRepository $activiteRepository): Response
-    {
+    {   
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         return $this->render('activite/index.html.twig', [
             'activites' => $activiteRepository->findAll(),
         ]);
@@ -31,7 +38,14 @@ class ActiviteController extends AbstractController
      * @Route("/new", name="activite_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
-    {
+    {   
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         $activite = new Activite();
         $form = $this->createForm(ActiviteType::class, $activite);
         $form->handleRequest($request);
@@ -56,7 +70,14 @@ class ActiviteController extends AbstractController
      * @Route("/{id}", name="activite_show", methods={"GET"})
      */
     public function show(Activite $activite): Response
-    {
+    {   
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         return $this->render('Front/activite/show.html.twig', [
             'activite' => $activite,
         ]);
@@ -67,7 +88,14 @@ class ActiviteController extends AbstractController
      * @Route("/{id}/edit", name="activite_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Activite $activite): Response
-    {
+    {   
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         $form = $this->createForm(ActiviteType::class, $activite);
         $form->handleRequest($request);
 

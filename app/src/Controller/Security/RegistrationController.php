@@ -15,14 +15,26 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
+
+        //Check if a user is already connected
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_USER')){
+            return $this->redirectToRoute('navigation');
+        }
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         // 1) build the form
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
+                
         if ($form->isSubmitted() && $form->isValid()) { 
-           
             // 3) Encode the password (you could also do this via   
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);

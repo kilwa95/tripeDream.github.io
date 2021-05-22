@@ -20,6 +20,13 @@ class PaysController extends AbstractController
      */
     public function index(PaysRepository $paysRepository): Response
     {
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         return $this->render('Front/pays/index.html.twig', [
             'pays' => $paysRepository->findAll(),
         ]);
@@ -29,7 +36,14 @@ class PaysController extends AbstractController
      * @Route("/new", name="pays_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
-    {
+    {   
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         $pay = new Pays();
         $form = $this->createForm(PaysType::class, $pay);
         $form->handleRequest($request);
@@ -52,7 +66,14 @@ class PaysController extends AbstractController
      * @Route("/{id}", name="pays_show", methods={"GET"})
      */
     public function show(Pays $pay): Response
-    {
+    {   
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         return $this->render('Front/pays/show.html.twig', [
             'pay' => $pay,
         ]);
@@ -62,7 +83,14 @@ class PaysController extends AbstractController
      * @Route("/{id}/edit", name="pays_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Pays $pay): Response
-    {
+    {   
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         $form = $this->createForm(PaysType::class, $pay);
         $form->handleRequest($request);
 
@@ -82,7 +110,14 @@ class PaysController extends AbstractController
      * @Route("/{id}", name="pays_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Pays $pay): Response
-    {
+    {   
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         if ($this->isCsrfTokenValid('delete'.$pay->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($pay);
