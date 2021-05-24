@@ -31,12 +31,24 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user->setUsername($faker->firstName());
             $user->setLastName($faker->lastName());
             $user->setAdresse($adresses[array_rand($adresses)]);
-            $roles = array_rand(array_flip(['ROLE_USER', 'ROLE_AGENCE']));
+            $roles = array_rand(array_flip(['ROLE_USER', 'ROLE_AGENCE', 'ROLE_ADMIN']));
             $user->setRoles(array($roles));
             $normalUserPwd = $this->encoder->encodePassword($user, 'user');
             $agencyUserPwd = $this->encoder->encodePassword($user, 'agence');
+            $adminUserPwd = $this->encoder->encodePassword($user, 'admin');
+
             $isSimpleUser = in_array("ROLE_USER", $user->getRoles());
-            $encodedPassword = $isSimpleUser ? $normalUserPwd : $agencyUserPwd;
+            $isAgencyUser = in_array("ROLE_AGENCE", $user->getRoles());
+            $isAdminUser = in_array("ROLE_ADMIN", $user->getRoles());
+
+            if ($isSimpleUser) {
+                $encodedPassword =  $normalUserPwd;
+            } elseif ($isAgencyUser) {
+                $encodedPassword =  $agencyUserPwd;
+            } elseif ($isAdminUser) {
+                $encodedPassword =  $adminUserPwd;
+            }
+
             $user->setPassword($encodedPassword);
             if (!$isSimpleUser)
                 $user->setSiret($faker->numberBetween(1000000000, 2147483646));
