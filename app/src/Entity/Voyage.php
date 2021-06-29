@@ -120,6 +120,16 @@ class Voyage
      * @ORM\OneToMany(targetEntity=Panier::class, mappedBy="voyage")
      */
     private $paniers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="participat")
+     */
+    private $usersParticipat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Statue::class, inversedBy="voyages")
+     */
+    private $statue;
  
 
     public function __construct()
@@ -133,6 +143,7 @@ class Voyage
         $this->programme = new ArrayCollection();
         $this->favorie = new ArrayCollection();
         $this->paniers = new ArrayCollection();
+        $this->usersParticipat = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -478,6 +489,45 @@ class Voyage
                 $panier->setVoyage(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsersParticipat(): Collection
+    {
+        return $this->usersParticipat;
+    }
+
+    public function addUsersParticipat(User $usersParticipat): self
+    {
+        if (!$this->usersParticipat->contains($usersParticipat)) {
+            $this->usersParticipat[] = $usersParticipat;
+            $usersParticipat->addParticipat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsersParticipat(User $usersParticipat): self
+    {
+        if ($this->usersParticipat->removeElement($usersParticipat)) {
+            $usersParticipat->removeParticipat($this);
+        }
+
+        return $this;
+    }
+
+    public function getStatue(): ?Statue
+    {
+        return $this->statue;
+    }
+
+    public function setStatue(?Statue $statue): self
+    {
+        $this->statue = $statue;
 
         return $this;
     }
