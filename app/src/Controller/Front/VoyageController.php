@@ -35,7 +35,7 @@ class VoyageController extends AbstractController
      */
     public function index(Request $request,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository,FavorieRepository $favorieRepository, PaginatorInterface $paginator)
     {
-        $voyages = $voyageRepository->findAll();
+        $voyages = $voyageRepository->findBy(['status' => 'avaible']);
         $pagination = $paginator->paginate(
         $voyages, /* query NOT result */
         $request->query->getInt('page', 1)/*page number*/,

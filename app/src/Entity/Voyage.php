@@ -127,9 +127,11 @@ class Voyage
     private $usersParticipat;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Statue::class, inversedBy="voyages")
+     * @ORM\Column(type="string", length=255)
      */
-    private $statue;
+    private $status;
+
+
  
 
     public function __construct()
@@ -520,17 +522,20 @@ class Voyage
         return $this;
     }
 
-    public function getStatue(): ?Statue
+    public function getStatus(): ?string
     {
-        return $this->statue;
+        return $this->status;
     }
 
-    public function setStatue(?Statue $statue): self
+    public function setStatus(string $status): self
     {
-        $this->statue = $statue;
+        $this->status = $status;
 
         return $this;
     }
+
+   
+ 
 
 
 }

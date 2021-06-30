@@ -28,6 +28,7 @@ class PanierController extends AbstractController
     public function index(VoyageRepository $voyageRepository): Response
     {
         $paniers = $this->getUser()->getPaniers();
+
         $ids = [];
         $voyages = [];
 
@@ -53,6 +54,7 @@ class PanierController extends AbstractController
     {
         $panier= new Panier();
         $voyage = $voyageRepository->find($id);
+        $voyage->setStatus('reserved');
         $panier->setVoyage($voyage);
         $user = $this->getUser();
         $user->addPanier($panier);
@@ -119,7 +121,12 @@ class PanierController extends AbstractController
         foreach($paniers as $panier) {
             $id=  $panier->getVoyage()->getId();
             $voyage =  $entityManager->getRepository(Voyage::class)->find($id);
+            $voyage->setStatus('avaible');
             $voyage->addUsersParticipat($user);
+            $entityManager->flush();
+        }
+        foreach($paniers as $panier) {
+            $entityManager->remove($panier);
             $entityManager->flush();
         }
 

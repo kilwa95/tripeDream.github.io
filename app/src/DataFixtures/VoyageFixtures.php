@@ -47,7 +47,7 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
             $voyage->addVille($villes[array_rand($villes)]);
             $voyage->setImageName($images[array_rand($images)]);
             $voyage->setImageSize(12345);
-            $voyage->setStatue(1);
+            $voyage->setStatus("avaible");
             $manager->persist($voyage);
         }
 
