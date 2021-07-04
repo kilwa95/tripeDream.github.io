@@ -24,7 +24,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $faker = \Faker\Factory::create('fr-FR');
         $adresses = $manager->getRepository(Adresse::class)->findAll();
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 50; $i++) {
 
             $user = new User();
             $user->setEmail($faker->email());

@@ -22,7 +22,7 @@ class NavigationController extends AbstractController
     {
         $user = $this->getUser();
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('admin_index');
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');

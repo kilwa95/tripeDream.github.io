@@ -1,0 +1,21 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+{% block body %}
+    {% include 'admin/left_menu.html.twig' %}
+    <div class="c-wrapper">
+
+        {% include 'admin/top_navigation.html.twig' %}
+        {% include 'admin/breadcrumb.html.twig' %}
+
+        <div class="c-body">
+            <main class="c-main">
+                {% block contentpage %}{% endblock %}
+            </main>
+        </div>
+
+        <footer class="c-footer">
+            <!-- Footer content here -->
+        </footer>
+    </div>
+{% endblock %}

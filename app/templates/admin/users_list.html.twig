@@ -1,0 +1,94 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}Liste des utilisateurs page{% endblock %}
+
+{% block contentpage %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-bootgrid/1.3.1/jquery.bootgrid.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bootgrid/1.3.1/jquery.bootgrid.js"></script>
+
+<style>
+    body {
+        margin:0;
+        padding:0;
+        background-color:#f1f1f1;
+    }
+    .box {
+        width:1270px;
+        padding:20px;
+        background-color:#fff;
+        border:1px solid #ccc;
+        border-radius:5px;
+        margin-top:25px;
+}
+</style>
+
+<div class="container box">
+    <h1 align="center">Liste des utilisateurs</h1>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div align="right">
+        <a href="{{ path('new_user') }}" class="btn btn-primary">Ajouter</a>
+    </div>
+
+    <div class="table-responsive">
+        <table id="user_data" data-toggle="bootgrid" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th data-column-id="id" data-type="numeric">ID</th>
+                    <th data-column-id="username">Nom d'utilisateur</th>
+                    <th data-column-id="email">Adresse e-mail</th>
+                    <th data-column-id="roles">Rôle</th>
+                    <th data-column-id="lastName">Nom de famille</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Opérations</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript" language="javascript" >
+    $(document).ready(function() {
+        $('.alert-success').delay(2000).hide(0);
+        $('.alert-danger').delay(2000).hide(0);
+
+        var userTable = $('#user_data').bootgrid({
+            ajax: true,
+            rowSelect: true,
+            url: "fetch-users",
+            formatters: {
+                "commands": function(column, row) {
+                    var urlEditBtn = "{{ path('edit_user', {'id': 'rowId'}) }}";
+                    var urlDelBtn = "{{ path('delete_user', {'id': 'rowId'}) }}";
+                    urlEditBtn = urlEditBtn.replace("rowId", row.id);
+                    urlDelBtn = urlDelBtn.replace("rowId", row.id);
+
+                    return "<a href='"+urlEditBtn+"' class='btn btn-warning btn-xs update'>Modifier</a>" +
+                        "&nbsp; <a href='"+urlDelBtn+"' class='btn btn-danger btn-xs delete'>Supprimer</a>";
+                }
+            },
+            labels: {
+                loading: "Chargement",
+                noResults: "Aucun résultat trouvé !",
+                refresh: "Actualiser",
+                search: "Rechercher",
+            }
+        });
+    });
+</script>
+
+{% endblock %}
