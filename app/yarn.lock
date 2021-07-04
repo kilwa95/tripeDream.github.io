@@ -1624,6 +1624,11 @@
   dependencies:
     "hoek" "2.x.x"
 
+"bootstrap-icons@^1.5.0":
+  "integrity" "sha512-44feMc7DE1Ccpsas/1wioN8ewFJNquvi5FewA06wLnqct7CwMdGDVy41ieHaacogzDqLfG8nADIvMNp9e4bfbA=="
+  "resolved" "https://registry.npmjs.org/bootstrap-icons/-/bootstrap-icons-1.5.0.tgz"
+  "version" "1.5.0"
+
 "bootstrap@^4.5.3":
   "integrity" "sha512-Io55IuQY3kydzHtbGvQya3H+KorS/M9rSNyfCGCg9WZ4pyT/lCxIlpJgG1GXW/PswzC84Tr2fBYi+7+jFVQQBw=="
   "resolved" "https://registry.npmjs.org/bootstrap/-/bootstrap-4.6.0.tgz"

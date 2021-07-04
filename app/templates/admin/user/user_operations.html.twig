@@ -1,0 +1,43 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}Opérations utilisateurs{% endblock %}
+
+{% block contentpage %}
+
+<div class="container-fluid">
+    <div class="fade-in">
+        <div class="row">
+            <div class="col">
+                <div class="card card-accent-warning">
+                    <form>
+                        <div class="card-header"><strong>Opérations utilisateurs</strong>
+                        </div>
+                        <div class="collapse show" id="coll">
+                        {{ dump(form)}}
+                            {{ form_start(form) }}
+                            <div class="card-body">
+                                <div class="my-custom-class-for-errors">
+                                    {{ form_errors(form) }}
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-3 col-form-label" for="select1">Choisir un utilisateur</label>
+                                    <div class="col-md-9" data-prototype="{{ form_row(form.username.vars.prototype)|e('html_attr') }}">
+                                        {% for user in form.username %}
+                                            {{ form_row(user.username) }}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                {{ form_row(form.submit) }}
+                            </div>
+                            {{form_end(form) }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

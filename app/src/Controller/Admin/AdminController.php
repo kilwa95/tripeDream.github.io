@@ -12,10 +12,19 @@ use App\Repository\UserRepository;
 use App\Form\UserType;
 use App\Entity\User;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Doctrine\ORM\EntityRepository;
+
+/**
+ * @Route("/admin")
+ */
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin", name="admin_index")
+     * @Route("", name="admin_index")
      */
     public function index(): Response
     {
@@ -25,17 +34,15 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/users", name="users_list")
+     * @Route("/users", name="users_list")
      */
     public function usersList(): Response
     {
-        return $this->render('admin/users_list.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
+        return $this->render('admin/users_list.html.twig');
     }
 
     /**
-     * @Route("/admin/fetch-users", name="users_fetching", methods={"GET", "POST"})
+     * @Route("/fetch-users", name="users_fetching", methods={"GET", "POST"})
      */
     public function getUsersJson(Request $request): Response
     {
@@ -138,7 +145,17 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/users/new", name="new_user", methods={"GET", "POST"})
+     * @Route("/users/{id}", requirements={ "id" : "\d+" }, name="show_user", methods={"GET"})
+     */
+    public function show(User $user): Response
+    {
+        return $this->render('admin/user/show.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/users/new", name="new_user", methods={"GET", "POST"})
      */
     public function newUser(Request $request): Response
     {
@@ -171,13 +188,12 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/users/{id}/edit", name="edit_user", methods={"GET","POST"})
+     * @Route("/users/{id}/edit", name="edit_user", methods={"GET","POST"})
      */
     public function editUser(Request $request, User $user): Response
     {
         $form = $this->createForm(UserType::class, $user, ['action' => 'edit']);
         $form->handleRequest($request);
-        $response = new Response();
 
         if ($form->isSubmitted() && $form->isValid()) {
             try{
@@ -199,7 +215,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/users/delete/{id}", name="delete_user", methods={"DELETE", "GET", "POST"})
+     * @Route("/users/delete/{id}", name="delete_user", methods={"DELETE", "GET", "POST"})
      */
     public function deleteUser(int $id, UserRepository $userRepository): Response
     {
@@ -212,5 +228,39 @@ class AdminController extends AbstractController
         $this->addFlash('success', "L'utilisateur a été supprimé avec succès");
         
         return $this->redirectToRoute('users_list');
+    }
+
+    /**
+     * @Route("/users/operations", name="user_operation", methods={"DELETE", "GET", "POST"})
+     */
+    public function userOperations(Request $request, UserRepository $userRepository): Response
+    {
+        $action = $request->get('action');
+        $users = $userRepository->findAll();
+
+        $defaultData = ['message' => 'Type your message here'];
+        $form = $this->createFormBuilder($defaultData)
+            ->add('user', EntityType::class, [
+                'class' => User::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.username', 'ASC');
+                },
+                'choice_label' => 'username',
+            ])
+            ->add('submit', SubmitType::class)
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+        }
+
+        return $this->render('admin/user/user_operations.html.twig', [
+            'action' => $action,
+            'users' => $users,
+            'form' => $form->createView(),
+        ]);
     }
 }
