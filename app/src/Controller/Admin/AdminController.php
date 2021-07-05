@@ -229,38 +229,4 @@ class AdminController extends AbstractController
         
         return $this->redirectToRoute('users_list');
     }
-
-    /**
-     * @Route("/users/operations", name="user_operation", methods={"DELETE", "GET", "POST"})
-     */
-    public function userOperations(Request $request, UserRepository $userRepository): Response
-    {
-        $action = $request->get('action');
-        $users = $userRepository->findAll();
-
-        $defaultData = ['message' => 'Type your message here'];
-        $form = $this->createFormBuilder($defaultData)
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.username', 'ASC');
-                },
-                'choice_label' => 'username',
-            ])
-            ->add('submit', SubmitType::class)
-            ->getForm();
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // data is an array with "name", "email", and "message" keys
-            $data = $form->getData();
-        }
-
-        return $this->render('admin/user/user_operations.html.twig', [
-            'action' => $action,
-            'users' => $users,
-            'form' => $form->createView(),
-        ]);
-    }
 }
