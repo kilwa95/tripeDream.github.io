@@ -1,6 +1,6 @@
 {% extends 'admin/index.html.twig' %}
 
-{% block title %}Détails voyage{% endblock %}
+{% block title %}Détails programme{% endblock %}
 
 {% block contentpage %}
 
@@ -8,14 +8,14 @@
     <div class="fade-in">
         <div class="row">
             <div class="col">
-                <div class="card card-accent-primary">
-                    <div class="card-header"><strong>Détails voyage</strong>
+                <div class="card card-accent-success">
+                    <div class="card-header"><strong>Détails programme</strong>
                         <div class="card-header-actions">
-                            <a type="button" class="btn btn-outline-primary" href="{{ path('edit_voyage', {'id': voyage.id})}}">
+                            <a type="button" class="btn btn-outline-primary" href="{{ path('admin_programme_edit', {'id': programme.id})}}">
                                 <i class="bi bi-pencil-square"></i>
                                 Modifier
                             </a>
-                            <a type="button" class="btn btn-outline-danger" href="{{ path('delete_voyage', {'id': voyage.id})}}">
+                            <a type="button" class="btn btn-outline-danger" href="{{ path('delete_programme', {'id': programme.id})}}">
                                 <i class="bi bi-trash"></i>
                                 Supprimer
                             </a>
@@ -25,10 +25,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Nom:</h6>
+                                    <h6 class="mb-0">Jour:</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    <em>{{ voyage.name }}</em>
+                                    <em>{{ programme.jour }}</em>
                                 </div>
                             </div>
                             <hr>
@@ -37,16 +37,7 @@
                                     <h6 class="mb-0">Description:</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    <em>{{ voyage.description }}</em>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Points forts:</h6>
-                                </div>
-                                <div class="col-sm-9">
-                                    <em>{{ voyage.pointFort }}</em>
+                                    <em>{{ programme.description }}</em>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +48,7 @@
     </div>
 </div>
 
-{% set entity = 'voyage' %}
+{% set entity = 'programme' %}
 {% include 'admin/back_to_list_card.html.twig' %}
 
 {% endblock %}

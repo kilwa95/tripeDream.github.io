@@ -34,6 +34,11 @@
                             urlEditBtn = "{{ path('edit_voyage', {'id': 'rowId'}) }}";
                             urlDelBtn = "{{ path('delete_voyage', {'id': 'rowId'}) }}";
                             break;
+                        case 'programme':
+                            urlShowBtn = "{{ path('show_programme', {'id': 'rowId'}) }}";
+                            urlEditBtn = "{{ path('admin_programme_edit', {'id': 'rowId'}) }}";
+                            urlDelBtn = "{{ path('delete_programme', {'id': 'rowId'}) }}";
+                            break;
                     }
 
                     urlShowBtn = urlShowBtn.replace("rowId", row.id);

@@ -1,23 +1,23 @@
 {% extends 'admin/index.html.twig' %}
 
-{% block title %}Liste des voyages{% endblock %}
+{% block title %}Liste des programmes{% endblock %}
 
 {% block datatabscripts %}
     {% include 'admin/datatable.html.twig' %}
 {% endblock %}
 
 {% block contentpage %}
-<input id="entity" name="entity" type="hidden" value="voyage">
-<input id="url" name="url" type="hidden" value="fetch-voyages">
+<input id="entity" name="entity" type="hidden" value="programme">
+<input id="url" name="url" type="hidden" value="fetch-programmes">
 
 <div class="container-fluid">
     <div class="fade-in">
         <div class="row">
             <div class="col">
-                <div class="card card-accent-primary">
-                    <div class="card-header"><h4><strong>Liste des voyages</strong></h4>
+                <div class="card card-accent-success">
+                    <div class="card-header"><h4><strong>Liste des programmes</strong></h4>
                         <div class="card-header-actions">
-                            <a type="button" class="btn btn-outline-primary" href="{{ path('admin_voyage_new') }}">
+                            <a type="button" class="btn btn-outline-primary" href="{{ path('admin_programme_new') }}">
                                 <i class="bi bi-person-plus"></i>
                             </a>
                         </div>
@@ -41,9 +41,8 @@
                                 <thead>
                                     <tr>
                                         <th data-column-id="id" data-type="numeric">ID</th>
-                                        <th data-column-id="name">Nom</th>
+                                        <th data-column-id="jour">Jour</th>
                                         <th data-column-id="description">Description</th>
-                                        <th data-column-id="pointFort">Points forts</th>
                                         <th data-column-id="commands" data-formatter="commands" data-sortable="false">Opérations</th>
                                     </tr>
                                 </thead>

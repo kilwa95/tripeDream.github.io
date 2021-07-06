@@ -15,6 +15,8 @@
                             <a href="{{path('info_pr_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des informations pratiques</a>
                         {% elseif entity == 'voyage' %}
                             <a href="{{path('voyage_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des voyages</a>
+                        {% elseif entity == 'programme' %}
+                            <a href="{{path('programme_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des programmes</a>
                         {% endif %}
                     </div>
                 </div>
