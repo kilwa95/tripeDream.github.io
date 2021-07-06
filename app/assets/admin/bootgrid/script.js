@@ -1,11 +1,14 @@
 $(document).ready(function() {
-    //$('#user_data-footer').removeClass();
+    //$('#table_data-footer').removeClass();
     /*
-    $('#user_data-footer div div ul > li').each(function()
+    $('#table_data-footer div div ul > li').each(function()
     {
         console.log($(this))
         $(this).toggleClass('active page-item');
     });
     */
-    $('.bootgrid-footer li.prev a').html("Précedent");
+
+    //console.log($('.bootgrid-footer li a').html());
+    //$('.bootgrid-footer li a').html();
+    //$('.bootgrid-footer li.prev a').find(`[data-page='prev']`).html('<i class="bi bi-arrow-left-square"></i>');
 });

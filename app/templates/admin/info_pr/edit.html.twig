@@ -1,6 +1,6 @@
 {% extends 'admin/index.html.twig' %}
 
-{% block title %}Modifier un utilisateur{% endblock %}
+{% block title %}Modifier une information pratique{% endblock %}
 
 {% block contentpage %}
 
@@ -9,15 +9,15 @@
         <div class="row">
             <div class="col">
                 <div class="card">
-                    <div class="card-header text-center"><h3><strong>Modifier un utilisateur</strong></h3></div>
-                    {{ include('admin/user/_form.html.twig') }}
+                    <div class="card-header text-center"><h3><strong>Modifier une information pratique</strong></h3></div>
+                    {{ include('admin/info_pr/_form.html.twig') }}
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-{% set entity = 'user' %}
+{% set entity = 'info_pr' %}
 {% include 'admin/back_to_list_card.html.twig' %}
 
 {% endblock %}

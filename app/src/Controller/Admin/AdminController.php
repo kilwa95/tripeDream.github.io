@@ -38,7 +38,7 @@ class AdminController extends AbstractController
      */
     public function usersList(): Response
     {
-        return $this->render('admin/users_list.html.twig');
+        return $this->render('admin/user/index.html.twig');
     }
 
     /**
@@ -145,7 +145,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/users/{id}", requirements={ "id" : "\d+" }, name="show_user", methods={"GET"})
+     * @Route("/users/{id}", requirements={ "id" : "\d+|rowId" }, name="show_user", methods={"GET"})
      */
     public function show(User $user): Response
     {
@@ -221,12 +221,18 @@ class AdminController extends AbstractController
     {
         $user = $userRepository->find($id);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($user);
-        $em->flush();
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($user);
+            $em->flush();
+    
+            $this->addFlash('success', "L'utilisateur a été supprimé avec succès");
 
-        $this->addFlash('success', "L'utilisateur a été supprimé avec succès");
-        
-        return $this->redirectToRoute('users_list');
+            return $this->redirectToRoute('users_list');
+        } catch(\Exception $e){
+            $this->addFlash('danger', $e->getMessage());
+            
+            return $this->redirectToRoute('users_list');
+        }
     }
 }

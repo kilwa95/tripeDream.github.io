@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block contentpage %}
+<input id="entity" name="entity" type="hidden" value="user">
 <input id="url" name="url" type="hidden" value="fetch-users">
 
 <div class="container-fluid">
@@ -18,24 +19,25 @@
                         <div class="card-header-actions">
                             <a type="button" class="btn btn-outline-primary" href="{{ path('new_user') }}">
                                 <i class="bi bi-person-plus"></i>
-                                Ajouter
                             </a>
                         </div>
-                        {% for message in app.flashes('success') %}
-                            <div class="alert alert-success">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-
-                        {% for message in app.flashes('danger') %}
-                            <div class="alert alert-danger">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
                     </div>
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success alert-dismissible fade show">
+                            {{ message }}
+                            <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        </div>
+                    {% endfor %}
+
+                    {% for message in app.flashes('danger') %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            {{ message }}
+                            <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        </div>
+                    {% endfor %}
                     <div class="collapse show" id="coll">
                         <div class="card-body">
-                            <table id="user_data" data-toggle="bootgrid" class="table table-responsive-sm table-bordered">
+                            <table id="table_data" data-toggle="bootgrid" class="table table-responsive-sm table-bordered">
                                 <thead>
                                     <tr>
                                         <th data-column-id="id" data-type="numeric">ID</th>

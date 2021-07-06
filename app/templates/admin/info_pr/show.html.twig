@@ -1,6 +1,6 @@
 {% extends 'admin/index.html.twig' %}
 
-{% block title %}Détails utilisateur{% endblock %}
+{% block title %}Détails information pratique{% endblock %}
 
 {% block contentpage %}
 
@@ -11,11 +11,11 @@
                 <div class="card card-accent-warning">
                     <div class="card-header"><strong>Détails utilisateur</strong>
                         <div class="card-header-actions">
-                            <a type="button" class="btn btn-outline-primary" href="{{ path('edit_user', {'id': user.id})}}">
+                            <a type="button" class="btn btn-outline-primary" href="{{ path('edit_info_pr', {'id': info_pr.id})}}">
                                 <i class="bi bi-pencil-square"></i>
                                 Modifier
                             </a>
-                            <a type="button" class="btn btn-outline-danger" href="{{ path('delete_user', {'id': user.id})}}">
+                            <a type="button" class="btn btn-outline-danger" href="{{ path('delete_info_pr', {'id': info_pr.id})}}">
                                 <i class="bi bi-trash"></i>
                                 Supprimer
                             </a>
@@ -25,37 +25,46 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Nom d'utilisateur:</h6>
+                                    <h6 class="mb-0">Début sejour:</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    <em>{{ user.username }}</em>
+                                    <em>{{ info_pr.rendezvous|date('d/m/Y') }}</em>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Adresse e-mail:</h6>
+                                    <h6 class="mb-0">Fin sejour:</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    <em>{{ user.email }}</em>
+                                    <em>{{ info_pr.finsejour|date('d/m/Y') }}</em>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Rôle:</h6>
+                                    <h6 class="mb-0">Hébergement:</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    <em>{{ user.roles[0] }}</em>
+                                    <em>{{ info_pr.hebergement }}</em>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Nom de famille:</h6>
+                                    <h6 class="mb-0">Repas:</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    <em>{{ user.lastName }}</em>
+                                    <em>{{ info_pr.repas }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Informations COVID-19:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ info_pr.covid19 }}</em>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +75,7 @@
     </div>
 </div>
 
-{% set entity = 'user' %}
+{% set entity = 'info_pr' %}
 {% include 'admin/back_to_list_card.html.twig' %}
 
 {% endblock %}

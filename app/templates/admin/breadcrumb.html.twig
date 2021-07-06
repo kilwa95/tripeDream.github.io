@@ -7,6 +7,7 @@
 
         {% set current = '' %}
         {% for url in urls %}
+            {% set url = url|replace({'_': " "}) %}
             {% if loop.last %}
                 <li class="breadcrumb-item active">{{ url|title }}</li>
             {% else %}
