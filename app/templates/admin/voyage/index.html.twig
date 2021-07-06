@@ -1,23 +1,23 @@
 {% extends 'admin/index.html.twig' %}
 
-{% block title %}Liste des utilisateurs{% endblock %}
+{% block title %}Liste des voyages{% endblock %}
 
 {% block datatabscripts %}
     {% include 'admin/datatable.html.twig' %}
 {% endblock %}
 
 {% block contentpage %}
-<input id="entity" name="entity" type="hidden" value="user">
-<input id="url" name="url" type="hidden" value="fetch-users">
+<input id="entity" name="entity" type="hidden" value="voyage">
+<input id="url" name="url" type="hidden" value="fetch-voyages">
 
 <div class="container-fluid">
     <div class="fade-in">
         <div class="row">
             <div class="col">
                 <div class="card card-accent-warning">
-                    <div class="card-header"><h4><strong>Liste des utilisateurs</strong></h4>
+                    <div class="card-header"><h4><strong>Liste des voyages</strong></h4>
                         <div class="card-header-actions">
-                            <a type="button" class="btn btn-outline-primary" href="{{ path('new_user') }}">
+                            <a type="button" class="btn btn-outline-primary" href="{{ path('admin_voyage_new') }}">
                                 <i class="bi bi-person-plus"></i>
                             </a>
                         </div>
@@ -41,10 +41,9 @@
                                 <thead>
                                     <tr>
                                         <th data-column-id="id" data-type="numeric">ID</th>
-                                        <th data-column-id="username">Nom d'utilisateur</th>
-                                        <th data-column-id="email">Adresse e-mail</th>
-                                        <th data-column-id="roles">Rôle</th>
-                                        <th data-column-id="lastName">Nom de famille</th>
+                                        <th data-column-id="name">Nom</th>
+                                        <th data-column-id="description">Description</th>
+                                        <th data-column-id="pointFort">Points forts</th>
                                         <th data-column-id="commands" data-formatter="commands" data-sortable="false">Opérations</th>
                                     </tr>
                                 </thead>

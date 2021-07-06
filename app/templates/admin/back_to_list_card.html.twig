@@ -13,6 +13,8 @@
                             <a href="{{path('users_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des utilisateurs</a>
                         {% elseif entity == 'info_pr' %}
                             <a href="{{path('info_pr_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des informations pratiques</a>
+                        {% elseif entity == 'voyage' %}
+                            <a href="{{path('voyage_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des voyages</a>
                         {% endif %}
                     </div>
                 </div>

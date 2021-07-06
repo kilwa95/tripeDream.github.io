@@ -1,6 +1,6 @@
 {% extends 'admin/index.html.twig' %}
 
-{% block title %}Détails information pratique{% endblock %}
+{% block title %}Détails voyage{% endblock %}
 
 {% block contentpage %}
 
@@ -9,13 +9,13 @@
         <div class="row">
             <div class="col">
                 <div class="card card-accent-warning">
-                    <div class="card-header"><strong>Détails information pratique</strong>
+                    <div class="card-header"><strong>Détails voyage</strong>
                         <div class="card-header-actions">
-                            <a type="button" class="btn btn-outline-primary" href="{{ path('edit_info_pr', {'id': info_pr.id})}}">
+                            <a type="button" class="btn btn-outline-primary" href="{{ path('edit_voyage', {'id': voyage.id})}}">
                                 <i class="bi bi-pencil-square"></i>
                                 Modifier
                             </a>
-                            <a type="button" class="btn btn-outline-danger" href="{{ path('delete_info_pr', {'id': info_pr.id})}}">
+                            <a type="button" class="btn btn-outline-danger" href="{{ path('delete_voyage', {'id': voyage.id})}}">
                                 <i class="bi bi-trash"></i>
                                 Supprimer
                             </a>
@@ -25,46 +25,28 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Début sejour:</h6>
+                                    <h6 class="mb-0">Nom:</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    <em>{{ info_pr.rendezvous|date('d/m/Y') }}</em>
+                                    <em>{{ voyage.name }}</em>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Fin sejour:</h6>
+                                    <h6 class="mb-0">Description:</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    <em>{{ info_pr.finsejour|date('d/m/Y') }}</em>
+                                    <em>{{ voyage.description }}</em>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Hébergement:</h6>
+                                    <h6 class="mb-0">Points forts:</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    <em>{{ info_pr.hebergement }}</em>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Repas:</h6>
-                                </div>
-                                <div class="col-sm-9">
-                                    <em>{{ info_pr.repas }}</em>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Informations COVID-19:</h6>
-                                </div>
-                                <div class="col-sm-9">
-                                    <em>{{ info_pr.covid19 }}</em>
+                                    <em>{{ voyage.pointFort }}</em>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +57,7 @@
     </div>
 </div>
 
-{% set entity = 'info_pr' %}
+{% set entity = 'voyage' %}
 {% include 'admin/back_to_list_card.html.twig' %}
 
 {% endblock %}

@@ -11,7 +11,7 @@
             {% if loop.last %}
                 <li class="breadcrumb-item active">{{ url|title }}</li>
             {% else %}
-                {% set current = current ~ url ~ '/' %}
+                {% set current = current ~ url|replace({' ': "_"}) ~ '/' %}
                 <li class="breadcrumb-item"><a href="{{ base_url ~ '/' ~ current }}">{{ url|title }}</a></li>
             {% endif %}
         {% endfor %}

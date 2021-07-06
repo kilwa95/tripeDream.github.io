@@ -29,8 +29,13 @@
                             urlEditBtn = "{{ path('edit_info_pr', {'id': 'rowId'}) }}";
                             urlDelBtn = "{{ path('delete_info_pr', {'id': 'rowId'}) }}";
                             break;
+                        case 'voyage':
+                            urlShowBtn = "{{ path('show_voyage', {'id': 'rowId'}) }}";
+                            urlEditBtn = "{{ path('edit_voyage', {'id': 'rowId'}) }}";
+                            urlDelBtn = "{{ path('delete_voyage', {'id': 'rowId'}) }}";
+                            break;
                     }
-                    
+
                     urlShowBtn = urlShowBtn.replace("rowId", row.id);
                     urlEditBtn = urlEditBtn.replace("rowId", row.id);
                     urlDelBtn = urlDelBtn.replace("rowId", row.id);
