@@ -39,6 +39,11 @@
                             urlEditBtn = "{{ path('admin_programme_edit', {'id': 'rowId'}) }}";
                             urlDelBtn = "{{ path('delete_programme', {'id': 'rowId'}) }}";
                             break;
+                        case 'tarif':
+                            urlShowBtn = "{{ path('show_tarif', {'id': 'rowId'}) }}";
+                            urlEditBtn = "{{ path('admin_tarif_edit', {'id': 'rowId'}) }}";
+                            urlDelBtn = "{{ path('delete_tarif', {'id': 'rowId'}) }}";
+                            break;
                     }
 
                     urlShowBtn = urlShowBtn.replace("rowId", row.id);
