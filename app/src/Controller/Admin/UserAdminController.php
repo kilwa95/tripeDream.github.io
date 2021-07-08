@@ -28,7 +28,7 @@ class UserAdminController extends AbstractController
     /**
      * @Route("/fetch-users", name="users_fetching", methods={"GET", "POST"})
      */
-    public function getUsersJson(Request $request): Response
+    public function getJson(Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -141,7 +141,7 @@ class UserAdminController extends AbstractController
     /**
      * @Route("/new", name="new_user", methods={"GET", "POST"})
      */
-    public function newUser(Request $request): Response
+    public function new(Request $request): Response
     {
         $user = new User();
 
@@ -166,7 +166,7 @@ class UserAdminController extends AbstractController
 
         return $this->render('admin/user/new.html.twig', [
             'user' => $user,
-            'operation' => 'new',
+            'action' => 'new',
             'form' => $form->createView(),
         ]);
     }
@@ -174,7 +174,7 @@ class UserAdminController extends AbstractController
     /**
      * @Route("/{id}/edit", name="edit_user", methods={"GET","POST"})
      */
-    public function editUser(Request $request, User $user): Response
+    public function edit(Request $request, User $user): Response
     {
         $form = $this->createForm(UserType::class, $user, ['action' => 'edit']);
         $form->handleRequest($request);

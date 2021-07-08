@@ -12,10 +12,19 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 
+use Symfony\Component\Security\Core\Security;
+
 use Symfony\Component\Form\CallbackTransformer;
 
 class UserType extends AbstractType
 {
+    private $security;
+    
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -67,18 +76,27 @@ class UserType extends AbstractType
         if ($options['action'] == 'edit') {
             $builder->remove('reset');
         }
-
-        $builder->get('roles')
-            ->addModelTransformer(new CallbackTransformer(
-                function ($rolesArray) {
-                    // transform the array to a string
-                    return count($rolesArray)? $rolesArray[0]: null;
-                },
-                function ($rolesString) {
-                    // transform the string back to an array
-                    return [$rolesString];
-                }
-            ));
+        
+        /*
+        if ($options['action'] == 'roles') {
+            $builder->remove('reset');
+        }
+        */
+        if ($this->security->isGranted('ROLE_ADMIN')) {
+            $builder->remove('roles');
+        } else {
+            $builder->get('roles')
+                ->addModelTransformer(new CallbackTransformer(
+                    function ($rolesArray) {
+                        // transform the array to a string
+                        return count($rolesArray)? $rolesArray[0]: null;
+                    },
+                    function ($rolesString) {
+                        // transform the string back to an array
+                        return [$rolesString];
+                    }
+                ));
+        }
     }
 
 
