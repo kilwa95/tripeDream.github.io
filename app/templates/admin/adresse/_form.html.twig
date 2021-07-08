@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+<div class="card-body">
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+    {{ form_row(form.rue) }}
+    {{ form_row(form.compliment) }}
+    {{ form_row(form.codePostal) }}
+    {{ form_row(form.ville) }}
+</div>
+
+<div class="card-footer">
+    {{ form_row(form.submit) }}
+    
+    {% if form.reset is defined %}
+        {{ form_row(form.reset) }}
+    {% endif %}
+</div>
+{{form_end(form) }}
