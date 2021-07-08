@@ -7,25 +7,25 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-use App\Entity\Saison;
-use App\Form\SaisonType;
-use App\Repository\SaisonRepository;
+use App\Entity\Pays;
+use App\Form\PaysType;
+use App\Repository\PaysRepository;
 
 /**
- * @Route("/admin/saison")
+ * @Route("/admin/pays")
  */
-class SaisonAdminController extends AbstractController
+class PaysAdminController extends AbstractController
 {
     /**
-     * @Route("/", name="saison_list")
+     * @Route("/", name="pays_list")
      */
     public function index(): Response
     {
-        return $this->render('admin/saison/index.html.twig', []);
+        return $this->render('admin/pays/index.html.twig', []);
     }
 
     /**
-     * @Route("/fetch-saisons", name="saison_fetching", methods={"GET", "POST"})
+     * @Route("/fetch-pays", name="pays_fetching", methods={"GET", "POST"})
      */
     public function getJson(Request $request): Response
     {
@@ -55,13 +55,13 @@ class SaisonAdminController extends AbstractController
 
         $start_from = ($current_page_number - 1) * $records_per_page;
 
-        $dql = 'SELECT saison.id, saison.name FROM App\Entity\Saison saison ';
+        $dql = 'SELECT pays.id, pays.name FROM App\Entity\Pays pays ';
 
         if (!empty($request->get("searchPhrase")))
         {
             $strMainSearch = $request->get("searchPhrase");
-            $dql .= "WHERE (saison.id LIKE '%".$strMainSearch."%' OR "
-                ."saison.name LIKE '%".$strMainSearch."%') ";
+            $dql .= "WHERE (pays.id LIKE '%".$strMainSearch."%' OR "
+                ."pays.name LIKE '%".$strMainSearch."%') ";
         }
         $order_by = '';
 
@@ -74,12 +74,12 @@ class SaisonAdminController extends AbstractController
         }
         else
         {
-            $dql .= 'ORDER BY saison.id ASC ';
+            $dql .= 'ORDER BY pays.id ASC ';
         }
         
         if ($order_by != '')
         {
-            $orderBy = 'saison.'. substr($order_by, 0, -2);
+            $orderBy = 'pays.'. substr($order_by, 0, -2);
             $dql .= ' ORDER BY ' . $orderBy;
         }
 
@@ -95,7 +95,7 @@ class SaisonAdminController extends AbstractController
         }
 
         $recordsTotal = $em
-            ->createQuery('SELECT count(saison) FROM App\Entity\Saison saison')
+            ->createQuery('SELECT count(pays) FROM App\Entity\Pays pays')
             ->getSingleScalarResult();
         
         $result = $this->json([
@@ -111,95 +111,95 @@ class SaisonAdminController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", requirements={ "id" : "\d+|rowId" }, name="show_saison", methods={"GET"})
+     * @Route("/{id}", requirements={ "id" : "\d+|rowId" }, name="show_pays", methods={"GET"})
      */
-    public function show(Saison $saison): Response
+    public function show(Pays $pays): Response
     {
-        //dd($saison);
-        return $this->render('admin/saison/show.html.twig', [
-            'saison' => $saison,
+        //dd($pays);
+        return $this->render('admin/pays/show.html.twig', [
+            'pays' => $pays,
         ]);
     }
 
     /**
-     * @Route("/new", name="admin_saison_new", methods={"GET", "POST"})
+     * @Route("/new", name="admin_pays_new", methods={"GET", "POST"})
      */
     public function new(Request $request): Response
     {
-        $saison = new Saison();
+        $pays = new Pays();
 
-        $form = $this->createForm(SaisonType::class, $saison, ['action' => 'new']);
+        $form = $this->createForm(PaysType::class, $pays, ['action' => 'new']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try{
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($saison);
+                $em->persist($pays);
                 $em->flush();
     
-                $this->addFlash('success', "La saison a été bien crée");
+                $this->addFlash('success', "Le pays a été bien crée");
                 
-                return $this->redirectToRoute('saison_list');
+                return $this->redirectToRoute('pays_list');
             } catch(\Exception $e){
                 $this->addFlash('danger', $e->getMessage());
                 
-                return $this->redirectToRoute('saison_list');
+                return $this->redirectToRoute('pays_list');
             }
         }
 
-        return $this->render('admin/saison/new.html.twig', [
-            'saison' => $saison,
+        return $this->render('admin/pays/new.html.twig', [
+            'pays' => $pays,
             'operation' => 'new',
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_saison_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="admin_pays_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Saison $saison): Response
+    public function edit(Request $request, Pays $pays): Response
     {
-        $form = $this->createForm(SaisonType::class, $saison, ['action' => 'edit']);
+        $form = $this->createForm(PaysType::class, $pays, ['action' => 'edit']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try{
                 $this->getDoctrine()->getManager()->flush();
-                $this->addFlash('success', "La saison a été modifié avec succès");
+                $this->addFlash('success', "Le pays a été modifié avec succès");
     
-                return $this->redirectToRoute('saison_list');
+                return $this->redirectToRoute('pays_list');
             } catch(\Exception $e){
                 $this->addFlash('danger', $e->getMessage());
                 
-                return $this->redirectToRoute('saison_list');
+                return $this->redirectToRoute('pays_list');
             }
         }
 
-        return $this->render('admin/saison/edit.html.twig', [
-            'saison' => $saison,
+        return $this->render('admin/pays/edit.html.twig', [
+            'pays' => $pays,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/delete/{id}", name="delete_saison", methods={"DELETE", "GET", "POST"})
+     * @Route("/delete/{id}", name="delete_pays", methods={"DELETE", "GET", "POST"})
      */
-    public function delete(int $id, SaisonRepository $saisonRepository): Response
+    public function delete(int $id, PaysRepository $paysRepository): Response
     {
-        $saison = $saisonRepository->find($id);
+        $pays = $paysRepository->find($id);
         
         try{
             $em = $this->getDoctrine()->getManager();
-            $em->remove($saison);
+            $em->remove($pays);
             $em->flush();
     
-            $this->addFlash('success', "La saison a été supprimé avec succès");
+            $this->addFlash('success', "Le pays a été supprimé avec succès");
 
-            return $this->redirectToRoute('saison_list');
+            return $this->redirectToRoute('pays_list');
         } catch(\Exception $e){
             $this->addFlash('danger', $e->getMessage());
             
-            return $this->redirectToRoute('saison_list');
+            return $this->redirectToRoute('pays_list');
         }
     }
 }

@@ -54,6 +54,11 @@
                             urlEditBtn = "{{ path('admin_saison_edit', {'id': 'rowId'}) }}";
                             urlDelBtn = "{{ path('delete_saison', {'id': 'rowId'}) }}";
                             break;
+                        case 'pays':
+                            urlShowBtn = "{{ path('show_pays', {'id': 'rowId'}) }}";
+                            urlEditBtn = "{{ path('admin_pays_edit', {'id': 'rowId'}) }}";
+                            urlDelBtn = "{{ path('delete_pays', {'id': 'rowId'}) }}";
+                            break;
                     }
 
                     urlShowBtn = urlShowBtn.replace("rowId", row.id);
