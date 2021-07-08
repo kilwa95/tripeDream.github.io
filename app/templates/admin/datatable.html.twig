@@ -49,6 +49,11 @@
                             urlEditBtn = "{{ path('admin_activite_edit', {'id': 'rowId'}) }}";
                             urlDelBtn = "{{ path('delete_activite', {'id': 'rowId'}) }}";
                             break;
+                        case 'saison':
+                            urlShowBtn = "{{ path('show_saison', {'id': 'rowId'}) }}";
+                            urlEditBtn = "{{ path('admin_saison_edit', {'id': 'rowId'}) }}";
+                            urlDelBtn = "{{ path('delete_saison', {'id': 'rowId'}) }}";
+                            break;
                     }
 
                     urlShowBtn = urlShowBtn.replace("rowId", row.id);
