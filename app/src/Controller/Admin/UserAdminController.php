@@ -36,6 +36,8 @@ class UserAdminController extends AbstractController
         $start_from = 0;
         $current_page_number = 0;
 
+        $dqlCount = 'SELECT count(user) FROM App\Entity\User user';
+
         if ($request->get("rowCount") != null)
         {
             $records_per_page = $request->get("rowCount");
@@ -61,13 +63,63 @@ class UserAdminController extends AbstractController
         if (!empty($request->get("searchPhrase")))
         {
             $strMainSearch = $request->get("searchPhrase");
-            $dql .= "WHERE (user.id LIKE '%".$strMainSearch."%' OR "
+            $strMainSearchRole = $strMainSearch;
+            
+            $strMainSearchRole = strtolower($strMainSearchRole);
+            switch ($strMainSearchRole) {
+                case 'u':
+                case 'us':
+                case 'use':
+                case 'user':
+                case 'agence':
+                    $strMainSearchRole = '#';
+                    break;
+                case 'v':
+                case 'vo':
+                case 'voy':
+                case 'voya':
+                case 'voyag':
+                case 'voyage':
+                case 'voyageu':
+                case 'voyageur':
+                    $strMainSearchRole = "user";
+                    break;
+                case 'a':
+                case 'ag':
+                case 'age':
+                case 'agen':
+                case 'agenc':
+                case 'agenci':
+                case 'agencie':
+                case 'agencier':
+                    $strMainSearchRole = "agence";
+                    break;
+                case 'admini':
+                case 'adminis':
+                case 'administ':
+                case 'administr':
+                case 'administra':
+                case 'administrat':
+                case 'administrate':
+                case 'administrateu':
+                case 'administrateur':
+                    $strMainSearchRole = "admin";
+                    break;
+            }
+            
+            $where = "WHERE (user.id LIKE '%".$strMainSearch."%' OR "
                 ."user.username LIKE '%".$strMainSearch."%' OR "
                 ."user.email LIKE '%".$strMainSearch."%' OR "
-                ."user.roles LIKE '%".$strMainSearch."%' OR "
+                ."lower(user.roles) LIKE '%".$strMainSearchRole."%' OR "
                 ."user.lastName LIKE '%".$strMainSearch."%') ";
+
+            $dql .= $where;
+
+            $dqlCount .= ' ' .$where;
         }
         $order_by = '';
+
+        $recordsTotal = $em->createQuery($dqlCount)->getSingleScalarResult();
 
         if ($request->get("sort") != null && is_array($request->get("sort")))
         {
@@ -86,12 +138,18 @@ class UserAdminController extends AbstractController
             $orderBy = 'user.'. substr($order_by, 0, -2);
             $dql .= ' ORDER BY ' . $orderBy;
         }
-
-        $items = $em
-            ->createQuery($dql)
-            ->setFirstResult($start_from)
-            ->setMaxResults($records_per_page)
-            ->getResult();
+        
+        if ($records_per_page != -1) {
+            $items = $em
+                ->createQuery($dql)
+                ->setFirstResult($start_from)
+                ->setMaxResults($records_per_page)
+                ->getResult();
+        } else {
+            $items = $em
+                ->createQuery($dql)
+                ->getResult();
+        }
 
         $data = [];
         foreach ($items as $item) {
@@ -111,10 +169,6 @@ class UserAdminController extends AbstractController
 
             $data[] = $item;
         }
-
-        $recordsTotal = $em
-            ->createQuery('SELECT count(user) FROM App\Entity\User user')
-            ->getSingleScalarResult();
         
         $result = $this->json([
             'current'  => intval($request->get("current")),

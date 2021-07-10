@@ -35,6 +35,8 @@ class TarifAdminController extends AbstractController
         $start_from = 0;
         $current_page_number = 0;
 
+        $dqlCount = 'SELECT count(tarif) FROM App\Entity\Tarif tarif';
+
         if ($request->get("rowCount") != null)
         {
             $records_per_page = $request->get("rowCount");
@@ -60,13 +62,19 @@ class TarifAdminController extends AbstractController
         if (!empty($request->get("searchPhrase")))
         {
             $strMainSearch = $request->get("searchPhrase");
-            $dql .= "WHERE (tarif.id LIKE '%".$strMainSearch."%' OR "
+            $where = "WHERE (tarif.id LIKE '%".$strMainSearch."%' OR "
                 ."tarif.prix LIKE '%".$strMainSearch."%' OR "
                 ."tarif.depart LIKE '%".$strMainSearch."%' OR "
                 ."tarif.arrive LIKE '%".$strMainSearch."%' OR "
                 ."tarif.capacite LIKE '%".$strMainSearch."%') ";
+
+            $dql .= $where;
+
+            $dqlCount .= ' ' .$where;
         }
         $order_by = '';
+
+        $recordsTotal = $em->createQuery($dqlCount)->getSingleScalarResult();
 
         if ($request->get("sort") != null && is_array($request->get("sort")))
         {
@@ -85,21 +93,23 @@ class TarifAdminController extends AbstractController
             $orderBy = 'tarif.'. substr($order_by, 0, -2);
             $dql .= ' ORDER BY ' . $orderBy;
         }
-
-        $items = $em
-            ->createQuery($dql)
-            ->setFirstResult($start_from)
-            ->setMaxResults($records_per_page)
-            ->getResult();
+        
+        if ($records_per_page != -1) {
+            $items = $em
+                ->createQuery($dql)
+                ->setFirstResult($start_from)
+                ->setMaxResults($records_per_page)
+                ->getResult();
+        } else {
+            $items = $em
+                ->createQuery($dql)
+                ->getResult();
+        }
 
         $data = [];
         foreach ($items as $item) {
             $data[] = $item;
         }
-
-        $recordsTotal = $em
-            ->createQuery('SELECT count(tarif) FROM App\Entity\Tarif tarif')
-            ->getSingleScalarResult();
         
         $result = $this->json([
             'current'  => intval($request->get("current")),

@@ -13,6 +13,16 @@
             rowSelect: true,
             url: url,
             formatters: {
+                "infoPrId": function(column, row) {
+                    var url = "{{ path('show_info_pr', {'id': 'rowId'}) }}".replace("rowId", row[column.id]);
+
+                    return "<a target='_blank' href='"+ url +"'>"+ row[column.id] +"</a>";
+                },
+                "userId": function(column, row) {
+                    var url = "{{ path('show_user', {'id': 'rowId'}) }}".replace("rowId", row[column.id]);
+
+                    return "<a target='_blank' href='"+ url +"'>"+ row[column.id] +"</a>";
+                },
                 "commands": function(column, row) {
                     var urlShowBtn;
                     var urlEditBtn;

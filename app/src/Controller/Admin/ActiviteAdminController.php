@@ -35,6 +35,8 @@ class ActiviteAdminController extends AbstractController
         $start_from = 0;
         $current_page_number = 0;
 
+        $dqlCount = 'SELECT count(activite) FROM App\Entity\Activite activite';
+
         if ($request->get("rowCount") != null)
         {
             $records_per_page = $request->get("rowCount");
@@ -60,10 +62,17 @@ class ActiviteAdminController extends AbstractController
         if (!empty($request->get("searchPhrase")))
         {
             $strMainSearch = $request->get("searchPhrase");
-            $dql .= "WHERE (activite.id LIKE '%".$strMainSearch."%' OR "
+
+            $where = "WHERE (activite.id LIKE '%".$strMainSearch."%' OR "
                 ."activite.name LIKE '%".$strMainSearch."%') ";
+
+            $dql .= $where;
+
+            $dqlCount .= ' ' .$where;
         }
         $order_by = '';
+
+        $recordsTotal = $em->createQuery($dqlCount)->getSingleScalarResult();
 
         if ($request->get("sort") != null && is_array($request->get("sort")))
         {
@@ -82,21 +91,23 @@ class ActiviteAdminController extends AbstractController
             $orderBy = 'activite.'. substr($order_by, 0, -2);
             $dql .= ' ORDER BY ' . $orderBy;
         }
-
-        $items = $em
-            ->createQuery($dql)
-            ->setFirstResult($start_from)
-            ->setMaxResults($records_per_page)
-            ->getResult();
+        
+        if ($records_per_page != -1) {
+            $items = $em
+                ->createQuery($dql)
+                ->setFirstResult($start_from)
+                ->setMaxResults($records_per_page)
+                ->getResult();
+        } else {
+            $items = $em
+                ->createQuery($dql)
+                ->getResult();
+        }
 
         $data = [];
         foreach ($items as $item) {
             $data[] = $item;
         }
-
-        $recordsTotal = $em
-            ->createQuery('SELECT count(activite) FROM App\Entity\Activite activite')
-            ->getSingleScalarResult();
         
         $result = $this->json([
             'current'  => intval($request->get("current")),

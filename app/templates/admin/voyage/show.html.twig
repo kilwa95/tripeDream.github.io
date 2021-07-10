@@ -49,6 +49,33 @@
                                     <em>{{ voyage.pointFort }}</em>
                                 </div>
                             </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">ID infos pratiques:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ voyage.infoPratique.id }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Agencier:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ voyage.user.username }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Image:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <img src="{{ asset('/images/voyages/' ~ voyage.imageName) }}" alt="">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

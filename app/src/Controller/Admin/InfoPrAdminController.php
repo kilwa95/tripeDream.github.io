@@ -37,6 +37,8 @@ class InfoPrAdminController extends AbstractController
         $start_from = 0;
         $current_page_number = 0;
 
+        $dqlCount = 'SELECT count(info_pr) FROM App\Entity\InfoPratique info_pr';
+
         if ($request->get("rowCount") != null)
         {
             $records_per_page = $request->get("rowCount");
@@ -62,14 +64,21 @@ class InfoPrAdminController extends AbstractController
         if (!empty($request->get("searchPhrase")))
         {
             $strMainSearch = $request->get("searchPhrase");
-            $dql .= "WHERE (info_pr.id LIKE '%".$strMainSearch."%' OR "
+
+            $where = "WHERE (info_pr.id LIKE '%".$strMainSearch."%' OR "
                 ."info_pr.rendez_vous LIKE '%".$strMainSearch."%' OR "
                 ."info_pr.fin_sejour LIKE '%".$strMainSearch."%' OR "
                 ."info_pr.hebergement LIKE '%".$strMainSearch."%' OR "
                 ."info_pr.repas LIKE '%".$strMainSearch."%' OR "
                 ."info_pr.covid19 LIKE '%".$strMainSearch."%') ";
+
+            $dql .= $where;
+
+            $dqlCount .= ' ' .$where;
         }
         $order_by = '';
+
+        $recordsTotal = $em->createQuery($dqlCount)->getSingleScalarResult();
 
         if ($request->get("sort") != null && is_array($request->get("sort")))
         {
@@ -88,21 +97,23 @@ class InfoPrAdminController extends AbstractController
             $orderBy = 'info_pr.'. substr($order_by, 0, -2);
             $dql .= ' ORDER BY ' . $orderBy;
         }
-
-        $items = $em
-            ->createQuery($dql)
-            ->setFirstResult($start_from)
-            ->setMaxResults($records_per_page)
-            ->getResult();
+        
+        if ($records_per_page != -1) {
+            $items = $em
+                ->createQuery($dql)
+                ->setFirstResult($start_from)
+                ->setMaxResults($records_per_page)
+                ->getResult();
+        } else {
+            $items = $em
+                ->createQuery($dql)
+                ->getResult();
+        }
 
         $data = [];
         foreach ($items as $item) {
             $data[] = $item;
         }
-
-        $recordsTotal = $em
-            ->createQuery('SELECT count(info_pr) FROM App\Entity\InfoPratique info_pr')
-            ->getSingleScalarResult();
         
         $result = $this->json([
             'current'  => intval($request->get("current")),

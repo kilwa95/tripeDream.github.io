@@ -35,6 +35,8 @@ class VoyageAdminController extends AbstractController
         $start_from = 0;
         $current_page_number = 0;
 
+        $dqlCount = 'SELECT count(voyage) FROM App\Entity\Voyage voyage';
+
         if ($request->get("rowCount") != null)
         {
             $records_per_page = $request->get("rowCount");
@@ -55,17 +57,26 @@ class VoyageAdminController extends AbstractController
 
         $start_from = ($current_page_number - 1) * $records_per_page;
 
-        $dql = 'SELECT voyage.id, voyage.name, voyage.description, voyage.pointFort FROM App\Entity\Voyage voyage ';
+        $dql = 'SELECT voyage.id, voyage.name, voyage.description, voyage.pointFort, IDENTITY(voyage.infoPratique), IDENTITY(voyage.user) FROM App\Entity\Voyage voyage ';
 
         if (!empty($request->get("searchPhrase")))
         {
             $strMainSearch = $request->get("searchPhrase");
-            $dql .= "WHERE (voyage.id LIKE '%".$strMainSearch."%' OR "
+
+            $where = "WHERE (voyage.id LIKE '%".$strMainSearch."%' OR "
                 ."voyage.name LIKE '%".$strMainSearch."%' OR "
                 ."voyage.description LIKE '%".$strMainSearch."%' OR "
-                ."voyage.pointFort LIKE '%".$strMainSearch."%') ";
+                ."voyage.pointFort LIKE '%".$strMainSearch."%' OR "
+                ."IDENTITY(voyage.infoPratique) LIKE '%".$strMainSearch."%' OR "
+                ."IDENTITY(voyage.user) LIKE '%".$strMainSearch."%') ";
+
+            $dql .= $where;
+
+            $dqlCount .= ' ' .$where;
         }
         $order_by = '';
+
+        $recordsTotal = $em->createQuery($dqlCount)->getSingleScalarResult();
 
         if ($request->get("sort") != null && is_array($request->get("sort")))
         {
@@ -84,21 +95,23 @@ class VoyageAdminController extends AbstractController
             $orderBy = 'voyage.'. substr($order_by, 0, -2);
             $dql .= ' ORDER BY ' . $orderBy;
         }
-
-        $items = $em
-            ->createQuery($dql)
-            ->setFirstResult($start_from)
-            ->setMaxResults($records_per_page)
-            ->getResult();
+        
+        if ($records_per_page != -1) {
+            $items = $em
+                ->createQuery($dql)
+                ->setFirstResult($start_from)
+                ->setMaxResults($records_per_page)
+                ->getResult();
+        } else {
+            $items = $em
+                ->createQuery($dql)
+                ->getResult();
+        }
 
         $data = [];
         foreach ($items as $item) {
             $data[] = $item;
         }
-
-        $recordsTotal = $em
-            ->createQuery('SELECT count(voyage) FROM App\Entity\Voyage voyage')
-            ->getSingleScalarResult();
         
         $result = $this->json([
             'current'  => intval($request->get("current")),
