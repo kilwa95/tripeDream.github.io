@@ -57,7 +57,7 @@ class ProgrammeAdminController extends AbstractController
 
         $start_from = ($current_page_number - 1) * $records_per_page;
 
-        $dql = 'SELECT programme.id, programme.jour, programme.description FROM App\Entity\Programme programme ';
+        $dql = 'SELECT programme.id, programme.jour, programme.description, IDENTITY(programme.voyage) FROM App\Entity\Programme programme ';
 
         if (!empty($request->get("searchPhrase")))
         {
@@ -65,7 +65,8 @@ class ProgrammeAdminController extends AbstractController
 
             $where = "WHERE (programme.id LIKE '%".$strMainSearch."%' OR "
                 ."programme.jour LIKE '%".$strMainSearch."%' OR "
-                ."programme.description LIKE '%".$strMainSearch."%') ";
+                ."programme.description LIKE '%".$strMainSearch."%' OR "
+                ."IDENTITY(programme.voyage) LIKE '%".$strMainSearch."%') ";
 
             $dql .= $where;
 
@@ -74,7 +75,7 @@ class ProgrammeAdminController extends AbstractController
         $order_by = '';
 
         $recordsTotal = $em->createQuery($dqlCount)->getSingleScalarResult();
-
+        
         if ($request->get("sort") != null && is_array($request->get("sort")))
         {
             foreach($request->get("sort") as $key => $value)

@@ -23,6 +23,11 @@
 
                     return "<a target='_blank' href='"+ url +"'>"+ row[column.id] +"</a>";
                 },
+                "voyageId": function(column, row) {
+                    var url = "{{ path('show_voyage', {'id': 'rowId'}) }}".replace("rowId", row[column.id]);
+
+                    return "<a target='_blank' href='"+ url +"'>"+ row[column.id] +"</a>";
+                },
                 "commands": function(column, row) {
                     var urlShowBtn;
                     var urlEditBtn;

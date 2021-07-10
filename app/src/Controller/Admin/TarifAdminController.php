@@ -57,7 +57,7 @@ class TarifAdminController extends AbstractController
 
         $start_from = ($current_page_number - 1) * $records_per_page;
 
-        $dql = 'SELECT tarif.id, tarif.prix, tarif.depart, tarif.arrive, tarif.capacite FROM App\Entity\Tarif tarif ';
+        $dql = 'SELECT tarif.id, tarif.prix, tarif.depart, tarif.arrive, tarif.capacite, IDENTITY(tarif.voyage) FROM App\Entity\Tarif tarif ';
 
         if (!empty($request->get("searchPhrase")))
         {
@@ -66,7 +66,8 @@ class TarifAdminController extends AbstractController
                 ."tarif.prix LIKE '%".$strMainSearch."%' OR "
                 ."tarif.depart LIKE '%".$strMainSearch."%' OR "
                 ."tarif.arrive LIKE '%".$strMainSearch."%' OR "
-                ."tarif.capacite LIKE '%".$strMainSearch."%') ";
+                ."tarif.capacite LIKE '%".$strMainSearch."%' OR "
+                ."IDENTITY(tarif.voyage) LIKE '%".$strMainSearch."%') ";
 
             $dql .= $where;
 
