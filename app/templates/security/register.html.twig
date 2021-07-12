@@ -1,54 +1,26 @@
 {% extends 'base_security.html.twig' %}
-
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    .error{color:red}
-</style>
 
-{# 
-{% if entity.field_boolean == True %}   
-
-
-
-{% endif%}   
-
- #}
- {# {% if entity.field_boolean == T
- rue %}    #}
-
-
-<div class="example-wrapper user-wrapper" >
-    <h1>Register as a User</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-
-    <button class="btn">{{ button_label|default('Sign Up') }}</button>
-    {{ form_end(form) }}
-</div>      
+<div id="back">
+    <canvas id="canvas" class="canvas-back"></canvas>
+    <div class="backRight">
     </div>
+    <div class="backLeft">
+    </div>
+</div>
 
- 
-{% endblock %}
-
-
-{% block javascripts%}
-<script>
-    {# function validate(){
-        var userRole= document.getElementById('user-role');
-        var agenceRole= document.getElementById('agence-role');
-        document.querySelectorAll('.role').forEach(function(button) {
-        button.addEventListener('click',function(){
-            if (userRole.checked){
-                document.getElementById('user_roles').value= 0
-                }else{
-                    document.getElementById('user_roles').value= 1
-                }
-            })
-        })  
-    }
-    validate() #}
-</script>
-{% endblock %}
+<div class="right">
+    <div class="content">
+        <h2>Sign Up</h2>
+        {{ form_start(form) }}
+        <div class="form-element form-stack">
+            {{ form_widget(form) }}
+        </div>
+        <div class="form-element form-submit">
+            <button id="signUp" class="signup" type="submit"
+                name="signup">{{ button_label|default('Sign Up') }}</button>
+            <a href="{{path('app_login')}}" class="signup off">Log In</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+    {% endblock %}

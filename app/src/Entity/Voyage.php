@@ -5,10 +5,13 @@ namespace App\Entity;
 use App\Repository\VoyageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=VoyageRepository::class)
+ * @Vich\Uploadable
  */
 class Voyage
 {
@@ -34,8 +37,35 @@ class Voyage
      */
     private $pointFort;
 
-  
 
+    /**
+     * @Vich\UploadableField(mapping="voyage_image", fileNameProperty="imageName",size="imageSize")
+     * @var File|null
+     */
+    private $imageFile;
+
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string|null
+     */
+    private $imageName;
+
+
+    /**
+     * @ORM\Column(type="integer")
+     * @var int|null
+     */
+    private $imageSize;
+
+
+   /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+  
     /**
      * @ORM\OneToMany(targetEntity=Avis::class, mappedBy="voyage")
      */
@@ -62,12 +92,12 @@ class Voyage
     private $saison;
 
     /**
-     * @ORM\OneToMany(targetEntity=Tarif::class, mappedBy="voyage")
+     * @ORM\OneToMany(targetEntity=Tarif::class, mappedBy="voyage",cascade={"persist"})
      */
     private $tarif;
 
     /**
-     * @ORM\OneToMany(targetEntity=Programme::class, mappedBy="voyage")
+     * @ORM\OneToMany(targetEntity=Programme::class, mappedBy="voyage",cascade={"persist"})
      */
     private $programme;
 
@@ -85,6 +115,23 @@ class Voyage
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="voyage")
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Panier::class, mappedBy="voyage")
+     */
+    private $paniers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="participat")
+     */
+    private $usersParticipat;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $status;
+
+
  
 
     public function __construct()
@@ -97,6 +144,8 @@ class Voyage
         $this->tarif = new ArrayCollection();
         $this->programme = new ArrayCollection();
         $this->favorie = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
+        $this->usersParticipat = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -380,6 +429,113 @@ class Voyage
 
         return $this;
     }
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageSize(?int $imageSize): void
+    {
+        $this->imageSize = $imageSize;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    /**
+     * @return Collection|Panier[]
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): self
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->setVoyage($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): self
+    {
+        if ($this->paniers->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getVoyage() === $this) {
+                $panier->setVoyage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsersParticipat(): Collection
+    {
+        return $this->usersParticipat;
+    }
+
+    public function addUsersParticipat(User $usersParticipat): self
+    {
+        if (!$this->usersParticipat->contains($usersParticipat)) {
+            $this->usersParticipat[] = $usersParticipat;
+            $usersParticipat->addParticipat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsersParticipat(User $usersParticipat): self
+    {
+        if ($this->usersParticipat->removeElement($usersParticipat)) {
+            $usersParticipat->removeParticipat($this);
+        }
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+   
+ 
 
 
 }

@@ -73,11 +73,23 @@ class User implements UserInterface
      */
     private $voyage;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Panier::class, mappedBy="user")
+     */
+    private $paniers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Voyage::class, inversedBy="usersParticipat")
+     */
+    private $participat;
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
         $this->favorie = new ArrayCollection();
         $this->voyage = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
+        $this->participat = new ArrayCollection();
     }
 
 
@@ -285,6 +297,60 @@ class User implements UserInterface
                 $voyage->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Panier[]
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): self
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): self
+    {
+        if ($this->paniers->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getUser() === $this) {
+                $panier->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Voyage[]
+     */
+    public function getParticipat(): Collection
+    {
+        return $this->participat;
+    }
+
+    public function addParticipat(Voyage $participat): self
+    {
+        if (!$this->participat->contains($participat)) {
+            $this->participat[] = $participat;
+        }
+
+        return $this;
+    }
+
+    public function removeParticipat(Voyage $participat): self
+    {
+        $this->participat->removeElement($participat);
 
         return $this;
     }

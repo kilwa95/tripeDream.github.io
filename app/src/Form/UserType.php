@@ -7,6 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+
 use Symfony\Component\Form\CallbackTransformer;
 
 class UserType extends AbstractType
@@ -16,7 +18,7 @@ class UserType extends AbstractType
         $builder
             ->add('username')
             ->add('lastname')
-            ->add('email')
+            ->add('email',EmailType::class)
             ->add('password', PasswordType::class, array('label' => 'Password'))
             ->add('roles', ChoiceType::class, [
                 'required' => true,
