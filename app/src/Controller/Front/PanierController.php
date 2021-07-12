@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Panier;
+use App\Entity\Voyage;
 use App\Repository\VoyageRepository;
 use App\Repository\PanierRepository;
 use App\Services\Payement;
@@ -34,11 +35,12 @@ class PanierController extends AbstractController
             return $this->redirectToRoute('agence_index');
         } 
         $paniers = $this->getUser()->getPaniers();
+
         $ids = [];
         $voyages = [];
 
         foreach($paniers as $panier) {
-            $id=  $panier->getVoyage()->getId();
+            $id =  $panier->getVoyage()->getId();
             array_push($ids,$id);
         }
         foreach($ids as $id){
@@ -59,6 +61,7 @@ class PanierController extends AbstractController
     {
         $panier= new Panier();
         $voyage = $voyageRepository->find($id);
+        $voyage->setStatus('reserved');
         $panier->setVoyage($voyage);
         $user = $this->getUser();
         $user->addPanier($panier);
@@ -100,9 +103,8 @@ class PanierController extends AbstractController
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
         } 
+       
         $checkout_session =  $payement->checkout($total);
-
-
         $paniers = $this->getUser()->getPaniers();
         $ids = [];
         $voyages = [];
@@ -121,7 +123,6 @@ class PanierController extends AbstractController
               'id' => $checkout_session->id
             ]);
         }
-        dump( $paniers);
 
         return $this->render('Front/payement/checkout.html.twig',[
             'paniers' =>  $voyages,
@@ -130,7 +131,7 @@ class PanierController extends AbstractController
 
     }
      /**
-     * @Route("/payementy/success", name="panier_success", methods={"GET"})
+     * @Route("/payement/success", name="panier_success", methods={"GET"})
      */
     public function success(Request $request): Response
     {  
@@ -140,7 +141,25 @@ class PanierController extends AbstractController
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
-        } 
+        }
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $paniers = $this->getUser()->getPaniers();
+        $user = $this->getUser();
+
+        foreach($paniers as $panier) {
+            $id=  $panier->getVoyage()->getId();
+            $voyage =  $entityManager->getRepository(Voyage::class)->find($id);
+            $voyage->setStatus('avaible');
+            $voyage->addUsersParticipat($user);
+            $entityManager->flush();
+        }
+        foreach($paniers as $panier) {
+            $entityManager->remove($panier);
+            $entityManager->flush();
+        }
+
+          
         return $this->render('Front/payement/success.html.twig');
     }
     

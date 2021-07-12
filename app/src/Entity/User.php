@@ -78,12 +78,18 @@ class User implements UserInterface
      */
     private $paniers;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Voyage::class, inversedBy="usersParticipat")
+     */
+    private $participat;
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
         $this->favorie = new ArrayCollection();
         $this->voyage = new ArrayCollection();
         $this->paniers = new ArrayCollection();
+        $this->participat = new ArrayCollection();
     }
 
 
@@ -321,6 +327,30 @@ class User implements UserInterface
                 $panier->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Voyage[]
+     */
+    public function getParticipat(): Collection
+    {
+        return $this->participat;
+    }
+
+    public function addParticipat(Voyage $participat): self
+    {
+        if (!$this->participat->contains($participat)) {
+            $this->participat[] = $participat;
+        }
+
+        return $this;
+    }
+
+    public function removeParticipat(Voyage $participat): self
+    {
+        $this->participat->removeElement($participat);
 
         return $this;
     }

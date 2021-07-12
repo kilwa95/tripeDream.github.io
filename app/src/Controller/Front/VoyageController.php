@@ -42,7 +42,7 @@ class VoyageController extends AbstractController
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
         } 
-        $voyages = $voyageRepository->findAll();
+        $voyages = $voyageRepository->findAll(); // $voyages = $voyageRepository->findBy(['status' => 'avaible']); // KHALED
         $pagination = $paginator->paginate(
         $voyages, /* query NOT result */
         $request->query->getInt('page', 1)/*page number*/,

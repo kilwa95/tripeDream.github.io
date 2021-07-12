@@ -12,8 +12,9 @@
                 <div class="menu-item">
                     <a class="menu-item-name" href="javascript:void(0);">Pays</a>
                     <ul class="sub-menu">
+                        <input type='text' class='searchable-input' onKeypress='filterSearch(this)'>
                         {% for pays in pays %}
-                        <li><a href="{{ path('pays_name',{'id': pays.id}) }}">{{pays.name}}</a></li>
+                        <li><a href="{{ path('pays_name',{'id': pays.id}) }}" class='dataSearch' data-search='{{pays.name}}'>{{pays.name}}</a></li>
                         {% endfor %}
                         <li><a class="read-more" href="{{ path('voyage_index') }}">Read more....</a></li>
                     </ul>
@@ -25,8 +26,9 @@
                         activites
                     </a>
                     <ul class="sub-menu">
+                         <input type='text' class='searchable-input' onKeypress='filterSearch(this)'>
                         {% for activite in activites %}
-                        <li><a href="{{ path('activite_name',{'id': activite.id}) }}">{{activite.name}}</a></li>
+                        <li><a href="{{ path('activite_name',{'id': activite.id}) }}" class='dataSearch' data-search='{{activite.name}}'>{{activite.name}}</a></li>
                         {% endfor %}
                         <li><a class="read-more" href="{{ path('voyage_index') }}">Read more....</a></li>
                     </ul>
@@ -74,3 +76,16 @@
 
 
 </header>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function filterSearch(input){
+  let text = $(input).val().toLowerCase();
+  $(document).find(".sub-menu > li > a").filter(function () {
+    if($(this).attr('data-search') !== undefined){
+      $(this).toggle($(this).attr('data-search').toLowerCase().indexOf(text) > -1);
+    }
+  });
+}
+
+
+</script>
