@@ -1,0 +1,90 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}Détails voyage{% endblock %}
+
+{% block contentpage %}
+
+<div class="container-fluid">
+    <div class="fade-in">
+        <div class="row">
+            <div class="col">
+                <div class="card card-accent-primary">
+                    <div class="card-header"><strong>Détails voyage</strong>
+                        <div class="card-header-actions">
+                            <a type="button" class="btn btn-outline-primary" href="{{ path('edit_voyage', {'id': voyage.id})}}">
+                                <i class="bi bi-pencil-square"></i>
+                                Modifier
+                            </a>
+                            <a type="button" class="btn btn-outline-danger" href="{{ path('delete_voyage', {'id': voyage.id})}}">
+                                <i class="bi bi-trash"></i>
+                                Supprimer
+                            </a>
+                        </div>
+                    </div>
+                    <div class="collapse show" id="coll">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Nom:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ voyage.name }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Description:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ voyage.description }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Points forts:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ voyage.pointFort }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">ID infos pratiques:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ voyage.infoPratique.id }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Agencier:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ voyage.user.username }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Image:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <img src="{{ asset('/images/voyages/' ~ voyage.imageName) }}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% set entity = 'voyage' %}
+{% include 'admin/back_to_list_card.html.twig' %}
+
+{% endblock %}

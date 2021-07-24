@@ -1,0 +1,23 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}Modifier un tarif{% endblock %}
+
+{% block contentpage %}
+
+<div class="container-fluid">
+    <div class="fade-in">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header text-center"><h3><strong>Modifier un tarif</strong></h3></div>
+                    {{ include('admin/tarif/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% set entity = 'tarif' %}
+{% include 'admin/back_to_list_card.html.twig' %}
+
+{% endblock %}

@@ -1,0 +1,70 @@
+<!-- top navigation -->
+<header class="c-header c-header-light">
+    <button class="c-header-toggler c-class-toggler d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
+        <span class="c-header-toggler-icon"></span>
+    </button>
+    <ul class="c-header-nav mr-auto">
+        <li class="c-header-nav-item active">
+            <a class="c-header-nav-link" href="{{ path('admin_index') }}">Accueil <span class="sr-only">(current)</span></a>
+        </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0 px-3">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <ul class="c-header-nav ml-auto mr-4">
+        <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">
+                <svg class="c-icon">
+                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
+                </svg></a></li>
+        <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">
+                <svg class="c-icon">
+                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-list-rich"></use>
+                </svg></a></li>
+        <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">
+                <svg class="c-icon">
+                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
+                </svg></a></li>
+        <li class="c-header-nav-item dropdown">
+            <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right pt-0">
+                <div class="dropdown-header bg-light py-2"><strong>Compte ({{ app.user.username }})</strong></div>
+                    <a class="dropdown-item" href="#">
+                        <i class="bi bi-heart"></i>
+                        <span class="ml-2">Mes favoris</span>
+                        <span class="badge badge-danger ml-auto">42</span>
+                    </a>
+                    <a class="dropdown-item" href="#">
+                        <i class="bi bi-pen"></i>
+                        <span class="ml-2">Mes avis</span>
+                        <span class="badge badge-warning ml-auto">42</span>
+                    </a>
+                    <a class="dropdown-item" href="#">
+                        <i class="bi bi-credit-card-2-back"></i>
+                        <span class="ml-2">Mes transactions</span>
+                        <span class="badge badge-info ml-auto">42</span>
+                    </a>
+                <div class="dropdown-header bg-light py-2"><strong>Réglages</strong></div>
+                    <a class="dropdown-item" href="{{ path('show_user', {'id': app.user.id})}}">
+                        <i class="bi bi-eye"></i>
+                        <span class="ml-2">Voir mon profil</span>
+                    </a>
+                    <a class="dropdown-item" href="{{ path('edit_user', {'id': app.user.id})}}">
+                        <i class="bi bi-pencil"></i>
+                        <span class="ml-2">Modifier mon profil</span>
+                    </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ path('app_logout') }}">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span class="ml-2">Déconnexion</span>
+                </a>
+            </div>
+        </li>
+    </ul>
+</header>
+<!-- /top navigation -->

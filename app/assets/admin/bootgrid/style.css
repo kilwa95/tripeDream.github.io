@@ -1,0 +1,14 @@
+.bootgrid-footer li.active a {
+    color: #fff;
+    background-color: #321fdb;
+    border-color: #321fdb;
+}
+.bootgrid-footer li.disabled a {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #ddd;
+}
+.bootgrid-footer li a {
+    cursor: pointer;
+}

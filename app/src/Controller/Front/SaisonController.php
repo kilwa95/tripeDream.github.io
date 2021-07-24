@@ -20,6 +20,13 @@ class SaisonController extends AbstractController
      */
     public function index(SaisonRepository $saisonRepository): Response
     {
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         return $this->render('Front/saison/index.html.twig', [
             'saisons' => $saisonRepository->findAll(),
         ]);
@@ -30,6 +37,13 @@ class SaisonController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         $saison = new Saison();
         $form = $this->createForm(SaisonType::class, $saison);
         $form->handleRequest($request);
@@ -53,6 +67,13 @@ class SaisonController extends AbstractController
      */
     public function show(Saison $saison): Response
     {
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         return $this->render('Front/saison/show.html.twig', [
             'saison' => $saison,
         ]);
@@ -63,6 +84,13 @@ class SaisonController extends AbstractController
      */
     public function edit(Request $request, Saison $saison): Response
     {
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         $form = $this->createForm(SaisonType::class, $saison);
         $form->handleRequest($request);
 
@@ -83,6 +111,13 @@ class SaisonController extends AbstractController
      */
     public function delete(Request $request, Saison $saison): Response
     {
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+        } 
         if ($this->isCsrfTokenValid('delete'.$saison->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($saison);

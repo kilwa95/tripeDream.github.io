@@ -20,6 +20,13 @@ class NavigationController extends AbstractController
      */
     public function index(ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository): Response
     {
+        $user = $this->getUser();
+        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin_index');
+        }
+        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+            return $this->redirectToRoute('agence_index');
+         } 
         return $this->render('Front/navigation/index.html.twig');
     }
 

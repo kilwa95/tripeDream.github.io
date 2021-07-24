@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <div class="fade-in">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">Actions
+                        <div class="card-header-actions">
+                            <a class="card-header-action" href="{{path('admin_index')}}"><small class="text-muted">Accueil</small></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {% if entity == 'user' %}
+                            <a href="{{path('users_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des utilisateurs</a>
+                        {% elseif entity == 'info_pr' %}
+                            <a href="{{path('info_pr_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des informations pratiques</a>
+                        {% elseif entity == 'voyage' %}
+                            <a href="{{path('voyage_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des voyages</a>
+                        {% elseif entity == 'programme' %}
+                            <a href="{{path('programme_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des programmes</a>
+                        {% elseif entity == 'tarif' %}
+                            <a href="{{path('tarif_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des tarifs</a>
+                        {% elseif entity == 'activite' %}
+                            <a href="{{path('activite_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des activités</a>
+                        {% elseif entity == 'saison' %}
+                            <a href="{{path('saison_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des saisons</a>
+                        {% elseif entity == 'pays' %}
+                            <a href="{{path('pays_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des pays</a>
+                        {% elseif entity == 'ville' %}
+                            <a href="{{path('ville_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des villes</a>
+                        {% elseif entity == 'adresse' %}
+                            <a href="{{path('adresse_list')}}" class="btn btn-info btn-lg btn-block" type="button">Retour à la liste des adresses</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

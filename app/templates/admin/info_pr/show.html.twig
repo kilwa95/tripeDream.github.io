@@ -1,0 +1,81 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}Détails information pratique{% endblock %}
+
+{% block contentpage %}
+
+<div class="container-fluid">
+    <div class="fade-in">
+        <div class="row">
+            <div class="col">
+                <div class="card card-accent-info">
+                    <div class="card-header"><strong>Détails information pratique</strong>
+                        <div class="card-header-actions">
+                            <a type="button" class="btn btn-outline-primary" href="{{ path('edit_info_pr', {'id': info_pr.id})}}">
+                                <i class="bi bi-pencil-square"></i>
+                                Modifier
+                            </a>
+                            <a type="button" class="btn btn-outline-danger" href="{{ path('delete_info_pr', {'id': info_pr.id})}}">
+                                <i class="bi bi-trash"></i>
+                                Supprimer
+                            </a>
+                        </div>
+                    </div>
+                    <div class="collapse show" id="coll">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Début sejour:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ info_pr.rendezvous|date('d/m/Y') }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Fin sejour:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ info_pr.finsejour|date('d/m/Y') }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Hébergement:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ info_pr.hebergement }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Repas:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ info_pr.repas }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Informations COVID-19:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ info_pr.covid19 }}</em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% set entity = 'info_pr' %}
+{% include 'admin/back_to_list_card.html.twig' %}
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block datatabscripts %}
+    {% include 'admin/datatable.html.twig' %}
+{% endblock %}
+
+{% block contentpage %}
+<input id="entity" name="entity" type="hidden" value="user">
+<input id="url" name="url" type="hidden" value="fetch-users">
+
+<div class="container-fluid">
+    <div class="fade-in">
+        <div class="row">
+            <div class="col">
+                <div class="card card-accent-warning">
+                    <div class="card-header"><h4><strong>Liste des utilisateurs</strong></h4>
+                        <div class="card-header-actions">
+                            <a type="button" class="btn btn-outline-primary" href="{{ path('new_user') }}">
+                                <i class="bi bi-person-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success alert-dismissible fade show">
+                            {{ message }}
+                            <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        </div>
+                    {% endfor %}
+
+                    {% for message in app.flashes('danger') %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            {{ message }}
+                            <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        </div>
+                    {% endfor %}
+                    <div class="collapse show" id="coll">
+                        <div class="card-body">
+                            <table id="table_data" data-toggle="bootgrid" class="table table-responsive-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th data-column-id="id" data-type="numeric">ID</th>
+                                        <th data-column-id="username">Nom d'utilisateur</th>
+                                        <th data-column-id="email">Adresse e-mail</th>
+                                        <th data-column-id="roles">Rôle</th>
+                                        <th data-column-id="lastName">Nom de famille</th>
+                                        <th data-column-id="commands" data-formatter="commands" data-sortable="false">Opérations</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
