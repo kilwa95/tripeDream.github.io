@@ -2,21 +2,19 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}{{ "backend.global.welcome"|trans }}{% endblock %}</title>
+    {% block metas %}
+        <meta charset="UTF-8">
+    {% endblock %}
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
 
-<body style="font-family: Georgia, serif;">
-    {% include 'navigation/menu.html.twig' %}
-
-        {% block body %}{% endblock %}
-
-    {% include 'navigation/footer.html.twig' %}
+<body {% block bodyclass %}class="" {% endblock %}>
+    {% block body %}{% endblock %}
     {% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </body>
 

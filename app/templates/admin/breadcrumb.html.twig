@@ -1,0 +1,19 @@
+<div class="c-subheader px-3">
+    <ol class="breadcrumb border-0 m-0">
+        {% set full_path = app.request.getpathinfo %}
+        {% set urls = full_path|trim('/') %}
+        {% set urls = urls|split('/') %}
+        {% set base_url = app.request.getBaseURL() %}
+
+        {% set current = '' %}
+        {% for url in urls %}
+            {% set url = url|replace({'_': " "}) %}
+            {% if loop.last %}
+                <li class="breadcrumb-item active">{{ url|title }}</li>
+            {% else %}
+                {% set current = current ~ url|replace({' ': "_"}) ~ '/' %}
+                <li class="breadcrumb-item"><a href="{{ base_url ~ '/' ~ current }}">{{ url|title }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ol>
+</div>

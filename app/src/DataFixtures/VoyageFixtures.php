@@ -21,12 +21,12 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
         $faker = \Faker\Factory::create('fr-FR');
         $users = $manager->getRepository(User::class)->findAll();
         $usersAgencies = [];
+        $images = ['image1.jpg','image2.jpg','image3.jpg','image4.jpg','image5.jpg'];
 
         foreach ($users as $user) {
             if ($user->getRoles() === ['ROLE_AGENCE'])
                 array_push($usersAgencies, $user);
         }
-
         $infosPratiques =  $manager->getRepository(InfoPratique::class)->findAll();
         $activites=  $manager->getRepository(Activite::class)->findAll();
         $pays =  $manager->getRepository(Pays::class)->findAll();
@@ -45,6 +45,9 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
             $voyage->addPay($pays[array_rand($pays)]);
             $voyage->addSaison($saison[array_rand($saison)]);
             $voyage->addVille($villes[array_rand($villes)]);
+            $voyage->setImageName($images[array_rand($images)]);
+            $voyage->setImageSize(12345);
+            $voyage->setStatus("avaible");
             $manager->persist($voyage);
         }
 

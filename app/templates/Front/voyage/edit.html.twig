@@ -1,0 +1,12 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Edit Voyage{% endblock %}
+
+{% block body %}
+    <h1>Edit Voyage</h1>
+
+    {{ include('Front/voyage/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('agence_voyage_show', {'id': app.user.id}) }}">Retour à mes voyages</a>
+
+{% endblock %}

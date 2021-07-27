@@ -1,0 +1,9 @@
+
+{% extends 'agence/index.html.twig' %}
+
+{% block title %}New Voyage{% endblock %}
+
+{% block core %}
+    {{ include('agence/form/_form.html.twig') }}
+    {# <a href="{{ path('agence_voyage_show', {'id': app.user.id}) }}">Retour à mes voyages</a> #}
+{% endblock %}

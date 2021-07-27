@@ -24,7 +24,9 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
 	.addEntry('app', './assets/app.js')
-	.addEntry('coreui', './assets/coreui.js')
+	.addEntry('security', './assets/security.js')
+	.addEntry('agence', './assets/agence.js')
+	.addEntry('admin', './assets/admin.js')
 	//.addEntry('page2', './assets/page2.js')
 
 	// When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
@@ -48,7 +50,7 @@ Encore
 	.configureBabelPresetEnv((config) => {
 		config.useBuiltIns = 'usage';
 		config.corejs = 3;
-	});
+	})
 
 // enables Sass/SCSS support
 //.enableSassLoader()
@@ -61,7 +63,7 @@ Encore
 //.enableIntegrityHashes(Encore.isProduction())
 
 // uncomment if you're having problems with a jQuery plugin
-//.autoProvidejQuery()
+.autoProvidejQuery()
 
 // uncomment if you use API Platform Admin (composer req api-admin)
 //.enableReactPreset()

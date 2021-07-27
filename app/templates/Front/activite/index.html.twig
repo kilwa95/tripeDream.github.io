@@ -1,0 +1,38 @@
+{% extends 'Front/navigation/index.html.twig' %}
+
+{% block title %}Activite index{% endblock %}
+
+{% block body %}
+    <h1>Activite index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for activite in activites %}
+            <tr>
+                <td>{{ activite.id }}</td>
+                <td>{{ activite.name }}</td>
+                <td>
+                    <a href="{{ path('activite_show', {'id': activite.id}) }}">show</a>
+                   {% if is_granted("ROLE_AGENCE") %}
+                        <a href="{{ path('activite_edit', {'id': activite.id}) }}">edit</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted("ROLE_AGENCE") %}
+        <a href="{{ path('activite_new') }}">Create new</a>
+    {% endif %}
+{% endblock %}

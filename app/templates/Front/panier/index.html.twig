@@ -1,0 +1,52 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Panier index{% endblock %}
+
+{% block body %}
+{% set totale = 0 %}
+{% set tarifs = [] %}
+
+{% for panier in paniers %}
+{% set tarifs = tarifs|merge([panier.tarif|first.prix]) %}
+ {% endfor %}
+
+ {% for i in tarifs %}
+ {% set totale = totale + i %}
+  {% endfor %}
+
+
+<div class="d-flex align-items-center" style="height: 137px; background: #1c1d1f; color: white;">
+    <div style="font-size:30px;font-weight: 400;padding-left:195px;">Panier</div>
+</div>
+<div class="container mt-5 mb-5">
+    
+    <div class="row">
+        <div class="col-9 mr-3">
+            <div class="d-flex flex-column">
+            {% if  paniers is defined %}
+            {% for panier in paniers %}
+                <div style=" height:90px;" class="d-flex flex-row justify-content-between  card">
+                    <div class="d-flex flex-row" style="max-width:320px; min-width:320px; ">
+                        <img src="{{ vich_uploader_asset(panier) }}" alt="{{ panier.name }}" />
+                        <div style="color:#1c1d1f;font-weight:700;" class="pl-1">{{panier.name}}</div>
+
+                    </div>
+                    <div class="d-flex flex-column pt-2">
+                    <a style="color:#a435f0;" href="{{path('panier_delete',{'id': panier.id})}}">Supprimer</a>
+                    <a style="color:#a435f0;" href="{{path('voyage_show',{'id': panier.id})}}">Fiche produit</a>
+                    </div>
+                    <div class="pr-2 pt-2"style="color:#a435f0; ">{{panier.tarif|first.prix}} €</div>
+                </div>
+            {% endfor %}
+            {% endif %}
+            </div>
+        </div>
+        <div style="height:600px;" class="col d-flex flex-column">
+            <div>Total: </div>
+            <div style="font-size:36px;font-weight:700;">{{totale}} €</div>
+            <a  id="panier-total" href="{{path('panier_validation',{'total': totale})}}" type="button" style="color:white;background-color:#a435f0;border: 1px solid transparent;" class="mt-1 w-100 btn">Validations</a>
+        </div>
+    </div>
+   
+</div>
+{% endblock %}

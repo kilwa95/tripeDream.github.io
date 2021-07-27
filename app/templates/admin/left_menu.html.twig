@@ -1,0 +1,97 @@
+
+<div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
+    <div class="c-sidebar-brand d-lg-down-none">
+        TripDream
+    </div>
+    <ul class="c-sidebar-nav">
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{path('admin_index')}}">
+                <i class="bi bi-speedometer"></i>
+                <span class="ml-2">Dashboard</span><span class="badge badge-info">NEW</span>
+            </a>
+        </li>
+        <li class="c-sidebar-nav-title">Utilisateurs</li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ path('users_list') }}">
+                <i class="bi bi-people"></i>
+                <span class="ml-2">Tous les utilisateurs</span>
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+                <i class="bi bi-gear"></i>
+                <span class="ml-2">Opérations</span>
+            </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ path('new_user') }}"><span class="c-sidebar-nav-icon"></span>Création</a></li>
+            </ul>
+        </li>
+        <li class="c-sidebar-nav-title">Voyages</li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ path('voyage_list') }}">
+                <i class="bi bi-list"></i>
+                <span class="ml-2">Tous les voyages</span>
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+                <i class="bi bi-gear"></i>
+                <span class="ml-2">Opérations</span>
+            </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ path('admin_voyage_new') }}"><span class="c-sidebar-nav-icon"></span>Création</a></li>
+            </ul>
+        </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ path('programme_list') }}">
+                <i class="bi bi-calendar-week"></i>
+                <span class="ml-2">Programmes</span>
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ path('tarif_list') }}">
+                <i class="bi bi-currency-exchange"></i>
+                <span class="ml-2">Tarifs</span>
+            </a>
+        </li>
+        <li class="c-sidebar-nav-title">Éléments supplémentaires</li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ path('activite_list') }}">
+                <i class="bi bi-controller"></i>
+                <span class="ml-2">Activités</span>
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ path('info_pr_list') }}">
+                <i class="bi bi-info-circle"></i>
+                <span class="ml-2">Informations pratiques</span>
+            </a>
+        </li>
+        <li class="c-sidebar-nav-title">Général</li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ path('saison_list') }}">
+                <i class="bi bi-umbrella"></i>
+                <span class="ml-2">Saisons</span>
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ path('pays_list') }}">
+                <i class="bi bi-globe"></i>
+                <span class="ml-2">Pays</span>
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ path('ville_list') }}">
+                <i class="bi bi-building"></i>
+                <span class="ml-2">Villes</span>
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ path('adresse_list') }}">
+                <i class="bi bi-geo-alt"></i>
+                <span class="ml-2">Adresses</span>
+            </a>
+        </li>
+    </ul>
+    <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
+</div>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+     <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    {% endblock %}
+</head>
+
+<body style="font-family: Georgia, serif;">
+     {{menu()}}
+    {# {% include 'Front/navigation/menu.html.twig' %} #}
+    {% block body %}{% endblock %}
+    {% include 'Front/navigation/footer.html.twig' %}
+    {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+   
+    {% endblock %}
+</body>
+
+</html>

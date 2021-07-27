@@ -1,0 +1,90 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}Détails tarif{% endblock %}
+
+{% block contentpage %}
+
+<div class="container-fluid">
+    <div class="fade-in">
+        <div class="row">
+            <div class="col">
+                <div class="card card-accent-success">
+                    <div class="card-header"><strong>Détails tarif</strong>
+                        <div class="card-header-actions">
+                            <a type="button" class="btn btn-outline-primary" href="{{ path('admin_tarif_edit', {'id': tarif.id})}}">
+                                <i class="bi bi-pencil-square"></i>
+                                Modifier
+                            </a>
+                            <a type="button" class="btn btn-outline-danger" href="{{ path('delete_tarif', {'id': tarif.id})}}">
+                                <i class="bi bi-trash"></i>
+                                Supprimer
+                            </a>
+                        </div>
+                    </div>
+                    <div class="collapse show" id="coll">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">ID:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ tarif.id }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Prix:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ tarif.prix }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Départ:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ tarif.depart|date('d/m/Y') }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Arrivée:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ tarif.arrive|date('d/m/Y') }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Capacité:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ tarif.capacite }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">ID voyage:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ tarif.voyage.id }}</em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% set entity = 'tarif' %}
+{% include 'admin/back_to_list_card.html.twig' %}
+
+{% endblock %}

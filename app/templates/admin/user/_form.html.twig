@@ -1,0 +1,22 @@
+{{ form_start(form) }}
+<div class="card-body">
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+    {{ form_row(form.username) }}
+    {{ form_row(form.password) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.lastname) }}
+    {% if form.roles is defined %}
+        {{ form_row(form.roles) }}
+    {% endif %}
+</div>
+
+<div class="card-footer">
+    {{ form_row(form.submit) }}
+    
+    {% if form.reset is defined %}
+        {{ form_row(form.reset) }}
+    {% endif %}
+</div>
+{{form_end(form) }}

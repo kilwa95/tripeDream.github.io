@@ -1,0 +1,19 @@
+{% extends 'base_agence.html.twig' %}
+
+{% block title %}agence{% endblock %}
+{% block body %}
+{% include 'agence/sidebar.html.twig' %}
+<div class="c-wrapper">
+
+    {% include 'agence/header.html.twig' %}
+
+    <div class="c-body">
+        <main class="c-main">
+    {% block core %}{% endblock %}
+        </main>
+    </div>
+    <footer class="c-footer">
+        <!-- Footer content here -->
+    </footer>
+</div>
+{% endblock %}
