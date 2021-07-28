@@ -76,8 +76,12 @@ class UserType extends AbstractType
         if ($options['action'] == 'edit') {
             $builder->remove('reset');
         }
-
+        
+    if($this->security->getUser()){
         $currentUserId = $this->security->getUser()->getId();
+    }else{
+        $currentUserId = null;
+    }
 
         //dd($currentUserId);
 
