@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Tarif;
 use App\Form\TarifType;
 use App\Repository\TarifRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/tarif")
  */
 class TarifAdminController extends AbstractController

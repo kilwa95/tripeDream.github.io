@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Activite;
 use App\Form\ActiviteType;
 use App\Repository\ActiviteRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/activite")
  */
 class ActiviteAdminController extends AbstractController

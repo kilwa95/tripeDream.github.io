@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Saison;
 use App\Form\SaisonType;
 use App\Repository\SaisonRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/saison")
  */
 class SaisonAdminController extends AbstractController

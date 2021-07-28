@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\InfoPratique;
 use App\Form\InfoPratiqueType;
 use App\Repository\InfoPratiqueRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/info_pratiques")
  */
 class InfoPrAdminController extends AbstractController

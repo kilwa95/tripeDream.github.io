@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Programme;
 use App\Form\ProgrammeType;
 use App\Repository\ProgrammeRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/programme")
  */
 class ProgrammeAdminController extends AbstractController
