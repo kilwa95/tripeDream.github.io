@@ -40,7 +40,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             elseif ($i == 2)
                 $role = "USER";
             $roles = ['ROLE_'.$role ];
-            $user->setRoles(array($roles));
+            $user->setRoles($roles);
 
             $normalUserPwd = $this->encoder->encodePassword($user, $type[$i]);
             $encodedPassword =  $normalUserPwd;
