@@ -76,6 +76,10 @@ class UserType extends AbstractType
         if ($options['action'] == 'edit') {
             $builder->remove('reset');
         }
+        if ($this->security->getUser() === null || !$this->isGranted('ROLE_ADMIN')) {
+            $builder->remove('submit');
+            $builder->remove('reset');
+        }
         
     if($this->security->getUser()){
         $currentUserId = $this->security->getUser()->getId();
@@ -85,7 +89,7 @@ class UserType extends AbstractType
 
         //dd($currentUserId);
 
-        if ($options['data']->getId() == $currentUserId) {
+        if ($options['data']->getId() == $currentUserId && $this->security->getUser() !== null) {
             $builder->remove('roles');
         } else {
             $builder->get('roles')
