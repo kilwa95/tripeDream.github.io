@@ -76,7 +76,7 @@ class UserType extends AbstractType
         if ($options['action'] == 'edit') {
             $builder->remove('reset');
         }
-        if ($this->security->getUser() === null || !$this->isGranted('ROLE_ADMIN')) {
+        if ($this->security->getUser() === null || ($this->security->getUser()->getRoles()[0] !== 'ROLE_ADMIN')) {
             $builder->remove('submit');
             $builder->remove('reset');
         }
