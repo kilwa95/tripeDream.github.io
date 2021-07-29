@@ -2,7 +2,7 @@
 {# TODO: check if user reserved the trip and the date of the trip is < datetime.now() sla
   #}
   {% for participat in voyage.usersParticipat %}
-  {% if app.user.id == participat.id %}
+  {% if app.user != null and app.user.id == participat.id %}
    <a class="btn btn-info mb-4" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
     mettre un commentaire
   </a>
