@@ -30,7 +30,7 @@
                     <div> <a id="favorie_lien" href="{{path('favorie_delete',{'id': voyage.id})}}"><i
                                 class="far fa fa-heart"></i></a>
                     </div>
-                    {% else %}
+                    {% elseif is_granted("ROLE_USER") %}
                     <div> <a id="favorie_lien" href="{{path('favorie_new',{'id': voyage.id})}}"><i
                                 class="far fa fa-heart-o"></i></a>
                     </div>
@@ -54,7 +54,7 @@
                 <div class="mt-5 text-center w-100" style="color:#fff;background:#2ecc71;font-size:22px;padding:10px;">
                     <a class="text-white" href="{{path('panier_new',{'id': voyage.id})}}">Ajouté dans le panier</a>
                 </div>
-                {% else %}
+                {% elseif is_granted("ROLE_USER") %}
                 <div class="mt-5 text-center w-50" style="color:#fff;background:#ff7e00;font-size:22px;padding:10px;">
                     <a class="text-white" href="{{path('panier_new',{'id': voyage.id})}}">Ajouter au panier</a>
                 </div>

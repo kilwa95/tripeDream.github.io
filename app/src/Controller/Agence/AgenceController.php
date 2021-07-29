@@ -47,6 +47,7 @@ class AgenceController extends AbstractController
         $voyage->addProgramme($programme);
         $voyage->addTarif($tarif);
         $voyage->setUser($this->getUser());
+        $voyage->setStatus("avaible");
         $form = $this->createForm(VoyageType::class, $voyage, ['new' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
