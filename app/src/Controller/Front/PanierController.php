@@ -131,10 +131,12 @@ class PanierController extends AbstractController
 
     }
      /**
-     * @Route("/payement/success", name="panier_success", methods={"GET"})
+     * @Route("/payement/success/{total}", name="panier_success", methods={"POST","GET"})
      */
     public function success(Request $request): Response
-    {  
+    {
+        $total = $request->get("total");
+
         $user = $this->getUser();
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('admin');
@@ -160,7 +162,10 @@ class PanierController extends AbstractController
         }
 
           
-        return $this->render('Front/payement/success.html.twig');
+        return $this->render('Front/payement/success.html.twig',[
+            //'paniers' =>  $voyages,
+            'total' => $total
+        ]);
     }
     
 }
