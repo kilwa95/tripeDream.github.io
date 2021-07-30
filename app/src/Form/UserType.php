@@ -56,7 +56,7 @@ class UserType extends AbstractType
                 'choices'  => [
                     'Voyageur' => 'ROLE_USER',
                     'Agencier' => 'ROLE_AGENCE',
-                    'Administrateur' => 'ROLE_ADMIN',
+                    //'Administrateur' => 'ROLE_ADMIN',
                 ],
             ])
             ->add('submit', SubmitType::class, [
