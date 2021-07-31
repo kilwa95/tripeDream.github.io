@@ -12,10 +12,11 @@
 </head>
 
 <body style="font-family: Georgia, serif;">
-     {{menu()}}
+    {{ menu() }}
     {# {% include 'Front/navigation/menu.html.twig' %} #}
     {% block body %}{% endblock %}
-    {% include 'Front/navigation/footer.html.twig' %}
+    {{ footer() }}
+    {# {% include 'Front/navigation/footer.html.twig' %} #}
     {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
    

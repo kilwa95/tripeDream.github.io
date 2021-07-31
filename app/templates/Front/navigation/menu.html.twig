@@ -1,155 +1,140 @@
-
-  {% if (is_granted('ROLE_USER') or app.user == null) %}
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="logo" href="{{ path('navigation') }}"></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="ml-2 collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{{ path('navigation') }}">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('voyage_index') }}">Voyages</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Pays
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{{ path('navigation') }}">
+        <img src="{{ asset('images/logo2.png') }}" alt="TripDream: Trouvez et réservez des voyages en 1 clic">
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <form class="px-4 py-2">
-            <input class="form-control searchable-input" type="search" placeholder="Rechercher" aria-label="Search" onKeyUp='filterSearch(this)'>
-          </form>
-          {% for pays in pays %}
-            <a href="{{ path('pays_name',{'id': pays.id}) }}" class='dropdown-item dataSearch' data-search='{{pays.name}}'>{{pays.name}}</a>
-          {% endfor %}
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item read-more" href="{{ path('voyage_index') }}">Voir plus....</a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            {% if (is_granted('ROLE_USER') or app.user == null) %}
+                <a class="navbar-item" href="{{ path('navigation') }}">
+                Home
+                </a>
+                <a class="navbar-item" href="{{ path('voyage_index') }}">
+                Voyages
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                    Pays
+                    </a>
+                    <div class="navbar-dropdown">
+                        <form class="px-4 py-2">
+                            <input class="input is-rounded ds-input" type="text" placeholder="Rechercher" aria-label="search" onKeyUp='filterSearch(this)'>
+                        </form>
+                        {% for pays in pays %}
+                            <a href="{{ path('pays_name',{'id': pays.id}) }}" class='navbar-item dataSearch' data-search='{{pays.name}}'>{{pays.name}}</a>
+                        {% endfor %}
+                        <hr class="navbar-divider">
+                        <a class="navbar-item read-more" href="{{ path('voyage_index') }}">Voir plus....</a>
+                    </div>
+                </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                    Activités
+                    </a>
+                    <div class="navbar-dropdown">
+                        <form class="px-4 py-2">
+                            <input class="input is-rounded ds-input" type="text" placeholder="Rechercher" aria-label="search" onKeyUp='filterSearch(this)'>
+                        </form>
+                        {% for activite in activites %}
+                            <a href="{{ path('activite_name',{'id': activite.id}) }}" class='navbar-item dataSearch' data-search='{{activite.name}}'>{{activite.name}}</a>
+                        {% endfor %}
+                        <hr class="navbar-divider">
+                        <a class="navbar-item read-more" href="{{ path('voyage_index') }}">Voir plus....</a>
+                    </div>
+                </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                    Sasions
+                    </a>
+                    <div class="navbar-dropdown">
+                        <form class="px-4 py-2">
+                            <input class="input is-rounded ds-input" type="text" placeholder="Rechercher" aria-label="search" onKeyUp='filterSearch(this)'>
+                        </form>
+                        {% for saison in saison %}
+                            <a href="{{ path('saison_name',{'id': saison.id}) }}" class='navbar-item dataSearch' data-search='{{saison.name}}'>{{saison.name}}</a>
+                        {% endfor %}
+                        <hr class="navbar-divider">
+                        <a class="navbar-item read-more" href="{{ path('voyage_index') }}">Voir plus....</a>
+                    </div>
+                </div>
+            {% elseif (is_granted('ROLE_AGENCE')) %}
+                <a class="navbar-item" href="{{ path('agence_index') }}">
+                Home (agencier)
+                </a>
+                <a class="navbar-item" href="{{ path('agence_voyage_show', {'id': app.user.id}) }}">
+                Mes voyages
+                </a>
+                <a class="navbar-item" href="{{path('voyage_new')}}">
+                Créer un voyage
+                </a>
+            {% endif %}
         </div>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Activités
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <form class="px-4 py-2">
-            <input class="form-control searchable-input" type="search" placeholder="Rechercher" aria-label="Search" onKeyUp='filterSearch(this)'>
-          </form>
-          {% for activite in activites %}
-            <a href="{{ path('activite_name',{'id': activite.id}) }}" class='dropdown-item dataSearch' data-search='{{activite.name}}'>{{activite.name}}</a>
-          {% endfor %}
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item read-more" href="{{ path('voyage_index') }}">Voir plus....</a>
-        </div>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Sasions
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <form class="px-4 py-2">
-            <input class="form-control searchable-input" type="search" placeholder="Rechercher" aria-label="Search" onKeyUp='filterSearch(this)'>
-          </form>
-          {% for saison in saison %}
-            <a class="dropdown-item" href="{{ path('saison_name',{'id': saison.id}) }}" class='dropdown-item dataSearch' data-search='{{saison.name}}'>{{saison.name}}</a>
-          {% endfor %}
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item read-more" href="{{ path('voyage_index') }}">Voir plus....</a>
-        </div>
-      </li>
-      
-    </ul>
-
-    <ul class="navbar-nav" style="list-style-type: none;">
-
-    {% if is_granted("ROLE_USER") or is_granted("ROLE_AGENCE") %}
-
-      <li class="dropdown">
-        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-            </svg>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right pt-0">
-            <div class="dropdown-header bg-light py-2"><strong>{{ app.user.username }}</strong></div>
-                <a class="dropdown-item" href="{{path('favorie_index')}}">
-                    <i class="bi bi-heart"></i>
-                    <span class="ml-2">Mes favoris</span>
-                    <span class="badge badge-danger ml-auto">{{ app.user.favorie|length }}</span>
-                </a>
-                <a class="dropdown-item" href="{{path('panier_index')}}">
-                    <i class="bi bi-pen"></i>
-                    <span class="ml-2">Mon panier</span>
-                    <span class="badge badge-warning ml-auto">{{ app.user.paniers|length }}</span>
-                </a>
-                <a class="dropdown-item" href="{{path('purchase_index')}}">
-                    <i class="bi bi-credit-card-2-back"></i>
-                    <span class="ml-2">Mon historique</span>
-                </a>
-            {# <div class="dropdown-header bg-light py-2"><strong>Réglages</strong></div>
-                <a class="dropdown-item" href="{{ path('show_user', {'id': app.user.id})}}">
-                    <i class="bi bi-eye"></i>
-                    <span class="ml-2">Voir mon profil</span>
-                </a>
-                <a class="dropdown-item" href="{{ path('edit_user', {'id': app.user.id})}}">
-                    <i class="bi bi-pencil"></i>
-                    <span class="ml-2">Modifier mon profil</span>
-                </a> #}
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ path('app_logout') }}">
-                <i class="bi bi-box-arrow-left"></i>
-                <span class="ml-2">Déconnexion</span>
+        <div class="navbar-end">
+            <a class="navbar-item is-hidden-desktop-only" href="https://github.com/kilwa95/tripeDream.github.io" target="_blank">
+                <i class="bi bi-github"></i>
             </a>
+
+            {% if is_granted("ROLE_USER") or is_granted("ROLE_AGENCE") %}
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-item">
+                    <span class="mr-2">{{ app.user.username }}</span>
+                    <i class="bi bi-person-circle"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+
+                    {% if is_granted("ROLE_USER") %}
+                        <a class="navbar-item" href="{{path('favorie_index')}}">
+                            <i class="bi bi-heart"></i>
+                            <span class="ml-2">Mes favoris</span>
+                            <span class="badge badge-danger ml-auto">{{ app.user.favorie|length }}</span>
+                        </a>
+                        <a class="navbar-item" href="{{path('panier_index')}}">
+                            <i class="bi bi-pen"></i>
+                            <span class="ml-2">Mon panier</span>
+                            <span class="badge badge-warning ml-auto">{{ app.user.paniers|length }}</span>
+                        </a>
+                        <a class="navbar-item" href="{{path('purchase_index')}}">
+                            <i class="bi bi-credit-card-2-back"></i>
+                            <span class="ml-2">Mon historique</span>
+                        </a>
+                        <hr class="navbar-divider">
+                    {% endif %}
+                    <a class="navbar-item" href="{{path('app_logout')}}">
+                        <i class="bi bi-box-arrow-left"></i>
+                        <span class="ml-2">Déconnexion</span>
+                    </a>
+                </div>
+            </div>
+            {% else %}
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-primary" href="{{path('user_registration')}}">
+                        <strong>Inscription</strong>
+                        </a>
+                        <a class="button is-light" href="{{path('app_login')}}">
+                        Connexion
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
-      </li>
-
-    {% else %}
-
-      <li class="my-2 my-lg-0">
-        <a href="{{path('app_login')}}" class="btn btn-primary my-2 my-sm-0">Connexion</a>
-        <a href="{{path('user_registration')}}" class="btn btn-secondary my-2 my-sm-0">Inscription</a>
-      </li>
-      
-    {% endif %}
-    </ul>
-
-  </div>
+    </div>
 </nav>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   function filterSearch(input){
     let text = $(input).val().toLowerCase();
-    $(document).find(".dropdown-menu > a").filter(function () {
+    $(document).find(".navbar-dropdown > a").filter(function () {
       if($(this).attr('data-search') !== undefined){
         $(this).toggle($(this).attr('data-search').toLowerCase().indexOf(text) > -1);
       }
     });
   }
 </script>
-{% elseif (is_granted('ROLE_AGENCE')) %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-<div class="ml-2 collapse navbar-collapse" id="navbarSupportedContent">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item active">
-      <a class="nav-link" href="{{ path('agence_index') }}">Home (agencier) <span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{ path('agence_voyage_show', {'id': app.user.id}) }}">Mes voyages</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{path('voyage_new')}}">Créer un voyage</a>
-    </li>
-  </ul>
-
-  <a class="c-header-nav-link btn btn-outline-danger" href="{{path('app_logout')}}">logout</a>
-</div>
-
-</nav>
-
-{% endif %}

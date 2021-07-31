@@ -30,6 +30,10 @@ class NavigationExtension extends AbstractExtension
             new TwigFunction('menu', [$this, 'displayMenu'], [
                 'needs_environment' => true,
                 'is_safe' => ['html']
+            ]),
+            new TwigFunction('footer', [$this, 'displayFooter'], [
+                'needs_environment' => true,
+                'is_safe' => ['html']
             ])
         ];
     }
@@ -44,6 +48,17 @@ class NavigationExtension extends AbstractExtension
             'activites' =>  $activites,
             'saison' =>  $saison
         ]);
+    }
 
+    public function displayFooter(Environment $environment)
+    {
+        $pays =  $this->doctrine->getRepository(Pays::class)->findAll();
+        $activites = $this->doctrine->getRepository(Activite::class)->findAll();
+        $saison = $this->doctrine->getRepository(Saison::class)->findAll();
+        return $environment->render('Front/navigation/footer.html.twig',[
+            'pays' => $pays,
+            'activites' =>  $activites,
+            'saison' =>  $saison
+        ]);
     }
 }
