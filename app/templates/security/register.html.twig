@@ -11,15 +11,15 @@
 
 <div class="right">
     <div class="content">
-        <h2>Sign Up</h2>
+        <h2>Inscription</h2>
         {{ form_start(form) }}
         <div class="form-element form-stack">
             {{ form_widget(form) }}
         </div>
         <div class="form-element form-submit">
             <button id="signUp" class="signup" type="submit"
-                name="signup">{{ button_label|default('Sign Up') }}</button>
-            <a href="{{path('app_login')}}" class="signup off">Log In</a>
+                name="signup">{{ button_label|default('Inscription') }}</button>
+            <a href="{{path('app_login')}}" class="signup off">Connexion</a>
         </div>
         {{ form_end(form) }}
     </div>

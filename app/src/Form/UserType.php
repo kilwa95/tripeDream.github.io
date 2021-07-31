@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
 
 use Symfony\Component\Security\Core\Security;
 
@@ -35,8 +38,23 @@ class UserType extends AbstractType
                         ]
                     ]
                 )
-            ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe'
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Les champs du mot de passe doivent correspondre.',
+                'required' => true,
+                'first_options'  => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Répéter le mot de passe'],
+                'mapped' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un mot de passe',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères.',
+                        'max' => 4096,
+                    ]),
+                ],
             ])
             ->add('email',EmailType::class, [
                 'label' => 'Adresse e-mail'
