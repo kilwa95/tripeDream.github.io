@@ -1,18 +1,152 @@
 {% extends 'base_front.html.twig' %}
 
-{% block title %}Voyage{% endblock %}
+{% block title %}Détails voyage{% endblock %}
 {% block stylesheets %}
 {{parent()}}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+{# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> #}
 {% endblock %}
 
 {% block body %}
-
 
 {% set prices = [] %}
 {% set departs = [] %}
 {% set jours = [] %}
 
+{% for tarif in voyage.tarif %}
+    {% set prices = prices|merge([tarif.prix]) %}
+{% endfor %}
+
+{% for programe in voyage.programme %}
+    {% set jours = jours|merge([programe.jour]) %}
+{% endfor %}
+
+{% for tarif in voyage.tarif %}
+    {% set departs  = departs|merge([tarif.depart]) %}
+{% endfor %}
+
+<script>
+$(document).ready(function() {
+  $('#tabs li').on('click', function() {
+    var tab = $(this).data('tab');
+
+    $('#tabs li').removeClass('is-active');
+    $(this).addClass('is-active');
+
+    $('#tab-content #cont').removeClass('is-active');
+    $('#cont[data-content="' + tab + '"]').addClass('is-active');
+  });
+
+    $("#leave-comm-btn").click(function() {
+        $("#modal-card").addClass("is-active"); 
+    });
+ 
+    $(".modal-close").click(function() {
+        $("#modal-card").removeClass("is-active");
+    });
+});
+</script>
+
+<div class="container">
+    <br>
+    <div class="columns box mt-5">
+        <div class="column">
+            <div class="columns">
+                <div class="column is-5-desktop is-5-tablet is-12-mobile">
+                    <img src="{{ vich_uploader_asset(voyage) }}" alt="{{ voyage.name }}">
+                </div>
+                <div class="column is-7-desktop is-5-tablet is-12-mobile content-detail">
+                    <div class="columns">
+                        <div class="column is-8">
+                            <dt style="font-size:1.7em;">{{voyage.name}}</dt>
+                            <dt style="">Agencier: {{ voyage.user.username }}</dt>
+                            <hr>
+                            <div class="price">
+                                <label for="price">Prix: </label>
+                                <span>{{ min(prices) }} €</span>
+                                <br><br>
+                            </div>
+                            <dt>{{ max(jours) }} jours</dt>
+                            <dt>{{ random(departs)|date("m/d/Y") }}</dt>
+                            <hr>
+                            <p style="">{{voyage.description}}</p>
+                        </div>
+                        <div class="column is-1">
+                            <div align="">
+                                {% if isfavorie == true %}
+                                    <div>
+                                        <a id="favorie_lien" href="{{path('favorie_delete',{'id': voyage.id})}}">
+                                            <i class="bi bi-suit-heart-fill"></i>
+                                        </a>
+                                    </div>
+                                {% elseif is_granted("ROLE_USER") %}
+                                    <div>
+                                        <a id="favorie_lien" href="{{path('favorie_new',{'id': voyage.id})}}">
+                                            <i class="bi bi-suit-heart"></i>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="column is-3">
+                            <div align="">
+                                {% if isPanier == true %}
+                                    <a class="text-white" href="{{path('panier_new',{'id': voyage.id})}}"><button class="button is-primary">Ajouté au panier</button></a>
+                                {% elseif is_granted("ROLE_USER") %}
+                                    <a class="text-white" href="{{path('panier_new',{'id': voyage.id})}}"><button class="button is-warning">Ajouter au panier</button></a>
+                                {% endif %}
+                                {# <button class="button is-small is-primary">Acheter maintenant</button> #}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabs is-toggle is-fullwidth mt-5" id="tabs">
+                <ul>
+                    <li class="is-active" data-tab="1">
+                        <a>
+                            <i class="bi bi-calendar-week"></i>
+                            <span class="ml-2">Programme</span>
+                        </a>
+                    </li>
+                    <li data-tab="2">
+                        <a>
+                            <i class="bi bi-info-circle"></i>
+                            <span class="ml-2">Informations pratiques</span>
+                        </a>
+                    </li>
+                    <li data-tab="3">
+                        <a>
+                            <i class="bi bi-currency-exchange"></i>
+                            <span class="ml-2">Tarifs</span>
+                        </a>
+                    </li>
+                    <li data-tab="4">
+                        <a>
+                            <i class="bi bi-chat-text"></i>
+                            <span class="ml-2">Avis</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="tab-content">
+                <div id="cont" class="is-active" data-content="1">
+                    {% include 'Front/voyage/programme.html.twig' %}
+                </div>
+                <div id="cont" data-content="2">
+                    {% include 'Front/voyage/infos_pratiques.html.twig' %}
+                </div>
+                <div id="cont" data-content="3">
+                    {% include 'Front/voyage/tarif.html.twig' %}
+                </div>
+                <div id="cont" data-content="4">
+                    {% include 'Front/voyage/avis.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{# 
 <div class="mt-5" style="min-height: 100vh;">
     <div class="container">
         <div class="row">
@@ -78,5 +212,5 @@
     </div>
 
 
-</div>
+</div> #}
 {% endblock %}

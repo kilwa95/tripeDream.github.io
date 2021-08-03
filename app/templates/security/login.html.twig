@@ -1,58 +1,60 @@
 {% extends 'base_security.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion!{% endblock %}
 
 {% block body %}
-<div id="back">
-    <canvas id="canvas" class="canvas-back"></canvas>
-    <div class="backRight">
-    </div>
-    <div class="backLeft">
-    </div>
-</div>
 
-<div id="slideBox">
-    <div class="topLayer">
-        <div class="right">
-            <div class="content">
-                <h2>Login</h2>
-                <form id="form-login" method="post" action="{{path('app_login')}}">
-                    {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
-                    {% if app.user %}
-                    <div class="mb-3">
-                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-                    </div>
-                    {% endif %}
-                    <div class="form-element form-stack">
-                        <label for="inputEmail" value="{{ last_username }}" class="form-label">email</label>
-                        <input type="email" id="inputEmail" name="email">
-                    </div>
-                    <div class="form-element form-stack">
-                        <label for="inputPassword" class="form-label">Password</label>
-                        <input id="inputPassword" type="password" name="password">
-                    </div>
-                    <div class="form-element form-stack">
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                    </div>
-
-                    <div class="form-element form-stack">
-                        <div>
-                          <label for="remember_me" class="form-label">remember me</label>
-                        <input type="checkbox" id="remember_me" name="_remember_me" checked />
-                        </div>
-                      
-                    </div>
-
-                    <div class="form-element form-submit">
-                        <button id="logIn" class="login" type="submit" name="login">Log In</button>
-                        <a href="{{path('user_registration')}}" class="login off" name="signup">Inscription</a>
-                    </div>
-                </form>
+<section class="hero is-warning is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-5">
+          <form class="box" id="form-login" method="post" action="{{path('app_login')}}">
+            {% if error %}
+              <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            {% if app.user %}
+              <div class="mb-3">
+                  Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+              </div>
+            {% endif %}
+            <div class="field">
+            <p class="control">
+                <label for="" value="{{ last_username }}" class="label">E-mail</label>
+                <input class="input" type="email" id="inputEmail" placeholder="E-mail" name="email">
+            </p>
             </div>
+            <div class="field">
+            <p class="control">
+                <label for="" class="label">Mot de passe</label>
+                <input id="inputPassword" class="input" type="password" placeholder="Mot de passe" name="password">
+            </p>
+            </div>
+
+            <div class="field">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            </div>
+
+            <div class="field">
+                <div>
+                  <label for="remember_me" class="form-label">Se souvenir de moi</label>
+                  <input type="checkbox" id="remember_me" name="_remember_me" checked />
+                </div>
+            </div>
+
+            <div class="field" align="center">
+            <p class="control">
+                <button class="button is-success">
+                Connexion
+                </button>
+            </p>
+            </div>
+
+          </form>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+</section>
 
 {% endblock %}

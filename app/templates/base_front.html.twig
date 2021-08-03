@@ -3,18 +3,29 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('/images/favicon.ico') }}" />
+    <title>{% block title %}Bienvenue!{% endblock %}</title>
     {% block stylesheets %}
     {{ encore_entry_link_tags('app') }}
-     <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
     <script src="https://js.stripe.com/v3/"></script>
     {% endblock %}
 </head>
 
-<body style="font-family: Georgia, serif;">
-    {{ menu() }}
-    {# {% include 'Front/navigation/menu.html.twig' %} #}
-    {% block body %}{% endblock %}
+<body class="">
+    <section class="hero is-warning">
+        <div class="hero-head">
+            {{ menu() }}
+            {# {% include 'Front/navigation/menu.html.twig' %} #}
+        </div>
+        
+        <div class="hero-body">
+            {% block hero %}{% endblock %}
+        </div>
+    </section>
+    <div class="" style="background: #EFF3F4;" id="list">
+        {% block body %}{% endblock %}
+    </div>
     {{ footer() }}
     {# {% include 'Front/navigation/footer.html.twig' %} #}
     {% block javascripts %}

@@ -1,56 +1,48 @@
-<div class="tab-pane  mt-5 mb-5 fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-{# TODO: check if user reserved the trip and the date of the trip is < datetime.now() sla
-  #}
-  {% for participat in voyage.usersParticipat %}
-  {% if app.user != null and app.user.id == participat.id %}
-   <a class="btn btn-info mb-4" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    mettre un commentaire
-  </a>
-  {% endif %}
-  {% endfor %}
+<div>
+    {% for participat in voyage.usersParticipat %}
+        {% if app.user != null and app.user.id == participat.id %}
+        <div class="has-text-centered mb-5">
+            <span class="button is-warning modal-button is-medium" id="leave-comm-btn" data-target="modal-card">Laisser un commentaire</span>
+        </div>
+        {% endif %}
+    {% endfor %}
 
+    <!-- START modal -->
+    <div id="modal-card" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            {% include 'Front/voyage/_form.avis.html.twig' %}
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+    <!-- END modal -->
 
+    {% set avisSort = [] %}
+    {% for avi in avis %}
+        {% set avisSort  = avisSort|merge([avi]) %}
+    {% endfor %}
 
+    {% set msg_box_color = ["", "is-dark", "is-warning", "is-link", "is-success", "is-info"] %}
 
-
-<div class="collapse" id="collapseExample">
-      {% include 'Front/voyage/_form.avis.html.twig' %}
-</div>
-   
-
-{% set avisSort = [] %}
-{% for avi in avis %}
-{% set avisSort  = avisSort|merge([avi]) %}
- {% endfor %}
-
-{% for avi in avisSort|sort((a, b) => a.date < b.date) %}
-    <ul class="list-unstyled  ">
-        <li class="media w-75  ">
-            <div class="media-body ">
-                <div><a style="font-size:24px;font-weight:700; color:green; max-width:64.45px;" class="mr-4 ">
-                        user: {{avi.user.lastName}}</a>
-                </div>
-                <div class="d-flex justify-content-between">
-
-                    <div><a href="" style="font-size:24px;font-weight:700; color:#61464b;" class="mt-0 mb-1">
-                            titre: {{avi.titre}}</a>
+    {% for avi in avisSort|sort((a, b) => a.date < b.date) %}
+        <div class="card">
+            <div class="v-card-content">
+                <article class="message {{ random(msg_box_color) }}" style="width: 100%;">
+                    <div class="message-body">
+                        <h3 style="text-transform:uppercase;"><b>{{ avi.titre }}</b></h3>
+                        <br>
+                        <p>{{ avi.description }}</p>
                     </div>
-                    <div>
-                        {% for i in 1..avi.compteur  %}
-                        <i class=" star fa fa-star"></i>
-                        {% endfor %}
-                    </div>
-
-                </div>
-
-                <p style="font-size:16px; color: #61464b;" class="font-weight-light text-justify  ">
-                    {{avi.description}}
-                </p>
-                <p style="font-size:16px; color: #61464b;" class="font-weight-light text-justify  ">
-                    {{avi.date|date("m/d/Y")}}
-                </p>
-        </li>
-        <hr>
-    </ul>
+                </article>
+            </div>
+            <footer class="card-footer">
+                <span class="card-footer-item">{{ avi.user.lastName }}</span>
+                <span class="card-footer-item">
+                    {% for i in 1..avi.compteur  %}
+                        <i class="bi bi-star-fill"></i>
+                    {% endfor %}</span>
+                <span class="card-footer-item">{{ avi.date|date("m/d/Y") }}</span>
+            </footer>
+        </div>
     {% endfor %}
 </div>

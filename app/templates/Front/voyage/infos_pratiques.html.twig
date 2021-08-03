@@ -1,22 +1,29 @@
-<div class="tab-pane mt-5 mb-5 fade" id="v-pills-pratique" role="tabpanel" aria-labelledby="v-pills-pratique-tab">
-    <table class="table table-striped table-bordered">
-        <thead class="thead-dark">
-            <tr>
-                <th class="text-center" scope="col">Rendez-vous</th>
-                <th class="text-center" scope="col">Fin sejour</th>
-                <th class="text-center" scope="col">Hébergement</th>
-                <th class="text-center" scope="col">Repas</th>
-                <th class="text-center" scope="col">Info COVID-19</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="text-center">{{infosPratiques.getRendezVous()|date("m/d/Y")}}</td>
-                <td class="text-center">{{infosPratiques.getFinSejour()|date("m/d/Y")}}</td>
-                <td class="text-center">{{infosPratiques.getHebergement()}}</td>
-                <td class="text-center">{{infosPratiques.getRepas()}}</td>
-                <td class="text-center">{{infosPratiques.getCovid19()}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<table class="table table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+        <tr>
+            <th>Arrivée</th>
+            <th>Départ</th>
+            <th>Hébergement</th>
+            <th>Repas</th>
+            <th>Info COVID-19</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Arrivée</th>
+            <th>Départ</th>
+            <th>Hébergement</th>
+            <th>Repas</th>
+            <th>Info COVID-19</th>
+        </tr>
+    </tfoot>
+    <tbody>
+        <tr>
+            <td>{{infosPratiques.getRendezVous()|date("m/d/Y")}}</td>
+            <td>{{infosPratiques.getFinSejour()|date("m/d/Y")}}</td>
+            <td>{{infosPratiques.getHebergement()}}</td>
+            <td>{{infosPratiques.getRepas()}}</td>
+            <td>{{infosPratiques.getCovid19()}}</td>
+        </tr>
+    </tbody>
+</table>

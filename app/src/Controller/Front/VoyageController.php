@@ -41,25 +41,17 @@ class VoyageController extends AbstractController
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
-        } 
-        $voyages = $voyageRepository->findAll(); // $voyages = $voyageRepository->findBy(['status' => 'avaible']); // KHALED
-        $pagination = $paginator->paginate(
-        $voyages, /* query NOT result */
-        $request->query->getInt('page', 1)/*page number*/,
-        3/*limit per page*/
-   );
+        }
+        // $voyages = $voyageRepository->findAll();
 
-        $pagination = $paginator->paginate(
-        $voyages, /* query NOT result */
-        $request->query->getInt('page', 1)/*page number*/,
-        4/*limit per page*/
-        );
+        $voyages = $voyageRepository->findBy(['status' => 'avaible']);
+        $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
+        $pagination->setParam('_fragment', 'list');
 
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyageRepository->findAll(),
             // 'favories' => $favorieRepository->findAll()
-            
         ]);
     }
 
@@ -73,15 +65,11 @@ class VoyageController extends AbstractController
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
-        } 
+        }
         
         $voyages = $pays->getVoyages();
-        $pagination = $paginator->paginate(
-        $voyages, /* query NOT result */
-        $request->query->getInt('page', 1)/*page number*/,
-        4/*limit per page*/
-        );
-
+        $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
+        $pagination->setParam('_fragment', 'list');
 
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
@@ -99,14 +87,11 @@ class VoyageController extends AbstractController
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
-        } 
-        $voyages  =  $activite->getVoyages();
-        $pagination = $paginator->paginate(
-        $voyages, /* query NOT result */
-        $request->query->getInt('page', 1)/*page number*/,
-        4/*limit per page*/
-        );
+        }
 
+        $voyages  =  $activite->getVoyages();
+        $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
+        $pagination->setParam('_fragment', 'list');
 
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
@@ -124,15 +109,11 @@ class VoyageController extends AbstractController
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
-        } 
+        }
         
         $voyages  =  $saison->getVoyages();
-        $pagination = $paginator->paginate(
-        $voyages, /* query NOT result */
-        $request->query->getInt('page', 1)/*page number*/,
-        4/*limit per page*/
-        );
-
+        $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
+        $pagination->setParam('_fragment', 'list');
 
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,

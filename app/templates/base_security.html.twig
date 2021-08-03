@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('/images/favicon.ico') }}" />
+    <title>{% block title %}Bienvenue!{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('security') }}
     {% endblock %}
 </head>
-
-        {% block body %}{% endblock %}
-
+<body>
+    {% block body %}{% endblock %}
     {% block javascripts %}
     {{ encore_entry_script_tags('security') }}
     {% endblock %}

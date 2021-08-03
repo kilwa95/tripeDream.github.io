@@ -1,74 +1,60 @@
 {% extends 'base_front.html.twig' %}
-{% block title %}Voyage index{% endblock %}
+{% block title %}Voyages{% endblock %}
 {% block stylesheets %}
-{{parent()}}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+{{ parent() }}
+{# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> #}
 {% endblock %}
 
 {% block body %}
+
 {% set prices = [] %}
 {% set departs = [] %}
 {% set jours = [] %}
 
-<div class="mt-5" style="min-height: 70vh;">
-    <div class="container">
-        <h2 class="pb-2">{{count|length}} résultats correspondent à votre recherche </h2>
-        <h1></h1>
-        <ul class="list-unstyled  ">
+<div class="container">
+    <div class="section">
+        <div class="box cta">
+            <p class="has-text-centered">
+                {{count|length}} résultats correspondent à votre recherche
+            </p>
+        </div>
+        <div class="columns is-multiline">
             {% for voyage in voyages %}
-            <div class="card">
 
-              <li class="media w-75  ">
-                <a href="{{ path('voyage_show', {'id': voyage.id}) }}">
-                    <img width="300" class="mr-3" src="{{ vich_uploader_asset(voyage) }}" alt="{{ voyage.name }}" />
-                </a>
+                {% for tarif in voyage.tarif %}
+                    {% set prices = prices|merge([tarif.prix]) %}
+                {% endfor %}
 
-                <div class="media-body ">
-                    <div class="d-flex justify-content-between">
-                        <div><a href="{{ path('voyage_show', {'id': voyage.id}) }}"
-                                style="font-size:24px;font-weight:700; color:#61464b;"
-                                class="mt-0 mb-1">{{voyage.name}}</a></div>
-                    </div>
+                {% for programe in voyage.programme %}
+                    {% set jours = jours|merge([programe.jour]) %}
+                {% endfor %}
 
+                {% for tarif in voyage.tarif %}
+                    {% set departs  = departs|merge([tarif.depart]) %}
+                {% endfor %}
 
-                    <p style="font-size:16px; color: #61464b;" class="font-weight-light text-justify  ">
-                        {{voyage.description}}
-                    </p>
-
-                    <div class="d-flex justify-content-between">
-                        <div style="font-size:24px;font-weight:700;">agence: <span style="color:#61464b">
-                                GoVoyage</span></div>
-                        {% for programe in voyage.programme %}
-                        {% set jours = jours|merge([programe.jour]) %}
-                        {% endfor %}
-                        <div> {{random(jours)}} jours</div>
-                    </div>
-
-                    <div class="d-flex flex-row justify-content-between ">
-                        {% for tarif in voyage.tarif %}
-                        {% set departs  = departs|merge([tarif.depart]) %}
-                        {% endfor %}
-                        <div class="text-warning">
-                            prochaine depart: {{random(departs)|date("m/d/Y")}}
-
+                <div class="column is-one-third">
+                    <div class="card is-shady">
+                        <div class="card-image">
+                            <a class="image is-16by9" href="{{ path('voyage_show', {'id': voyage.id}) }}">
+                                <img src="{{ vich_uploader_asset(voyage) }}" alt="{{ voyage.name }}" />
+                            </a>
                         </div>
-
-                        {% for tarif in voyage.tarif %}
-                        {% set prices = prices|merge([tarif.prix]) %}
-                        {% endfor %}
-                        <div style="font-weight:700;">
-                            {{random(prices)}} €
+                        <div class="v-card-content">
+                            <p class="title is-6" align="center"><a href="{{ path('voyage_show', {'id': voyage.id}) }}" >{{voyage.name}}</a></p>
+                            <p>{{voyage.description}}</p>
                         </div>
-
+                        <footer class="card-footer">
+                            <span class="card-footer-item">{{ random(prices) }} €</span>
+                            <span class="card-footer-item">{{ random(jours) }} jours</span>
+                            <span class="card-footer-item">{{ random(departs)|date("m/d/Y") }}</span>
+                        </footer>
                     </div>
-            </li>
-            </div>
-          
-            <br>
+                </div>
             {% endfor %}
-            <hr>
-        </ul>
-        <div class="navigation">
+        </div>
+
+        <div class="pagination justify-content-center">
             {{ knp_pagination_render(voyages) }}
         </div>
     </div>

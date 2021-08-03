@@ -32,9 +32,11 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, [
-                    'label'  => "Nom d'utilisatuer",
-                    'attr'   => [
-                        'class'   => 'c4'
+                    'label' => "Nom d'utilisateur",
+                    'label_attr' => ['class' => 'label'],
+                    'attr' => [
+                        'class' => 'input c4 mb-4',
+                        'placeholder' => "Nom d'utilisateur"
                         ]
                     ]
                 )
@@ -42,8 +44,8 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les champs du mot de passe doivent correspondre.',
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Répéter le mot de passe'],
+                'first_options'  => ['label' => 'Mot de passe', 'label_attr' => ['class' => 'label'], 'attr' => ['class' => 'input mb-4', 'placeholder' => "Mot de passe"]],
+                'second_options' => ['label' => 'Répéter le mot de passe', 'label_attr' => ['class' => 'label'], 'attr' => ['class' => 'input mb-4', 'placeholder' => "Répéter le mot de passe"]],
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
@@ -57,17 +59,27 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('email',EmailType::class, [
-                'label' => 'Adresse e-mail'
+                'label' => 'E-mail',
+                'attr' => [
+                    'class' => 'input mb-4',
+                    'placeholder' => "E-mail"
+                ],
+                'label_attr' => ['class' => 'label']
             ])
             ->add('lastname', TextType::class, [
                 'label'  => "Nom de famille",
+                'label_attr' => ['class' => 'label'],
                 'attr'   => [
-                    'class'   => 'c4'
+                    'class'   => 'input c4 mb-4',
+                    'placeholder' => "Nom de famille"
                     ]
                 ]
             )
             ->add('roles', ChoiceType::class, [
                 'label'  => "Rôle",
+                'attr' => [
+                    'class' => 'mb-4',
+                ],
                 'required' => true,
                 'multiple' => false,
                 'expanded' => true,

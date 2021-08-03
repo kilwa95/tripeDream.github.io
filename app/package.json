@@ -1,6 +1,5 @@
 {
     "devDependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.1",
         "@prettier/plugin-php": "github:prettier/plugin-php",
         "@symfony/webpack-encore": "^0.31.0",
         "core-js": "^3.0.0",

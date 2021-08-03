@@ -15,4 +15,8 @@ import './bulma/css/style.css';
 import './bulma/scss/menu.scss';
 import './bulma/js/menu.js';
 
+// import 'jquery';
+import './bulma/css/tabs.css';
+import './bulma/js/tabs.js';
+
 import 'bootstrap-icons/font/bootstrap-icons.css';
