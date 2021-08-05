@@ -12,10 +12,7 @@ use App\Entity\Voyage;
 use App\Repository\VoyageRepository;
 use App\Repository\PanierRepository;
 use App\Services\Payement;
-
-
-
-
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/panier")
@@ -25,7 +22,7 @@ class PanierController extends AbstractController
     /**
      * @Route("/", name="panier_index", methods={"GET"})
      */
-    public function index(VoyageRepository $voyageRepository): Response
+    public function index(Request $request, VoyageRepository $voyageRepository, PaginatorInterface $paginator): Response
     {   
         $user = $this->getUser();
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
@@ -48,9 +45,11 @@ class PanierController extends AbstractController
             array_push($voyages,$voyage);
         }
 
+        $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
+        $pagination->setParam('_fragment', 'list');
 
         return $this->render('Front/panier/index.html.twig',[
-            'paniers' =>  $voyages,
+            'paniers' =>  $pagination,
         ]);
     }
     /**
