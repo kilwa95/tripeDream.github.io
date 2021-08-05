@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/favorie")
@@ -24,7 +24,7 @@ class FavorieController extends AbstractController
     /**
      * @Route("/", name="favorie_index", methods={"GET"})
      */
-    public function index(VoyageRepository $voyageRepository): Response
+    public function index(Request $request, VoyageRepository $voyageRepository, PaginatorInterface $paginator): Response
     {   
         $user = $this->getUser();
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
@@ -46,8 +46,11 @@ class FavorieController extends AbstractController
             array_push($voyages,$voyage);
         }
 
+        $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
+        $pagination->setParam('_fragment', 'list');
+
         return $this->render('Front/favorie/index.html.twig', [
-            'favories' =>  $voyages,
+            'favories' =>  $pagination,
         ]);
     }
 
@@ -94,6 +97,6 @@ class FavorieController extends AbstractController
         $entityManager->remove($favorie);
         $entityManager->flush();
 
-        return $this->redirectToRoute('voyage_show', ['id'=> $id]);
+        return $this->redirectToRoute('favorie_index');
     }
 }

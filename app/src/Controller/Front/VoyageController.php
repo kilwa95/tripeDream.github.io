@@ -33,7 +33,7 @@ class VoyageController extends AbstractController
     /**
      * @Route("/", name="voyage_index", methods={"GET"})
      */
-    public function index(Request $request,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository,FavorieRepository $favorieRepository, PaginatorInterface $paginator)
+    public function index(Request $request, ActiviteRepository $activiteRepository, VoyageRepository $voyageRepository, PaysRepository $paysRepository, SaisonRepository $saisonRepository, FavorieRepository $favorieRepository, PaginatorInterface $paginator)
     {
         $user = $this->getUser();
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
