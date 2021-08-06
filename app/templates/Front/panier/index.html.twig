@@ -1,6 +1,6 @@
 {% extends 'base_front.html.twig' %}
 
-{% block title %}Panier index{% endblock %}
+{% block title %}Panier{% endblock %}
 
 {% block body %}
 {% set totale = 0 %}
@@ -18,9 +18,9 @@
     <div class="section">
         {% if paniers is not empty %}
             <div class="box">
-                <p class="has-text-centered">
+                <h1 class="has-text-centered">
                     Mon panier
-                </p>
+                </h1>
             </div>
             <div class="columns is-multiline">
             {% for panier in paniers %}
@@ -51,10 +51,10 @@
 
             <div class="card">
                 <div class="v-card-content">
-                    <p>Total: {{ totale }} €</p>
+                    <p><b>Total:</b> {{ totale }} €</p>
                 </div>
                 <footer class="card-footer">
-                    <span class="card-footer-item"><span><a href="{{ path('panier_validation', {'total': totale}) }}"><button class="button is-info">Valider</button></a></span></span>
+                    <span class="card-footer-item"><span><a href="{{ path('panier_validation', {'total': totale}) }}"><button class="button is-info">Passer la commande</button></a></span></span>
                 </footer>
             </div>
         {% else %}

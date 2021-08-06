@@ -72,28 +72,31 @@ class PanierController extends AbstractController
     }
 
      /**
-     * @Route("/{id}", name="panier_delete", methods={"DELETE","GET"})
+     * @Route("/{id}", name="panier_delete", methods={"DELETE", "GET"})
      */
-    public function delete(int $id, PanierRepository $panierRepository): Response
+    public function delete(Request $request, int $id, PanierRepository $panierRepository): Response
     {  
         $user = $this->getUser();
+
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('admin');
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
-        } 
+        }
+        
         $panier = $panierRepository->findOneBy(['voyage' => $id]);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($panier);
         $entityManager->flush();
 
-        return $this->redirectToRoute('panier_index');
+        // return $this->redirectToRoute('panier_index');
+        return $this->redirectToRoute('panier_validation', ['total' => $request->get('total')]);
     }
      /**
      * @Route("/validation/create-checkout-session/{total}", name="panier_validation", methods={"POST","GET"})
      */
-    public function validate(string $total,Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
+    public function validate(string $total, Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
     {
         $user = $this->getUser();
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {

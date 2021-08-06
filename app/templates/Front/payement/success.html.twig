@@ -1,32 +1,37 @@
 {% extends 'base_front.html.twig' %}
 
-{% block title %}Merci pour votre commande !{% endblock %}
+{% block title %}Récapitulatif de commande{% endblock %}
 
 {% block body %}
 
-  <div class="card border-success mb-3 container my-5">
-    <div class="card-header bg-transparent border-success text-center"><h3>Votre récapitulatif de commande</h3></div>
-    <div class="card-body text-success">
-      <div class="d-flex justify-content-between p-2">
-            <div>Prix d'origine :</div>
-            <div>{{total}} €</div>
+<div class="container">
+  <div class="section">
+    <div class="columns">
+        <div class="column is-full">
+            <div class="card is-shady">
+                <div class="card-header">
+                    <p class="title is-6">Votre récapitulatif de commande</p>
+                </div>
+                <div class="v-card-content mt-5 mb-5">
+                    <b>Prix d'origine</b>
+                    <p>{{ total }} €</p>
+                    <hr>
+                    <b>Crédit appliqué</b>
+                    <p>0 €</p>
+                    <hr>
+                    <b>Total payé</b>
+                    <p>{{ total }} €</p>
+                </div>
+                <footer class="card-footer">
+                    <span class="card-footer-item">
+                      <p>Nous vous remercions de votre confiance! Si vous avez des questions, veuillez envoyer un courriel à <a href="mailto:orders@example.com">orders@tripdream.com</a></p>
+                    </span>
+                </footer>
+            </div>
         </div>
-        <hr>
-        <div class="d-flex justify-content-between p-2">
-            <div>Crédits appliqués :</div>
-            <div>0 €</div>
-        </div>
-        <div style="font-size:24px;font-weight:700;" class="d-flex justify-content-between p-2">
-            <div>Total  :</div>
-            <div>{{total}} €</div>
-        </div>
-    </div>
-    <div class="card-footer bg-transparent border-success">
-      Nous vous remercions de votre confiance ! Si vous avez des questions, veuillez envoyer un courriel à
-      <a href="mailto:orders@example.com">orders@tripdream.com</a>.
     </div>
   </div>
-
 </div>
+
 {% endblock %}
 

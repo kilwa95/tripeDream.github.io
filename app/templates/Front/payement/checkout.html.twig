@@ -1,49 +1,79 @@
 {% extends 'base_front.html.twig' %}
 
-{% block title %}Buy cool new product{% endblock %}
+{% block title %}Détails de la commande{% endblock %}
 
 {% block body %}
-<div style="min-height:500px;" class="container d-flex mt-5">
-    <div style="width:667px;">
-        <div style="font-size:24px;font-weight:700;"> Détails de la commande</div>
-        {% if  paniers is defined %}
-        {% for panier in paniers %}
-        <div style=" height:90px;" class="d-flex flex-row justify-content-between  card">
-            <div class="d-flex flex-row" style="max-width:320px; min-width:320px; ">
-                <img src="{{ vich_uploader_asset(panier) }}" alt="{{ panier.name }}" />
-                <div style="color:#1c1d1f;font-weight:700;" class="pl-1">{{panier.name}}</div>
 
+<div class="container">
+    <div class="section">
+        {% if paniers is not empty %}
+            <div class="columns is-multiline">
+                <div class="column is-8">
+                    <div class="card is-shady" style="width: 100%;">
+                        <div class="card-header">
+                            <p class="title is-6">Détails de la commande</p>
+                        </div>
+                        <div class="v-card-content">
+                            <table class="table table is-striped is-narrow is-hoverable is-fullwidth">
+                                <thead>
+                                    <tr>
+                                        <th>Aperçu</th>
+                                        <th>Dénomination</th>
+                                        <th>Prix</th>
+                                        <th>Opérations</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for panier in paniers %}
+                                    <tr>
+                                        <td>
+                                            <a class="image is-16by9" href="{{ path('voyage_show', {'id': panier.id}) }}">
+                                                <img src="{{ vich_uploader_asset(panier) }}" alt="{{ panier.name }}" />
+                                            </a>
+                                        </td>
+                                        <td>{{ panier.name }}</td>
+                                        <td>{{ panier.tarif|first.prix }} €</td>
+                                        <td>
+                                            <a href="{{ path('voyage_show', {'id': panier.id}) }}"><button class="button is-small is-success"><i class="bi bi-eye"></i></button></a>
+                                            <a href="{{ path('panier_delete', {'id': panier.id, 'total': total}) }}"><button class="button is-small is-danger"><i class="bi bi-trash"></i></button></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-4">
+                    <div class="card is-shady">
+                        <div class="card-header">
+                            <p class="title is-6">Total et validation</p>
+                        </div>
+                        <div class="v-card-content mt-5">
+                            <b>Prix d'origine</b>
+                            <p>{{ total }} €</p>
+                            <hr>
+                            <b>Crédit appliqué</b>
+                            <p>0 €</p>
+                            <hr>
+                            <b>Total à payer</b>
+                            <p>{{ total }} €</p>
+                            <hr>
+                            <p>Comme exigé par la loi, Tripdream prélève les taxes sur les transactions applicables aux achats réalisés dans certaines juridictions fiscales.</p>
+                        </div>
+                        <footer class="card-footer">
+                            <span class="card-footer-item"><button data-total="{{ total }}" class="button is-info is-fullwidth" id="checkout-button">Payer</button></span>
+                        </footer>
+                    </div>
+                </div>
             </div>
-            <div class="d-flex flex-column pt-2">
-                <a style="color:#a435f0;" href="{{path('panier_delete',{'id': panier.id})}}">Supprimer</a>
-                <a style="color:#a435f0;" href="{{path('voyage_show',{'id': panier.id})}}">Fiche produit</a>
+        {% else %}
+            <div class="box">
+                <p class="has-text-centered has-text-danger-dark">
+                    Le panier est vide
+                </p>
             </div>
-            <div class="pr-2 pt-2" style="color:#a435f0; ">{{panier.tarif|first.prix}} €</div>
-        </div>
-        {% endfor %}
         {% endif %}
-    </div>
-    <div class="card ml-3" style="width:393px;">
-        <div style="font-size:24px;font-weight:700;"> Résumé</div>
-        <div class="d-flex justify-content-between p-2">
-            <div>Prix d'origine :</div>
-            <div>{{total}} €</div>
-        </div>
-        <hr>
-        <div class="d-flex justify-content-between p-2">
-            <div>Crédits appliqués :</div>
-            <div>0 €</div>
-        </div>
-        <div style="font-size:24px;font-weight:700;" class="d-flex justify-content-between p-2">
-            <div>Total a payer :</div>
-            <div>{{total}} €</div>
-        </div>
-        <hr>
-        <p class="pl-2">Comme exigé par la loi, Tripdream prélève les taxes sur les transactions applicables aux achats
-            réalisés dans certaines juridictions fiscales.<p>
-                <hr>
-        <button data-total="{{total}}" class="mt-1 w-100 btn" type="button" id="checkout-button">Payer</button>
-
     </div>
 </div>
 
