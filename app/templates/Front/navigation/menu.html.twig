@@ -61,7 +61,7 @@
                     <div class="navbar-item has-dropdown is-hoverable">
                         <span class="navbar-item">
                             <a class="button is-white is-outlined">
-                            Sasions
+                            Saisons
                             </a>
                         </span>
                         <div class="navbar-dropdown">
@@ -72,7 +72,6 @@
                                 <a href="{{ path('saison_name',{'id': saison.id}) }}" class='navbar-item dataSearch' data-search='{{saison.name}}'>{{saison.name}}</a>
                             {% endfor %}
                             <hr class="navbar-divider">
-                            <a class="navbar-item read-more" href="{{ path('voyage_index') }}">Voir plus....</a>
                         </div>
                     </div>
                 {% elseif (is_granted('ROLE_AGENCE')) %}
