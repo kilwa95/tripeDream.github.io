@@ -1,23 +1,27 @@
 {% extends 'base_agence.html.twig' %}
 
-{% block title %}agence{% endblock %}
+{% block title %}Espace agencier{% endblock %}
+
 {% block body %}
-{% include 'agence/sidebar.html.twig' %}
-<div class="c-wrapper">
 
     {% include 'agence/header.html.twig' %}
 
-    <div class="c-subheader px-3">
-        {{ slope_it_breadcrumb() }}
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3">
+                {% include 'agence/sidebar.html.twig' %}
+            </div>
+            <div class="column is-9">
+                <nav class="breadcrumb" aria-label="breadcrumbs">
+                    {{ slope_it_breadcrumb() }}
+                </nav>
+                {% block core %}{% endblock %}
+            </div>
+        </div>
     </div>
 
-    <div class="c-body">
-        <main class="c-main">
-    {% block core %}{% endblock %}
-        </main>
-    </div>
     <footer class="c-footer">
         <!-- Footer content here -->
     </footer>
-</div>
+
 {% endblock %}

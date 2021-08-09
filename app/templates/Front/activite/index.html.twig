@@ -9,8 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
+                <th>Nom</th>
+                <th>Opérations</th>
             </tr>
         </thead>
         <tbody>
@@ -19,9 +19,9 @@
                 <td>{{ activite.id }}</td>
                 <td>{{ activite.name }}</td>
                 <td>
-                    <a href="{{ path('activite_show', {'id': activite.id}) }}">show</a>
+                    <a href="{{ path('activite_show', {'id': activite.id}) }}">Détails</a>
                    {% if is_granted("ROLE_AGENCE") %}
-                        <a href="{{ path('activite_edit', {'id': activite.id}) }}">edit</a>
+                        <a href="{{ path('activite_edit', {'id': activite.id}) }}">Modifier</a>
                     {% endif %}
                 </td>
             </tr>
@@ -33,6 +33,6 @@
         </tbody>
     </table>
     {% if is_granted("ROLE_AGENCE") %}
-        <a href="{{ path('activite_new') }}">Create new</a>
+        <a href="{{ path('activite_new') }}">Créer une nouvelle activité</a>
     {% endif %}
 {% endblock %}

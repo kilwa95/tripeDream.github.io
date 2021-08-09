@@ -23,3 +23,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 });
+
+$(function(){
+  $('#navMainMenuAgence .navbar-start a, aside a').each(function(){
+      if ($(this).prop('href') == window.location.href) {
+          $(this).addClass('is-active');
+      }
+  });
+});

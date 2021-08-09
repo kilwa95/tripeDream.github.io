@@ -1,16 +1,18 @@
-<div class="c-sidebar c-sidebar-dark c-sidebar-show">
-    <ul class="c-sidebar-nav">
-        <li class="c-sidebar-nav-title">Géstion de voyages</li>
-        <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="{{ path('agence_voyage_show', {'id': app.user.id}) }}">
-                <i class="c-sidebar-nav-icon cil-align-left"></i>Mes voyages
+<aside class="menu is-hidden-mobile">
+    <p class="menu-label">
+        Géstion de voyages
+    </p>
+    <ul class="menu-list">
+        <li>
+            <a class="" href="{{ path('agence_voyage_show', {'id': app.user.id}) }}">
+                <i class=""></i>Mes voyages
             </a>
         </li>
-        <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="{{path('voyage_new')}}">
-                <i class="c-sidebar-nav-icon cil-speedometer"></i>Création voyage 
+        <li>
+            <a href="{{path('voyage_new')}}">
+                <i class=""></i>Création voyage 
                 <span class="badge badge-primary">NOUVEAU</span>
             </a>
-        </li> 
+        </li>
     </ul>
-</div>
+</aside>
