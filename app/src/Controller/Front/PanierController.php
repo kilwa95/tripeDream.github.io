@@ -97,8 +97,8 @@ class PanierController extends AbstractController
         $entityManager->remove($panier);
         $entityManager->flush();
 
-        // return $this->redirectToRoute('panier_index');
-        return $this->redirectToRoute('panier_validation', ['total' => $request->get('total')]);
+        return $this->redirectToRoute('panier_index');
+        // return $this->redirectToRoute('panier_validation', ['total' => $request->get('total')]);
     }
      /**
      * @Route("/validation/create-checkout-session/{total}", name="panier_validation", methods={"POST","GET"})
