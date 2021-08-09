@@ -156,6 +156,9 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "slope-it/breadcrumb-bundle": {
+        "version": "1.0.1"
+    },
     "stripe/stripe-php": {
         "version": "v7.78.0"
     },

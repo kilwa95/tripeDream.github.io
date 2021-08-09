@@ -13,14 +13,21 @@ use App\Repository\VoyageRepository;
 use App\Repository\PanierRepository;
 use App\Services\Payement;
 use Knp\Component\Pager\PaginatorInterface;
+use SlopeIt\BreadcrumbBundle\Annotation\Breadcrumb;
 
 /**
  * @Route("/panier")
+ * @Breadcrumb({
+ *  { "label" = "Accueil", "route" = "navigation" }
+ * })
  */
 class PanierController extends AbstractController
 {
     /**
      * @Route("/", name="panier_index", methods={"GET"})
+     * @Breadcrumb({
+     *  { "label" = "Mon panier" },
+     * })
      */
     public function index(Request $request, VoyageRepository $voyageRepository, PaginatorInterface $paginator): Response
     {   
@@ -84,7 +91,7 @@ class PanierController extends AbstractController
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
         }
-        
+
         $panier = $panierRepository->findOneBy(['voyage' => $id]);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($panier);
@@ -95,6 +102,10 @@ class PanierController extends AbstractController
     }
      /**
      * @Route("/validation/create-checkout-session/{total}", name="panier_validation", methods={"POST","GET"})
+     * @Breadcrumb({
+     *  { "label" = "Panier", "route" = "panier_index" },
+     *  { "label" = "Passage commande" },
+     * })
      */
     public function validate(string $total, Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
     {
@@ -134,6 +145,10 @@ class PanierController extends AbstractController
     }
      /**
      * @Route("/payement/success/{total}", name="panier_success", methods={"POST","GET"})
+     * @Breadcrumb({
+     *  { "label" = "Panier", "route" = "panier_index" },
+     *  { "label" = "Résumé commande" },
+     * })
      */
     public function success(Request $request): Response
     {

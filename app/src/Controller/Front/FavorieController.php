@@ -15,14 +15,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Knp\Component\Pager\PaginatorInterface;
+use SlopeIt\BreadcrumbBundle\Annotation\Breadcrumb;
 
 /**
  * @Route("/favorie")
+ * @Breadcrumb({
+ *  { "label" = "Accueil", "route" = "navigation" }
+ * })
  */
 class FavorieController extends AbstractController
 {
     /**
      * @Route("/", name="favorie_index", methods={"GET"})
+     * @Breadcrumb({
+     *  { "label" = "Mes favoris" },
+     * })
      */
     public function index(Request $request, VoyageRepository $voyageRepository, PaginatorInterface $paginator): Response
     {   

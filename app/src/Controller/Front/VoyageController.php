@@ -23,19 +23,26 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
+use SlopeIt\BreadcrumbBundle\Annotation\Breadcrumb;
 
 /**
  * @Route("/voyage")
+ * @Breadcrumb({
+ *  { "label" = "Accueil", "route" = "navigation" }
+ * })
  */
 class VoyageController extends AbstractController
 {
     /**
      * @Route("/", name="voyage_index", methods={"GET"})
-     */
+     * @Breadcrumb({
+     *  { "label" = "Voyages" }
+     * })
+    */
     public function index(Request $request, ActiviteRepository $activiteRepository, VoyageRepository $voyageRepository, PaysRepository $paysRepository, SaisonRepository $saisonRepository, FavorieRepository $favorieRepository, PaginatorInterface $paginator)
-    {
+    {        
         $user = $this->getUser();
+        
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('admin');
         }
@@ -50,13 +57,17 @@ class VoyageController extends AbstractController
 
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
-            'count'  => $voyageRepository->findAll(),
+            'count'  => $voyageRepository->findAll()
             // 'favories' => $favorieRepository->findAll()
         ]);
     }
 
     /**
      * @Route("/pays/{id}", name="pays_name", methods={"GET"})
+     * @Breadcrumb({
+     *  { "label" = "Voyages", "route" = "voyage_index" },
+     *  { "label" = "$pays" },
+     * })
      */
     public function paysById(Pays $pays,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
         $user = $this->getUser();
@@ -74,11 +85,16 @@ class VoyageController extends AbstractController
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyages,
+            'pays' => $pays
         ]);
     }
 
      /**
      * @Route("/activite/{id}", name="activite_name", methods={"GET"})
+     * @Breadcrumb({
+     *  { "label" = "Voyages", "route" = "voyage_index" },
+     *  { "label" = "$activite" },
+     * })
      */
     public function activiteById(Activite $activite ,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
         $user = $this->getUser();
@@ -96,11 +112,16 @@ class VoyageController extends AbstractController
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyages,
+            'activite'  => $activite,
         ]);
     }
 
      /**
      * @Route("/saison/{id}", name="saison_name", methods={"GET"})
+     * @Breadcrumb({
+     *  { "label" = "Voyages", "route" = "voyage_index" },
+     *  { "label" = "$saison" },
+     * })
      */
     public function saisonById(Saison $saison, Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
         $user = $this->getUser();
@@ -118,12 +139,17 @@ class VoyageController extends AbstractController
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyages,
+            'saison'  => $saison,
         ]);
     }
 
     /**
      * 
      * @Route("/{id}", name="voyage_show", methods={"GET","POST"})
+     * @Breadcrumb({
+     *  { "label" = "Voyages", "route" = "voyage_index" },
+     *  { "label" = "$voyage.name" },
+     * })
      */
     public function show(Request $request,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository,Voyage $voyage): Response
     {

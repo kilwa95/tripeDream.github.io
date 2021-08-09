@@ -7,6 +7,10 @@
 
     {% include 'agence/header.html.twig' %}
 
+    <div class="c-subheader px-3">
+        {{ slope_it_breadcrumb() }}
+    </div>
+
     <div class="c-body">
         <main class="c-main">
     {% block core %}{% endblock %}
