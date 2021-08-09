@@ -66,8 +66,8 @@
                             break;
                         case 'saison':
                             urlShowBtn = "{{ path('show_saison', {'id': 'rowId'}) }}";
-                            urlEditBtn = "{{ path('admin_saison_edit', {'id': 'rowId'}) }}";
-                            urlDelBtn = "{{ path('delete_saison', {'id': 'rowId'}) }}";
+                            urlEditBtn = "";
+                            urlDelBtn = "";
                             break;
                         case 'pays':
                             urlShowBtn = "{{ path('show_pays', {'id': 'rowId'}) }}";
@@ -89,6 +89,9 @@
                     urlShowBtn = urlShowBtn.replace("rowId", row.id);
                     urlEditBtn = urlEditBtn.replace("rowId", row.id);
                     urlDelBtn = urlDelBtn.replace("rowId", row.id);
+
+                    if (entity === "saison")
+                        return "<div class='text-center'><a href='"+urlShowBtn+"' class='btn btn-info btn-xs update'><i class='bi bi-eye'></i></a></div>";
 
                     return "<div class='text-center'><a href='"+urlShowBtn+"' class='btn btn-info btn-xs update'><i class='bi bi-eye'></i></a>" +
                         "&nbsp; <a href='"+urlEditBtn+"' class='btn btn-warning btn-xs update'><i class='bi bi-pencil-square'></i></a>" +

@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 
 class InfoPratiqueType extends AbstractType
@@ -28,9 +29,13 @@ class InfoPratiqueType extends AbstractType
                 'placeholder' => 'Select a value',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('hebergement')
+            ->add('hebergement', TextType::class, [
+                'label'  => "Hébergement",
+            ])
             ->add('repas')
-            ->add('covid19')
+            ->add('covid19', TextType::class, [
+                'label'  => "Informations sanitaires (Covid 19)",
+            ])
             ->add('submit', SubmitType::class, [
                 'label'  => "Envoyer",
                 'attr' => [
