@@ -20,13 +20,13 @@ class TarifType extends AbstractType
             ->add('prix', MoneyType::class)
             
             ->add('depart', DateType::class, [
-                'label'  => "Départ",
+                'label'  => "Date de départ",
                 'widget' => 'single_text',
                 'placeholder' => 'Select a value',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('arrive', DateType::class,[
-                'label'  => "Arrivée",
+            ->add('retour', DateType::class,[
+                'label'  => "Date de retour",
                 'widget' => 'single_text',
                 'placeholder' => 'Select a value',
                 'format' => 'yyyy-MM-dd',

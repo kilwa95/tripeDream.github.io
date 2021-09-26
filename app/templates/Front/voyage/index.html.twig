@@ -7,52 +7,45 @@
 
 {% block body %}
 
-{% set prices = [] %}
-{% set departs = [] %}
-{% set jours = [] %}
-
 <div class="container">
     <div class="section">
+    
+        {# {% if voyages is not empty %} #}
 
-        <div class="columns is-multiline">
-            {% for voyage in voyages %}
+            <div class="columns is-multiline">
+                {% for voyage in voyages %}
 
-                {% for tarif in voyage.tarif %}
-                    {% set prices = prices|merge([tarif.prix]) %}
-                {% endfor %}
-
-                {% for programe in voyage.programme %}
-                    {% set jours = jours|merge([programe.jour]) %}
-                {% endfor %}
-
-                {% for tarif in voyage.tarif %}
-                    {% set departs  = departs|merge([tarif.depart]) %}
-                {% endfor %}
-
-                <div class="column is-one-third">
-                    <div class="card is-shady">
-                        <div class="card-image">
-                            <a class="image is-16by9" href="{{ path('voyage_show', {'id': voyage.id}) }}">
-                                <img src="{{ vich_uploader_asset(voyage) }}" alt="{{ voyage.name }}" />
-                            </a>
+                    <div class="column is-one-third">
+                        <div class="card is-shady">
+                            <div class="card-image">
+                                <a class="image is-16by9" href="{{ path('voyage_show', {'id': voyage.id}) }}">
+                                    <img src="{{ vich_uploader_asset(voyage) }}" alt="{{ voyage.name }}" />
+                                </a>
+                            </div>
+                            <div class="v-card-content">
+                                <p class="title is-6" align="center"><a href="{{ path('voyage_show', {'id': voyage.id}) }}" >{{voyage.name}}</a></p>
+                                <p>{{voyage.description}}</p>
+                            </div>
+                            <footer class="card-footer">
+                                <span class="card-footer-item">{{ (voyage.tarif|first).prix }} €</span>
+                                <span class="card-footer-item">{{ voyage.infoPratique.duree }} jours</span>
+                                <span class="card-footer-item">{{ voyage.infoPratique.depart|date("d/m/Y") }}</span>
+                            </footer>
                         </div>
-                        <div class="v-card-content">
-                            <p class="title is-6" align="center"><a href="{{ path('voyage_show', {'id': voyage.id}) }}" >{{voyage.name}}</a></p>
-                            <p>{{voyage.description}}</p>
-                        </div>
-                        <footer class="card-footer">
-                            <span class="card-footer-item">{{ random(prices) }} €</span>
-                            <span class="card-footer-item">{{ random(jours) }} jours</span>
-                            <span class="card-footer-item">{{ random(departs)|date("m/d/Y") }}</span>
-                        </footer>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
 
-        <div class="pagination justify-content-center">
-            {{ knp_pagination_render(voyages) }}
-        </div>
+            <div class="pagination justify-content-center">
+                {{ knp_pagination_render(voyages) }}
+            </div>
+        {# {% else %}
+            <div class="box">
+                <p class="has-text-centered has-text-danger-dark">
+                    Aucun voyage corréspondant
+                </p>
+            </div>
+        {% endif %} #}
     </div>
 </div>
 

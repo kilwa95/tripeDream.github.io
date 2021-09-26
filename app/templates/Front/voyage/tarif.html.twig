@@ -3,16 +3,16 @@
   <thead>
     <tr>
       <th>Prix</th>
-      <th>Départ</th>
-      <th>Arrivée</th>
+      <th>Date de départ</th>
+      <th>Date de retour</th>
       <th>Capacité</th>
     </tr>
   </thead>
   <tfoot>
     <tr>
       <th>Prix</th>
-      <th>Départ</th>
-      <th>Arrivée</th>
+      <th>Date de départ</th>
+      <th>Date de retour</th>
       <th>Capacité</th>
     </tr>
   </tfoot>
@@ -20,8 +20,8 @@
     {% for tarif in tarifs %}
       <tr>
         <td>{{tarif.prix}} €</td>
-        <td>{{tarif.depart|date("m/d/Y")}}</td>
-        <td>{{tarif.arrive|date("m/d/Y")}}</td>
+        <td>{{tarif.depart|date("d/m/Y")}}</td>
+        <td>{{tarif.retour|date("d/m/Y")}}</td>
         <td>{{tarif.capacite}}</td>
       </tr>
     {% endfor %}

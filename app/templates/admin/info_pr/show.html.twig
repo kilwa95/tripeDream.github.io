@@ -25,19 +25,28 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Début sejour:</h6>
+                                    <h6 class="mb-0">Date de départ:</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    <em>{{ info_pr.rendezvous|date('d/m/Y') }}</em>
+                                    <em>{{ info_pr.depart|date('d/m/Y') }}</em>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Fin sejour:</h6>
+                                    <h6 class="mb-0">Date de retour:</h6>
                                 </div>
                                 <div class="col-sm-9">
-                                    <em>{{ info_pr.finsejour|date('d/m/Y') }}</em>
+                                    <em>{{ info_pr.retour|date('d/m/Y') }}</em>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Durée:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <em>{{ info_pr.duree }}</em>
                                 </div>
                             </div>
                             <hr>

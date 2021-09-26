@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Voyage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method Voyage|null find($id, $lockMode = null, $lockVersion = null)
@@ -63,5 +64,33 @@ class VoyageRepository extends ServiceEntityRepository
 
         // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetchAllAssociative();
+    }
+
+    // Find/search voyages by name
+    public function findVoyagesByName(string $query)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->where(
+                $qb->expr()->like('p.name', ':query')
+            )
+            ->setParameter('query', '%' . $query . '%')
+        ;
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
+    // Find/search voyages by date depart
+    public function findVoyagesByDateDepart(string $depart)
+    {
+        $qb = $this->createQueryBuilder('v')
+        ->join('v.infoPratique', 'ip')
+        ->where('ip.depart LIKE :depart')
+        ->setParameter('depart', $depart . "%");
+
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
     }
 }

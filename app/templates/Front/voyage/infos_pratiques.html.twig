@@ -1,8 +1,9 @@
 <table class="table table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
     <thead>
         <tr>
-            <th>Arrivée</th>
-            <th>Départ</th>
+            <th>Date de départ</th>
+            <th>Date de retour</th>
+            <th>Durée</th>
             <th>Hébergement</th>
             <th>Repas</th>
             <th>Info COVID-19</th>
@@ -10,8 +11,9 @@
     </thead>
     <tfoot>
         <tr>
-            <th>Arrivée</th>
-            <th>Départ</th>
+            <th>Date de départ</th>
+            <th>Date de retour</th>
+            <th>Durée</th>
             <th>Hébergement</th>
             <th>Repas</th>
             <th>Info COVID-19</th>
@@ -19,8 +21,9 @@
     </tfoot>
     <tbody>
         <tr>
-            <td>{{infosPratiques.getRendezVous()|date("m/d/Y")}}</td>
-            <td>{{infosPratiques.getFinSejour()|date("m/d/Y")}}</td>
+            <td>{{infosPratiques.getDepart()|date("d/m/Y")}}</td>
+            <td>{{infosPratiques.getRetour()|date("d/m/Y")}}</td>
+            <td>{{infosPratiques.getDuree()}} jours</td>
             <td>{{infosPratiques.getHebergement()}}</td>
             <td>{{infosPratiques.getRepas()}}</td>
             <td>{{infosPratiques.getCovid19()}}</td>

@@ -8,22 +8,6 @@
 
 {% block body %}
 
-{% set prices = [] %}
-{% set departs = [] %}
-{% set jours = [] %}
-
-{% for tarif in voyage.tarif %}
-    {% set prices = prices|merge([tarif.prix]) %}
-{% endfor %}
-
-{% for programe in voyage.programme %}
-    {% set jours = jours|merge([programe.jour]) %}
-{% endfor %}
-
-{% for tarif in voyage.tarif %}
-    {% set departs  = departs|merge([tarif.depart]) %}
-{% endfor %}
-
 <script>
 $(document).ready(function() {
   $('#tabs li').on('click', function() {
@@ -62,11 +46,11 @@ $(document).ready(function() {
                             <hr>
                             <div class="price">
                                 <label for="price">Prix: </label>
-                                <span>{{ min(prices) }} €</span>
+                                <span>{{ (voyage.tarif|first).prix }} €</span>
                                 <br><br>
                             </div>
-                            <dt>{{ max(jours) }} jours</dt>
-                            <dt>{{ random(departs)|date("m/d/Y") }}</dt>
+                            <dt>{{ voyage.infoPratique.duree }} jours</dt>
+                            <dt>{{ voyage.infoPratique.depart|date("d/m/Y") }}</dt>
                             <hr>
                             <p style="">{{voyage.description}}</p>
                         </div>

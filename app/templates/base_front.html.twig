@@ -17,6 +17,8 @@
         <div class="hero-head">
             {{ menu() }}
             {# {% include 'Front/navigation/menu.html.twig' %} #}
+
+            {{ render(controller('App\\Controller\\Front\\SearchController::searchBar')) }}
         </div>
         
         <div class="hero-body">

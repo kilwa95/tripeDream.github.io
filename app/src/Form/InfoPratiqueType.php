@@ -19,12 +19,12 @@ class InfoPratiqueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('rendez_vous',DateType::class,[
+            ->add('depart',DateType::class,[
                 'widget' => 'single_text',
                 'placeholder' => 'Select a value',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('fin_sejour',DateType::class,[
+            ->add('retour',DateType::class,[
                 'widget' => 'single_text',
                 'placeholder' => 'Select a value',
                 'format' => 'yyyy-MM-dd',

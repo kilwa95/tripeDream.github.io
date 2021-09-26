@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="card">
         <div class="card-header">
-            <h3>Ajouter un nouveux voyage</h3>
+            <h3>Ajouter ou modifier un voyage</h3>
         </div>
         <div class="card-body">
             {{ form_start(form) }}
@@ -42,7 +42,7 @@
                     {% for tarif in form.tarif %}
                     {{ form_row(tarif.prix) }}
                     {{ form_row(tarif.depart) }}
-                    {{ form_row(tarif.arrive) }}
+                    {{ form_row(tarif.retour) }}
                     {{ form_row(tarif.capacite) }}
                     {% endfor %}
                     <button type="button" class=" btn btn-info mb-2 add_item_link"
@@ -51,8 +51,8 @@
 
                 <div class="col-3 border-right">
                     <h4>Informations pratiques</h4>
-                    {{ form_row(form.infoPratique.rendez_vous) }}
-                    {{ form_row(form.infoPratique.fin_sejour) }}
+                    {{ form_row(form.infoPratique.depart) }}
+                    {{ form_row(form.infoPratique.retour) }}
                     {{ form_row(form.infoPratique.hebergement) }}
                     {{ form_row(form.infoPratique.repas) }}
                     {{ form_row(form.infoPratique.covid19) }}
