@@ -15,7 +15,6 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-
         //Check if a user is already connected
         $user = $this->getUser();
         if ($user !== null & $this->isGranted('ROLE_USER')){
@@ -35,8 +34,8 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
                 
         if ($form->isSubmitted() && $form->isValid()) { 
-            // 3) Encode the password (you could also do this via   
-            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            // 3) Encode the password
+            $password = $passwordEncoder->encodePassword($user, $form->get('password')->getData());
             $user->setPassword($password);
             
             // 4) save the User!
@@ -46,9 +45,8 @@ class RegistrationController extends AbstractController
                 
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
-                return $this->redirectToRoute('navigation');
+            return $this->redirectToRoute('navigation');
         }
-        return $this->render(
-            'security/register.html.twig',['form' => $form->createView()]);
+        return $this->render('security/register.html.twig',['form' => $form->createView()]);
     }
 }

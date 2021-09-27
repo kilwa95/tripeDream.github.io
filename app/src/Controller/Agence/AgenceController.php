@@ -23,21 +23,27 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use SlopeIt\BreadcrumbBundle\Annotation\Breadcrumb;
 
-
+/**
+ * @Breadcrumb({
+ *  { "label" = "Voyages", "route" = "agence_index" }
+ * })
+ */
 class AgenceController extends AbstractController
 {
-
     /**
      * @Route("/agence", name="agence_index", methods={"GET","POST"})
      */
-
-    public function index(){
+    public function index() {
         return $this->redirectToRoute('agence_voyage_show',['id' => $this->getUser()->getId()]); 
-       }
+    }
 
     /**
-     * @Route("/agence/new", name="voyage_new", methods={"GET","POST"})
+     * @Route("/agence/new", name="voyage_new", methods={"GET", "POST"})
+     * @Breadcrumb({
+     *  { "label" = "Nouveau" }
+     * })
      */
     public function new(Request $request, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
@@ -47,6 +53,7 @@ class AgenceController extends AbstractController
         $voyage->addProgramme($programme);
         $voyage->addTarif($tarif);
         $voyage->setUser($this->getUser());
+        $voyage->setStatus("avaible");
         $form = $this->createForm(VoyageType::class, $voyage, ['new' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -64,9 +71,6 @@ class AgenceController extends AbstractController
         ]);
     }
 
-    
-
-
     /**
      * @Route("/agence/user/{id}", name="agence_voyage_show", methods={"GET"})
      */
@@ -82,6 +86,9 @@ class AgenceController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="trip_edit", methods={"GET","POST"})
+     * @Breadcrumb({
+     *  { "label" = "Modifier" }
+     * })
      */
     public function edit(Request $request, Voyage $voyage, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {

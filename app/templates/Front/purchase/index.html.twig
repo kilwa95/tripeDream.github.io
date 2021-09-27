@@ -1,35 +1,54 @@
 {% extends 'base_front.html.twig' %}
 
-{% block title %}purchase index{% endblock %}
+{% block title %}Historique d'achats{% endblock %}
 
 {% block body %}
-<div class="d-flex align-items-center" style="height: 137px; background: #1c1d1f; color: white;">
-    <div style="font-size:30px;font-weight: 400;padding-left:195px;"> Mes achats</div>
-</div>
 
-<div class="container mt-5 mb-5">
- <div class="row">
-        <div class="col-9 mr-3">
-            <div class="d-flex flex-column">
-            {% if  purchases is defined %}
-            {% for purchase in purchases %}
-                <div style=" height:90px;" class="d-flex flex-row justify-content-between  card">
-                    <div class="d-flex flex-row" style="max-width:320px; min-width:320px; ">
-                        <img src="{{ vich_uploader_asset(purchase) }}" alt="{{ purchase.name }}" />
-                        <div style="color:#1c1d1f;font-weight:700;" class="pl-1">{{purchase.name}}</div>
-
-                    </div>
-                    <div class="d-flex flex-column pt-2">
-                    {# <a style="color:#a435f0;" href="{{path('purchase_delete',{'id': purchase.id})}}">Supprimer</a> #}
-                    <a style="color:#a435f0;" href="{{path('voyage_show',{'id': purchase.id})}}">Fiche produit</a>
-                    </div>
-                    <div class="pr-2 pt-2"style="color:#a435f0; ">{{purchase.tarif|first.prix}} €</div>
-                </div>
-            {% endfor %}
-            {% endif %}
+<div class="container">
+  <div class="section">
+    {% if purchases is not empty %}
+        <div class="card is-shady column is-offset-one-quarter">
+            <div class="card-header">
+                <p class="title is-6">Votre historique d'achats</p>
+            </div>
+            <div class="v-card-content mt-5 mb-5">
+                <table class="table table is-striped is-narrow is-hoverable">
+                    <thead>
+                        <tr>
+                            <th>Aperçu</th>
+                            <th>Dénomination</th>
+                            <th>Prix</th>
+                            <th>Opérations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for purchase in purchases %}
+                        <tr>
+                            <td>
+                                <a class="image is-16by9" href="{{ path('voyage_show', {'id': purchase.id}) }}">
+                                    <img src="{{ vich_uploader_asset(purchase) }}" alt="{{ purchase.name }}" />
+                                </a>
+                            </td>
+                            <td>{{ purchase.name }}</td>
+                            <td>{{ purchase.tarif|first.prix }} €</td>
+                            <td>
+                                <a href="{{ path('voyage_show', {'id': purchase.id}) }}"><button class="button is-small is-success"><i class="bi bi-eye"></i></button></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
+    {% else %}
+        <div class="box">
+            <p class="has-text-centered has-text-danger-dark">
+                Votre historique d'achats est vide
+            </p>
+        </div>
+    {% endif %}
+  </div>
 </div>
+
 {% endblock %}
 

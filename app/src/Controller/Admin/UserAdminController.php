@@ -11,8 +11,10 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/users")
  */
 class UserAdminController extends AbstractController

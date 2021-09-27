@@ -30,7 +30,7 @@ function addFormToCollection($collectionHolderClass) {
 }
 
 function addTagFormDeleteLink($tagFormLi) {
-	var $removeFormButton = $('<button class="btn btn-danger mb-5" type="button">Delete this tarif</button>');
+	var $removeFormButton = $('<button class="btn btn-danger mb-5" type="button">Supprimer ce tarif</button>');
 	$tagFormLi.append($removeFormButton);
 
 	$removeFormButton.on('click', function(e) {

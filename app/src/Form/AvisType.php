@@ -7,17 +7,31 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AvisType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titre')
-            ->add('description')
-            ->add('compteur',IntegerType::class,[
-                'label'=> false,
-                'help' => "veuiller entrer entre 1 et 5 etoile"
+            ->add('titre', TextType::class, [
+                'attr' => [
+                    'class' => 'mb-4',
+                    // 'placeholder' => "Titre"
+                ]
+            ])
+            ->add('description', TextType::class, [
+                'attr' => [
+                    'class' => 'mb-4',
+                    // 'placeholder' => "Description"
+                ]
+            ])
+            ->add('compteur', IntegerType::class, [
+                'attr' => [
+                    'class' => 'mb-4',
+                ],
+                'label'=> "Avis",
+                'help' => "Veuillez indiquer entre 1 et 5 étoiles"
             ]);
     }
 

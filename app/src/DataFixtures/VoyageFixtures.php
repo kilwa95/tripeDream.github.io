@@ -27,11 +27,11 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
             if ($user->getRoles() === ['ROLE_AGENCE'])
                 array_push($usersAgencies, $user);
         }
-        $infosPratiques =  $manager->getRepository(InfoPratique::class)->findAll();
-        $activites=  $manager->getRepository(Activite::class)->findAll();
-        $pays =  $manager->getRepository(Pays::class)->findAll();
-        $saison =  $manager->getRepository(Saison::class)->findAll();
-        $villes =  $manager->getRepository(Ville::class)->findAll();
+        $infosPratiques = $manager->getRepository(InfoPratique::class)->findAll();
+        $activites = $manager->getRepository(Activite::class)->findAll();
+        $pays = $manager->getRepository(Pays::class)->findAll();
+        $saison = $manager->getRepository(Saison::class)->findAll();
+        $villes = $manager->getRepository(Ville::class)->findAll();
 
         $NB_TRIPS = 100;
         for ($i = 0, $prInd = 0; $i < $NB_TRIPS; $i++, $prInd += 7) {

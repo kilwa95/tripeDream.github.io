@@ -11,8 +11,6 @@ use App\Repository\SaisonRepository;
 use App\Repository\FavorieRepository;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-
-
 class NavigationController extends AbstractController
 {
     /**

@@ -20,12 +20,12 @@ class InfoPratique
     /**
      * @ORM\Column(type="datetime")
      */
-    private $rendez_vous;
+    private $depart;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $fin_sejour;
+    private $retour;
 
     /**
      * @ORM\Column(type="text")
@@ -42,31 +42,36 @@ class InfoPratique
      */
     private $covid19;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $duree;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getRendezVous(): ?\DateTimeInterface
+    public function getDepart(): ?\DateTimeInterface
     {
-        return $this->rendez_vous;
+        return $this->depart;
     }
 
-    public function setRendezVous(\DateTimeInterface $rendez_vous): self
+    public function setDepart(\DateTimeInterface $depart): self
     {
-        $this->rendez_vous = $rendez_vous;
+        $this->depart = $depart;
 
         return $this;
     }
 
-    public function getFinSejour(): ?\DateTimeInterface
+    public function getRetour(): ?\DateTimeInterface
     {
-        return $this->fin_sejour;
+        return $this->retour;
     }
 
-    public function setFinSejour(\DateTimeInterface $fin_sejour): self
+    public function setRetour(\DateTimeInterface $retour): self
     {
-        $this->fin_sejour = $fin_sejour;
+        $this->retour = $retour;
 
         return $this;
     }
@@ -103,6 +108,18 @@ class InfoPratique
     public function setCovid19(string $covid19): self
     {
         $this->covid19 = $covid19;
+
+        return $this;
+    }
+
+    public function getDuree(): ?int
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(int $duree): self
+    {
+        $this->duree = $duree;
 
         return $this;
     }

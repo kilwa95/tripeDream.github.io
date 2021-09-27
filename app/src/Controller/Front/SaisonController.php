@@ -35,32 +35,32 @@ class SaisonController extends AbstractController
     /**
      * @Route("/new", name="saison_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
-    {
-        $user = $this->getUser();
-        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin');
-        }
-        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
-            return $this->redirectToRoute('agence_index');
-        } 
-        $saison = new Saison();
-        $form = $this->createForm(SaisonType::class, $saison);
-        $form->handleRequest($request);
+    // public function new(Request $request): Response
+    // {
+    //     $user = $this->getUser();
+    //     if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+    //         return $this->redirectToRoute('admin');
+    //     }
+    //     if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+    //         return $this->redirectToRoute('agence_index');
+    //     } 
+    //     $saison = new Saison();
+    //     $form = $this->createForm(SaisonType::class, $saison);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($saison);
-            $entityManager->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager = $this->getDoctrine()->getManager();
+    //         $entityManager->persist($saison);
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('saison_index');
-        }
+    //         return $this->redirectToRoute('saison_index');
+    //     }
 
-        return $this->render('Front/saison/new.html.twig', [
-            'saison' => $saison,
-            'form' => $form->createView(),
-        ]);
-    }
+    //     return $this->render('Front/saison/new.html.twig', [
+    //         'saison' => $saison,
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 
     /**
      * @Route("/{id}", name="saison_show", methods={"GET"})
@@ -82,48 +82,48 @@ class SaisonController extends AbstractController
     /**
      * @Route("/{id}/edit", name="saison_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Saison $saison): Response
-    {
-        $user = $this->getUser();
-        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin');
-        }
-        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
-            return $this->redirectToRoute('agence_index');
-        } 
-        $form = $this->createForm(SaisonType::class, $saison);
-        $form->handleRequest($request);
+    // public function edit(Request $request, Saison $saison): Response
+    // {
+    //     $user = $this->getUser();
+    //     if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+    //         return $this->redirectToRoute('admin');
+    //     }
+    //     if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+    //         return $this->redirectToRoute('agence_index');
+    //     } 
+    //     $form = $this->createForm(SaisonType::class, $saison);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('saison_index');
-        }
+    //         return $this->redirectToRoute('saison_index');
+    //     }
 
-        return $this->render('Front/saison/edit.html.twig', [
-            'saison' => $saison,
-            'form' => $form->createView(),
-        ]);
-    }
+    //     return $this->render('Front/saison/edit.html.twig', [
+    //         'saison' => $saison,
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 
     /**
      * @Route("/{id}", name="saison_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Saison $saison): Response
-    {
-        $user = $this->getUser();
-        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin');
-        }
-        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
-            return $this->redirectToRoute('agence_index');
-        } 
-        if ($this->isCsrfTokenValid('delete'.$saison->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($saison);
-            $entityManager->flush();
-        }
+    // public function delete(Request $request, Saison $saison): Response
+    // {
+    //     $user = $this->getUser();
+    //     if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+    //         return $this->redirectToRoute('admin');
+    //     }
+    //     if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+    //         return $this->redirectToRoute('agence_index');
+    //     } 
+    //     if ($this->isCsrfTokenValid('delete'.$saison->getId(), $request->request->get('_token'))) {
+    //         $entityManager = $this->getDoctrine()->getManager();
+    //         $entityManager->remove($saison);
+    //         $entityManager->flush();
+    //     }
 
-        return $this->redirectToRoute('saison_index');
-    }
+    //     return $this->redirectToRoute('saison_index');
+    // }
 }

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'Invalid credentials.' => 'The password or email you entered was invalid!',
+    'Invalid credentials.' => "Le mot de passe ou l'e-mail que vous avez saisi n'est pas valide !",
 ];

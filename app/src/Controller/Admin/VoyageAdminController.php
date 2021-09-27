@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Voyage;
 use App\Form\VoyageType;
 use App\Repository\VoyageRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/voyages")
  */
 class VoyageAdminController extends AbstractController

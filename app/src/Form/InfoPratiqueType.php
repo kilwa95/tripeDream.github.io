@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 
 class InfoPratiqueType extends AbstractType
@@ -18,19 +19,23 @@ class InfoPratiqueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('rendez_vous',DateType::class,[
+            ->add('depart',DateType::class,[
                 'widget' => 'single_text',
                 'placeholder' => 'Select a value',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('fin_sejour',DateType::class,[
+            ->add('retour',DateType::class,[
                 'widget' => 'single_text',
                 'placeholder' => 'Select a value',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('hebergement')
+            ->add('hebergement', TextType::class, [
+                'label'  => "Hébergement",
+            ])
             ->add('repas')
-            ->add('covid19')
+            ->add('covid19', TextType::class, [
+                'label'  => "Informations sanitaires (Covid 19)",
+            ])
             ->add('submit', SubmitType::class, [
                 'label'  => "Envoyer",
                 'attr' => [

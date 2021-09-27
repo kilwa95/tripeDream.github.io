@@ -12,20 +12,24 @@ use App\Entity\Voyage;
 use App\Repository\VoyageRepository;
 use App\Repository\PanierRepository;
 use App\Services\Payement;
-
-
-
-
+use Knp\Component\Pager\PaginatorInterface;
+use SlopeIt\BreadcrumbBundle\Annotation\Breadcrumb;
 
 /**
  * @Route("/panier")
+ * @Breadcrumb({
+ *  { "label" = "Accueil", "route" = "navigation" }
+ * })
  */
 class PanierController extends AbstractController
 {
     /**
      * @Route("/", name="panier_index", methods={"GET"})
+     * @Breadcrumb({
+     *  { "label" = "Mon panier" },
+     * })
      */
-    public function index(VoyageRepository $voyageRepository): Response
+    public function index(Request $request, VoyageRepository $voyageRepository, PaginatorInterface $paginator): Response
     {   
         $user = $this->getUser();
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
@@ -48,9 +52,11 @@ class PanierController extends AbstractController
             array_push($voyages,$voyage);
         }
 
+        $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
+        $pagination->setParam('_fragment', 'list');
 
         return $this->render('Front/panier/index.html.twig',[
-            'paniers' =>  $voyages,
+            'paniers' =>  $pagination,
         ]);
     }
     /**
@@ -73,28 +79,35 @@ class PanierController extends AbstractController
     }
 
      /**
-     * @Route("/{id}", name="panier_delete", methods={"DELETE","GET"})
+     * @Route("/{id}", name="panier_delete", methods={"DELETE", "GET"})
      */
-    public function delete(int $id, PanierRepository $panierRepository): Response
+    public function delete(Request $request, int $id, PanierRepository $panierRepository): Response
     {  
         $user = $this->getUser();
+
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('admin');
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
-        } 
+        }
+
         $panier = $panierRepository->findOneBy(['voyage' => $id]);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($panier);
         $entityManager->flush();
 
         return $this->redirectToRoute('panier_index');
+        // return $this->redirectToRoute('panier_validation', ['total' => $request->get('total')]);
     }
      /**
      * @Route("/validation/create-checkout-session/{total}", name="panier_validation", methods={"POST","GET"})
+     * @Breadcrumb({
+     *  { "label" = "Panier", "route" = "panier_index" },
+     *  { "label" = "Passage commande" },
+     * })
      */
-    public function validate(string $total,Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
+    public function validate(string $total, Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
     {
         $user = $this->getUser();
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
@@ -131,10 +144,16 @@ class PanierController extends AbstractController
 
     }
      /**
-     * @Route("/payement/success", name="panier_success", methods={"GET"})
+     * @Route("/payement/success/{total}", name="panier_success", methods={"POST","GET"})
+     * @Breadcrumb({
+     *  { "label" = "Panier", "route" = "panier_index" },
+     *  { "label" = "Résumé commande" },
+     * })
      */
     public function success(Request $request): Response
-    {  
+    {
+        $total = $request->get("total");
+
         $user = $this->getUser();
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('admin');
@@ -160,7 +179,10 @@ class PanierController extends AbstractController
         }
 
           
-        return $this->render('Front/payement/success.html.twig');
+        return $this->render('Front/payement/success.html.twig',[
+            //'paniers' =>  $voyages,
+            'total' => $total
+        ]);
     }
     
 }

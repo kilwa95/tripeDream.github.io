@@ -23,48 +23,51 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
+use SlopeIt\BreadcrumbBundle\Annotation\Breadcrumb;
 
 /**
  * @Route("/voyage")
+ * @Breadcrumb({
+ *  { "label" = "Accueil", "route" = "navigation" }
+ * })
  */
 class VoyageController extends AbstractController
 {
     /**
      * @Route("/", name="voyage_index", methods={"GET"})
-     */
-    public function index(Request $request,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository,FavorieRepository $favorieRepository, PaginatorInterface $paginator)
-    {
+     * @Breadcrumb({
+     *  { "label" = "Voyages" }
+     * })
+    */
+    public function index(Request $request, ActiviteRepository $activiteRepository, VoyageRepository $voyageRepository, PaysRepository $paysRepository, SaisonRepository $saisonRepository, FavorieRepository $favorieRepository, PaginatorInterface $paginator)
+    {        
         $user = $this->getUser();
+        
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('admin');
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
-        } 
-        $voyages = $voyageRepository->findAll(); // $voyages = $voyageRepository->findBy(['status' => 'avaible']); // KHALED
-        $pagination = $paginator->paginate(
-        $voyages, /* query NOT result */
-        $request->query->getInt('page', 1)/*page number*/,
-        3/*limit per page*/
-   );
+        }
+        // $voyages = $voyageRepository->findAll();
 
-        $pagination = $paginator->paginate(
-        $voyages, /* query NOT result */
-        $request->query->getInt('page', 1)/*page number*/,
-        4/*limit per page*/
-        );
+        $voyages = $voyageRepository->findBy(['status' => 'avaible']);
+        $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
+        $pagination->setParam('_fragment', 'list');
 
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
-            'count'  => $voyageRepository->findAll(),
+            'count'  => $voyageRepository->findAll()
             // 'favories' => $favorieRepository->findAll()
-            
         ]);
     }
 
     /**
      * @Route("/pays/{id}", name="pays_name", methods={"GET"})
+     * @Breadcrumb({
+     *  { "label" = "Voyages", "route" = "voyage_index" },
+     *  { "label" = "$pays" },
+     * })
      */
     public function paysById(Pays $pays,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
         $user = $this->getUser();
@@ -73,24 +76,25 @@ class VoyageController extends AbstractController
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
-        } 
+        }
         
         $voyages = $pays->getVoyages();
-        $pagination = $paginator->paginate(
-        $voyages, /* query NOT result */
-        $request->query->getInt('page', 1)/*page number*/,
-        4/*limit per page*/
-        );
-
+        $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
+        $pagination->setParam('_fragment', 'list');
 
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyages,
+            'pays' => $pays
         ]);
     }
 
      /**
      * @Route("/activite/{id}", name="activite_name", methods={"GET"})
+     * @Breadcrumb({
+     *  { "label" = "Voyages", "route" = "voyage_index" },
+     *  { "label" = "$activite" },
+     * })
      */
     public function activiteById(Activite $activite ,Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
         $user = $this->getUser();
@@ -99,23 +103,25 @@ class VoyageController extends AbstractController
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
-        } 
-        $voyages  =  $activite->getVoyages();
-        $pagination = $paginator->paginate(
-        $voyages, /* query NOT result */
-        $request->query->getInt('page', 1)/*page number*/,
-        4/*limit per page*/
-        );
+        }
 
+        $voyages  =  $activite->getVoyages();
+        $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
+        $pagination->setParam('_fragment', 'list');
 
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyages,
+            'activite'  => $activite,
         ]);
     }
 
      /**
      * @Route("/saison/{id}", name="saison_name", methods={"GET"})
+     * @Breadcrumb({
+     *  { "label" = "Voyages", "route" = "voyage_index" },
+     *  { "label" = "$saison" },
+     * })
      */
     public function saisonById(Saison $saison, Request $request,FavorieRepository $favorieRepository,ActiviteRepository $activiteRepository,VoyageRepository $voyageRepository,PaysRepository $paysRepository,SaisonRepository $saisonRepository, PaginatorInterface $paginator){
         $user = $this->getUser();
@@ -124,25 +130,26 @@ class VoyageController extends AbstractController
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
-        } 
+        }
         
         $voyages  =  $saison->getVoyages();
-        $pagination = $paginator->paginate(
-        $voyages, /* query NOT result */
-        $request->query->getInt('page', 1)/*page number*/,
-        4/*limit per page*/
-        );
-
+        $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
+        $pagination->setParam('_fragment', 'list');
 
         return $this->render('Front/voyage/index.html.twig',[
             'voyages' => $pagination,
             'count'  => $voyages,
+            'saison'  => $saison,
         ]);
     }
 
     /**
      * 
      * @Route("/{id}", name="voyage_show", methods={"GET","POST"})
+     * @Breadcrumb({
+     *  { "label" = "Voyages", "route" = "voyage_index" },
+     *  { "label" = "$voyage.name" },
+     * })
      */
     public function show(Request $request,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository,Voyage $voyage): Response
     {

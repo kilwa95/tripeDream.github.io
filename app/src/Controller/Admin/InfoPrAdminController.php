@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\InfoPratique;
 use App\Form\InfoPratiqueType;
 use App\Repository\InfoPratiqueRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/info_pratiques")
  */
 class InfoPrAdminController extends AbstractController
@@ -59,15 +61,16 @@ class InfoPrAdminController extends AbstractController
 
         $start_from = ($current_page_number - 1) * $records_per_page;
 
-        $dql = 'SELECT info_pr.id, info_pr.rendez_vous, info_pr.fin_sejour, info_pr.hebergement, info_pr.repas, info_pr.covid19 FROM App\Entity\InfoPratique info_pr ';
+        $dql = 'SELECT info_pr.id, info_pr.depart, info_pr.retour, info_pr.duree, info_pr.hebergement, info_pr.repas, info_pr.covid19 FROM App\Entity\InfoPratique info_pr ';
 
         if (!empty($request->get("searchPhrase")))
         {
             $strMainSearch = $request->get("searchPhrase");
 
             $where = "WHERE (info_pr.id LIKE '%".$strMainSearch."%' OR "
-                ."info_pr.rendez_vous LIKE '%".$strMainSearch."%' OR "
-                ."info_pr.fin_sejour LIKE '%".$strMainSearch."%' OR "
+                ."info_pr.depart LIKE '%".$strMainSearch."%' OR "
+                ."info_pr.retour LIKE '%".$strMainSearch."%' OR "
+                ."info_pr.duree LIKE '%".$strMainSearch."%' OR "
                 ."info_pr.hebergement LIKE '%".$strMainSearch."%' OR "
                 ."info_pr.repas LIKE '%".$strMainSearch."%' OR "
                 ."info_pr.covid19 LIKE '%".$strMainSearch."%') ";

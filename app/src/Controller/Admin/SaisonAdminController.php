@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Saison;
 use App\Form\SaisonType;
 use App\Repository\SaisonRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/saison")
  */
 class SaisonAdminController extends AbstractController
@@ -139,82 +141,82 @@ class SaisonAdminController extends AbstractController
     /**
      * @Route("/new", name="admin_saison_new", methods={"GET", "POST"})
      */
-    public function new(Request $request): Response
-    {
-        $saison = new Saison();
+    // public function new(Request $request): Response
+    // {
+    //     $saison = new Saison();
 
-        $form = $this->createForm(SaisonType::class, $saison, ['action' => 'new']);
-        $form->handleRequest($request);
+    //     $form = $this->createForm(SaisonType::class, $saison, ['action' => 'new']);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try{
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($saison);
-                $em->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         try{
+    //             $em = $this->getDoctrine()->getManager();
+    //             $em->persist($saison);
+    //             $em->flush();
     
-                $this->addFlash('success', "La saison a été bien crée");
+    //             $this->addFlash('success', "La saison a été bien crée");
                 
-                return $this->redirectToRoute('saison_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+    //             return $this->redirectToRoute('saison_list');
+    //         } catch(\Exception $e){
+    //             $this->addFlash('danger', $e->getMessage());
                 
-                return $this->redirectToRoute('saison_list');
-            }
-        }
+    //             return $this->redirectToRoute('saison_list');
+    //         }
+    //     }
 
-        return $this->render('admin/saison/new.html.twig', [
-            'saison' => $saison,
-            'operation' => 'new',
-            'form' => $form->createView(),
-        ]);
-    }
+    //     return $this->render('admin/saison/new.html.twig', [
+    //         'saison' => $saison,
+    //         'operation' => 'new',
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 
     /**
      * @Route("/{id}/edit", name="admin_saison_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Saison $saison): Response
-    {
-        $form = $this->createForm(SaisonType::class, $saison, ['action' => 'edit']);
-        $form->handleRequest($request);
+    // public function edit(Request $request, Saison $saison): Response
+    // {
+    //     $form = $this->createForm(SaisonType::class, $saison, ['action' => 'edit']);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try{
-                $this->getDoctrine()->getManager()->flush();
-                $this->addFlash('success', "La saison a été modifié avec succès");
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         try{
+    //             $this->getDoctrine()->getManager()->flush();
+    //             $this->addFlash('success', "La saison a été modifié avec succès");
     
-                return $this->redirectToRoute('saison_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+    //             return $this->redirectToRoute('saison_list');
+    //         } catch(\Exception $e){
+    //             $this->addFlash('danger', $e->getMessage());
                 
-                return $this->redirectToRoute('saison_list');
-            }
-        }
+    //             return $this->redirectToRoute('saison_list');
+    //         }
+    //     }
 
-        return $this->render('admin/saison/edit.html.twig', [
-            'saison' => $saison,
-            'form' => $form->createView(),
-        ]);
-    }
+    //     return $this->render('admin/saison/edit.html.twig', [
+    //         'saison' => $saison,
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 
     /**
      * @Route("/delete/{id}", name="delete_saison", methods={"DELETE", "GET", "POST"})
      */
-    public function delete(int $id, SaisonRepository $saisonRepository): Response
-    {
-        $saison = $saisonRepository->find($id);
+    // public function delete(int $id, SaisonRepository $saisonRepository): Response
+    // {
+    //     $saison = $saisonRepository->find($id);
         
-        try{
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($saison);
-            $em->flush();
+    //     try{
+    //         $em = $this->getDoctrine()->getManager();
+    //         $em->remove($saison);
+    //         $em->flush();
     
-            $this->addFlash('success', "La saison a été supprimé avec succès");
+    //         $this->addFlash('success', "La saison a été supprimé avec succès");
 
-            return $this->redirectToRoute('saison_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+    //         return $this->redirectToRoute('saison_list');
+    //     } catch(\Exception $e){
+    //         $this->addFlash('danger', $e->getMessage());
             
-            return $this->redirectToRoute('saison_list');
-        }
-    }
+    //         return $this->redirectToRoute('saison_list');
+    //     }
+    // }
 }

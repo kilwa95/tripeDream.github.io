@@ -34,7 +34,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right pt-0">
                 <div class="dropdown-header bg-light py-2"><strong>Compte ({{ app.user.username }})</strong></div>
-                    <a class="dropdown-item" href="#">
+                    {# <a class="dropdown-item" href="#">
                         <i class="bi bi-heart"></i>
                         <span class="ml-2">Mes favoris</span>
                         <span class="badge badge-danger ml-auto">42</span>
@@ -48,7 +48,7 @@
                         <i class="bi bi-credit-card-2-back"></i>
                         <span class="ml-2">Mes transactions</span>
                         <span class="badge badge-info ml-auto">42</span>
-                    </a>
+                    </a> #}
                 <div class="dropdown-header bg-light py-2"><strong>Réglages</strong></div>
                     <a class="dropdown-item" href="{{ path('show_user', {'id': app.user.id})}}">
                         <i class="bi bi-eye"></i>
