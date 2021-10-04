@@ -25,7 +25,11 @@
             {% block hero %}{% endblock %}
         </div>
     </section>
-    
+    {% for message in app.flashes('success') %}
+			<div class="col-xs4">
+				<div class="p-3 my-2 rounded-2 success">{{message}}</div>
+			</div>
+		{% endfor %}
     <div class="" style="background: #EFF3F4;" id="list">
         <div class="container mb-5 pt-2">
             {{ slope_it_breadcrumb() }}

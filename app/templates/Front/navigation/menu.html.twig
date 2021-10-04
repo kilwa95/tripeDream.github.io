@@ -93,7 +93,8 @@
                 </a> #}
 
                 {% if is_granted("ROLE_USER") or is_granted("ROLE_AGENCE") %}
-                <div class="navbar-item has-dropdown is-hoverable">
+                <a   href="{{ path('users_edit', {'id': app.user.id}) }}">dsdds</a>
+                <div class="navbar-item has-dropdown is-hoverable"   >
                     <span class="navbar-item">
                         <div class="button is-white is-outlined">
                             <span class="mr-2">{{ app.user.username }}</span>

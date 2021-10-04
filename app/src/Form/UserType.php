@@ -116,9 +116,6 @@ class UserType extends AbstractType
     }else{
         $currentUserId = null;
     }
-
-        //dd($currentUserId);
-
         if ($options['data']->getId() == $currentUserId && $this->security->getUser() !== null) {
             $builder->remove('roles');
         } else {
