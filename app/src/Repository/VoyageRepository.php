@@ -93,4 +93,20 @@ class VoyageRepository extends ServiceEntityRepository
 
         return $result;
     }
+
+    // Find/search voyages by date de départ, durée & pays de destination
+    public function findVoyagesByDateDepartDureePays(string $depart, string $duree, string $pays)
+    {
+        $qb = $this->createQueryBuilder('v')
+        ->join('v.infoPratique', 'ip')
+        ->join('v.pays', 'py')
+        ->where('ip.depart LIKE :depart AND ip.duree = :duree AND py.name = :pays')
+        ->setParameter('depart', $depart . "%")
+        ->setParameter('duree', $duree)
+        ->setParameter('pays', $pays);
+
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
 }
