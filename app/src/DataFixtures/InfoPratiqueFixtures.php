@@ -16,7 +16,7 @@ class InfoPratiqueFixtures extends Fixture
 
             $infoPratique->setDepart($faker->dateTimeBetween("now", '+'.rand(1, 5).' days'));
             $dayAfter = new \DateTime($infoPratique->getDepart()->format('Y-m-d H:i:s').' +1 day'); // to fix "0 jours" issue
-            $infoPratique->setRetour($faker->dateTimeBetween($dayAfter, '+'.rand(3, 60).' days'));
+            $infoPratique->setRetour($faker->dateTimeBetween($dayAfter, '+'.rand(3, 30).' days'));
 
             $infoPratique->setHebergement($faker->realText());
             $infoPratique->setRepas($faker->realText());
