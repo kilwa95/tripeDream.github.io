@@ -95,7 +95,7 @@
 
                     return "<div class='text-center'><a href='"+urlShowBtn+"' class='btn btn-info btn-xs update'><i class='bi bi-eye'></i></a>" +
                         "&nbsp; <a href='"+urlEditBtn+"' class='btn btn-warning btn-xs update'><i class='bi bi-pencil-square'></i></a>" +
-                        "&nbsp; <a href='"+urlDelBtn+"' class='btn btn-danger btn-xs delete'><i class='bi bi-x-square'></i></a></div>";
+                        "&nbsp; <a data-urlDelBtn='"+urlDelBtn+"' href='' class='btn btn-danger btn-xs delete' data-toggle='modal' data-target='#dangerModal'><i class='bi bi-x-square'></i></a></div>";
                 }
             },
             labels: {
@@ -173,6 +173,23 @@
             templates: {
                 
             }
+        });
+
+        table.on("loaded.rs.jquery.bootgrid", function () {
+            /* Executes after data is loaded and rendered */
+            $(this).find(".delete").click(function (e) {
+                urlDelBtn = $(this).attr('data-urlDelBtn');
+
+                modalId = $(this).attr("data-target")
+                modal = $(modalId);
+                
+                $(modalId+ ' .modal-footer a').attr("href", urlDelBtn)
+                modal.modal("show");
+
+                $("button[data-dismiss=modal]").click(function() {
+                    modal.modal('hide');
+                });
+            });
         });
     });
 </script>

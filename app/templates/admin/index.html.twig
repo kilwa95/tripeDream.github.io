@@ -17,6 +17,23 @@
 
         <footer class="c-footer">
             <!-- Footer content here -->
+            <div class="modal fade" id="dangerModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-danger" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmez-vous la suppression</h4>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Êtes-vous sûr de vouloir supprimer définitivement l'élément sélectionné ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-backdrop="false" data-dismiss="modal">Annuler</button>
+                            <a href=""><button class="btn btn-danger" type="button">Confirmer</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </footer>
     </div>
 {% endblock %}
