@@ -73,7 +73,7 @@ class SearchController extends AbstractController
         $pays = $request->request->get('form')['pays'];
 
         if ($depart) {
-            $voyages = $repo->findVoyagesByDateDepartDureePays($depart, $duree, $pays);
+            $voyages = $repo->findByDateDepartDureePays($depart, $duree, $pays);
         }
         return $this->render('Front/search/index.html.twig', [
             'voyages' => $voyages
