@@ -52,7 +52,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($user);
         }
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 20; $i++) {
 
             $user = new User();
             $user->setEmail($faker->email());
