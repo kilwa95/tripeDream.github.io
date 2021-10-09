@@ -8,7 +8,7 @@ var stripe = Stripe(
 );
 var checkoutButton = document.getElementById('checkout-button');
 checkoutButton.addEventListener('click', function() {
-	fetch(`/panier/validation/create-checkout-session/${total}`, {
+	fetch(`/panier/validation/create-checkout-session`, {
 		method: 'POST'
 	})
 	.then(function(response) {

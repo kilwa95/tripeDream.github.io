@@ -101,13 +101,13 @@ class PanierController extends AbstractController
         // return $this->redirectToRoute('panier_validation', ['total' => $request->get('total')]);
     }
      /**
-     * @Route("/validation/create-checkout-session/{total}", name="panier_validation", methods={"POST","GET"})
+     * @Route("/validation/create-checkout-session", name="panier_validation", methods={"POST","GET"})
      * @Breadcrumb({
      *  { "label" = "Panier", "route" = "panier_index" },
      *  { "label" = "Passage commande" },
      * })
      */
-    public function validate(string $total, Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
+    public function validate( Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
     {
         $user = $this->getUser();
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
@@ -117,6 +117,7 @@ class PanierController extends AbstractController
             return $this->redirectToRoute('agence_index');
         } 
        
+        $total = $this->get('session')->get('totale');
         $checkout_session =  $payement->checkout($total);
         $paniers = $this->getUser()->getPaniers();
         $ids = [];
@@ -144,7 +145,7 @@ class PanierController extends AbstractController
 
     }
      /**
-     * @Route("/payement/success/{total}", name="panier_success", methods={"POST","GET"})
+     * @Route("/payement/success", name="panier_success", methods={"POST","GET"})
      * @Breadcrumb({
      *  { "label" = "Panier", "route" = "panier_index" },
      *  { "label" = "Résumé commande" },
@@ -152,7 +153,7 @@ class PanierController extends AbstractController
      */
     public function success(Request $request): Response
     {
-        $total = $request->get("total");
+        $total = $this->get('session')->get('totale');
 
         $user = $this->getUser();
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {

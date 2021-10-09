@@ -23,7 +23,7 @@ class Payement {
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => $YOUR_DOMAIN . '/panier/payement/success/'. $total/100,
+            'success_url' => $YOUR_DOMAIN . '/panier/payement/success/'. $total * 100,
             'cancel_url' => $YOUR_DOMAIN . '/panier',
             ]);
 
