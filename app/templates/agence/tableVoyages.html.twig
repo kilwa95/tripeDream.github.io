@@ -3,6 +3,7 @@
 {% block title %}Mes voyages{% endblock %}
 
 {% block core %}
+
 <div class="container">
     <div class="card">
         <div class="card-header">Mes voyages</div>
@@ -25,8 +26,8 @@
                     {% for voyage in voyages %}
                         <tr>
                             <th class="text-center" style="max-width:181px;" scope="row">{{voyage.name}}</th>
-                            <td class="text-center" style="max-width:181px;">{{voyage.description}}</td>
-                            <td class="text-center"> <img style="max-width:181px;" class="mr-3" src="{{ vich_uploader_asset(voyage) }}" alt="{{ voyage.name }}" /></td>
+                            <td class="text-center" style="max-width:181px;">{{ voyage.description|striptags|length > 50 ? voyage.description|striptags|slice(0, 50) ~ '...' : voyage.description|striptags }}</td>
+                            <td class="text-center"> <img style="width:90px;height:50px" class="mr-3" src="{{ vich_uploader_asset(voyage) }}" alt="{{ voyage.name }}" /></td>
                             <td class="text-center">
                                 <a href="{{path('voyage_show', {'id': voyage.id})}}" class="btn btn-info btn-xs">
                                     <i class="bi bi-eye"></i>
@@ -34,7 +35,7 @@
                                 <a href="{{path('trip_edit', {'id': voyage.id})}}" class="btn btn-warning btn-xs">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>&nbsp;
-                                <a href="{{path('trip_delete', {'id': voyage.id})}}" class="btn btn-danger btn-xs">
+                                <a data-urlDelBtn="{{path('trip_delete', {'id': voyage.id})}}" href="" onclick="myFunction(this)" data-toggle='modal' data-target='#dangerModal' class="btn btn-danger btn-xs">
                                     <i class="bi bi-x-square"></i>
                                 </a>
                             </td>
@@ -44,6 +45,24 @@
             </table>
         </div>
         <div>
-        </div>
     </div>
-    {% endblock %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function myFunction(e) {
+        urlDelBtn = $(e).attr('data-urlDelBtn');
+
+        modalId = $(e).attr("data-target")
+        modal = $(modalId);
+        
+        $(modalId+ ' .modal-footer a').attr("href", urlDelBtn)
+        modal.modal("show");
+
+        $("button[data-dismiss=modal]").click(function() {
+            modal.modal('hide');
+        });
+    };
+</script>
+
+{% endblock %}
