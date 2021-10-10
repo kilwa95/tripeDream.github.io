@@ -133,6 +133,7 @@ class PanierController extends AbstractController
         }
 
         if ($request->isMethod('POST')) {
+
             return $this->json([
               'id' => $checkout_session->id
             ]);

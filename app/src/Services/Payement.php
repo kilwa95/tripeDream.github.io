@@ -14,7 +14,7 @@ class Payement {
             'line_items' => [[
                 'price_data' => [
                 'currency' => 'EUR',
-                'unit_amount' => $total,
+                'unit_amount' => $total * 100,
                 'product_data' => [
                     'name' => 'Stubborn Attachments',
                     'images' => ["https://i.imgur.com/EHyR2nP.png"],
@@ -23,7 +23,7 @@ class Payement {
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => $YOUR_DOMAIN . '/panier/payement/success/'. $total * 100,
+            'success_url' => $YOUR_DOMAIN . '/panier/payement/success/',
             'cancel_url' => $YOUR_DOMAIN . '/panier',
             ]);
 

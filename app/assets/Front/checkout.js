@@ -1,12 +1,11 @@
 import $ from 'jquery';
-
 const total = $('#checkout-button').data('total') * 100;
-console.log(total);
 
 var stripe = Stripe(
 	'pk_test_51IrUFOIPqsC3XcMt1SFLXLTFuKXY9X3VvpLU0XIvcOPUVc36FpvWt2u7cwbk8JiM6sq8CpYAX9bLaMYxliOoLhUU00DhG9vQtY'
 );
 var checkoutButton = document.getElementById('checkout-button');
+
 checkoutButton.addEventListener('click', function() {
 	fetch(`/panier/validation/create-checkout-session`, {
 		method: 'POST'
