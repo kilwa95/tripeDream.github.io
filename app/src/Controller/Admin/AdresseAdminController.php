@@ -156,8 +156,8 @@ class AdresseAdminController extends AbstractController
                 $this->addFlash('success', "L'adresse a été bien crée");
                 
                 return $this->redirectToRoute('adresse_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('adresse_list');
             }
@@ -184,8 +184,8 @@ class AdresseAdminController extends AbstractController
                 $this->addFlash('success', "L'adresse a été modifié avec succès");
     
                 return $this->redirectToRoute('adresse_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('adresse_list');
             }
@@ -212,8 +212,8 @@ class AdresseAdminController extends AbstractController
             $this->addFlash('success', "L'adresse a été supprimé avec succès");
 
             return $this->redirectToRoute('adresse_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('adresse_list');
         }
