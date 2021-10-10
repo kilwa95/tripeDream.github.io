@@ -131,6 +131,11 @@ class Voyage
      */
     private $status;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="voyage")
+     */
+    private $orders;
+
 
  
 
@@ -146,6 +151,7 @@ class Voyage
         $this->favorie = new ArrayCollection();
         $this->paniers = new ArrayCollection();
         $this->usersParticipat = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -530,6 +536,36 @@ class Voyage
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setVoyage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getVoyage() === $this) {
+                $order->setVoyage(null);
+            }
+        }
 
         return $this;
     }
