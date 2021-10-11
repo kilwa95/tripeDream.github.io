@@ -155,8 +155,8 @@ class ProgrammeAdminController extends AbstractController
                 $this->addFlash('success', "Le programme a été bien crée");
                 
                 return $this->redirectToRoute('programme_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('programme_list');
             }
@@ -183,8 +183,8 @@ class ProgrammeAdminController extends AbstractController
                 $this->addFlash('success', "Le programme a été modifié avec succès");
     
                 return $this->redirectToRoute('programme_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('programme_list');
             }
@@ -211,8 +211,8 @@ class ProgrammeAdminController extends AbstractController
             $this->addFlash('success', "Le programme a été supprimé avec succès");
 
             return $this->redirectToRoute('programme_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('programme_list');
         }

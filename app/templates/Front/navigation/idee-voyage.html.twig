@@ -2,20 +2,25 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h2 class="pb-3 text-red text-center">Destinations populaires</h2>
+                <h2 class="is-size-4 mb-4 has-text-white text-center">Destinations populaires</h2>
             </div>
-            <div class="col-12 col-sm-6 col-md-4">
-                <a href="" class="text-white">
-                    <figure class="position-relative overflow-hidden">
-                        <img class="img-fluid" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/Vienna.jpg"
-                            alt="Vienna">
-                        <figcaption class="d-flex align-items-center justify-content-center position-absolute">
-                            <h3>Vienna</h3>
-                        </figcaption>
-                    </figure>
-                </a>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4">
+
+            {# {{ dump(voyagesByPays) }} #}
+
+            {% for voyage in voyagesByPays %}
+                <div class="col-12 col-sm-6 col-md-4">
+                    <a href="{{ path('voyage_show', {'id': voyage.id}) }}" class="text-white">
+                        <figure class="position-relative overflow-hidden">
+                            <img class="" src="{{ vich_uploader_asset(voyage) }}" alt="{{ voyage.pays[0].name }}" width="600px" height="300px">
+                            <figcaption class="d-flex align-items-center justify-content-center position-absolute">
+                                <h3>{{ voyage.pays[0].name }}</h3>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </div>
+            {% endfor %}
+
+            {# <div class="col-12 col-sm-6 col-md-4">
                 <a href="" class="text-white">
                     <figure class="position-relative overflow-hidden">
                         <img class="img-fluid" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/Edinburgh.jpg"
@@ -62,9 +67,9 @@
         </div>
         <div class="row">
             <div class="col text-center">
-                <a class="btn bg-red text-white" href="" role="button">More Destinations ↓</a>
+                <a class="button is-white is-outlined" href="{{ path('voyage_index') }}" role="button">Plus de voyages ↓</a>
             </div>
-        </div>
+        </div> #}
 
     </div>
 </section>

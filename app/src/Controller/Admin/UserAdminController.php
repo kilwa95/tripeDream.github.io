@@ -213,8 +213,8 @@ class UserAdminController extends AbstractController
                 $this->addFlash('success', "L'utilisateur a été bien crée");
                 
                 return $this->redirectToRoute('users_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('users_list');
             }
@@ -241,8 +241,8 @@ class UserAdminController extends AbstractController
                 $this->addFlash('success', "L'utilisateur a été modifié avec succès");
     
                 return $this->redirectToRoute('users_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('users_list');
             }
@@ -269,8 +269,8 @@ class UserAdminController extends AbstractController
             $this->addFlash('success', "L'utilisateur a été supprimé avec succès");
 
             return $this->redirectToRoute('users_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('users_list');
         }

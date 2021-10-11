@@ -8,7 +8,7 @@ import './styles/footer.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import './Front/slides.js';
-import './Front/checkout.js';
+// import './Front/checkout.js';
 
 import 'bulma';
 import './bulma/css/style.css';
@@ -20,3 +20,4 @@ import './bulma/css/tabs.css';
 import './bulma/js/tabs.js';
 
 import 'bootstrap-icons/font/bootstrap-icons.css';
+

@@ -157,8 +157,8 @@ class VoyageAdminController extends AbstractController
                 $this->addFlash('success', "Le voyage a été bien crée");
                 
                 return $this->redirectToRoute('voyage_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('voyage_list');
             }
@@ -185,8 +185,8 @@ class VoyageAdminController extends AbstractController
                 $this->addFlash('success', "Le voyage a été modifié avec succès");
     
                 return $this->redirectToRoute('voyage_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('voyage_list');
             }
@@ -213,8 +213,8 @@ class VoyageAdminController extends AbstractController
             $this->addFlash('success', "Le voyage a été supprimé avec succès");
 
             return $this->redirectToRoute('voyage_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('voyage_list');
         }

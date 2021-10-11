@@ -157,8 +157,8 @@ class SaisonAdminController extends AbstractController
     //             $this->addFlash('success', "La saison a été bien crée");
                 
     //             return $this->redirectToRoute('saison_list');
-    //         } catch(\Exception $e){
-    //             $this->addFlash('danger', $e->getMessage());
+    //         } catch(\Exception $e) {
+    //             $this->addFlash('danger', "Une erreur est survenue");
                 
     //             return $this->redirectToRoute('saison_list');
     //         }
@@ -185,8 +185,8 @@ class SaisonAdminController extends AbstractController
     //             $this->addFlash('success', "La saison a été modifié avec succès");
     
     //             return $this->redirectToRoute('saison_list');
-    //         } catch(\Exception $e){
-    //             $this->addFlash('danger', $e->getMessage());
+    //         } catch(\Exception $e) {
+    //             $this->addFlash('danger', "Une erreur est survenue");
                 
     //             return $this->redirectToRoute('saison_list');
     //         }
@@ -213,8 +213,8 @@ class SaisonAdminController extends AbstractController
     //         $this->addFlash('success', "La saison a été supprimé avec succès");
 
     //         return $this->redirectToRoute('saison_list');
-    //     } catch(\Exception $e){
-    //         $this->addFlash('danger', $e->getMessage());
+    //     } catch(\Exception $e) {
+    //         $this->addFlash('danger', "Une erreur est survenue");
             
     //         return $this->redirectToRoute('saison_list');
     //     }

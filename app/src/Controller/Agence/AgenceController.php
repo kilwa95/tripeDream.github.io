@@ -61,7 +61,7 @@ class AgenceController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($voyage);
             $entityManager->flush();
-            $this->addFlash('success', 'Votre Voyage a etait bien crée');
+            $this->addFlash('success', 'Votre voyage a était bien crée');
             return $this->redirectToRoute('agence_voyage_show', ['id' => $this->getUser()->getId()]);
         } 
 
@@ -97,7 +97,7 @@ class AgenceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'Votre Voyage a etait bien editer');
+            $this->addFlash('success', 'Votre voyage a était bien édité');
             return $this->redirectToRoute('agence_voyage_show', ['id' => $this->getUser()->getId()]);
         }
 
@@ -133,7 +133,7 @@ class AgenceController extends AbstractController
         $entityManager->remove($trip);
 
         $entityManager->flush();
-        $this->addFlash('success', 'Votre Voyage a etait bien suprimé');
+        $this->addFlash('success', 'Votre voyage a était bien supprimé');
         return $this->redirectToRoute('agence_voyage_show', ['id' => $this->getUser()->getId()]);
     }
 }

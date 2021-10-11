@@ -67,7 +67,8 @@
                     <p><b>Total:</b> <label value='{{ totale }} '>{{ totale }}</label>€</p>
                 </div>
                 <footer class="card-footer">
-                    <span class="card-footer-item"><span><a href="{{ path('panier_validation', {'total': totale}) }}"><button class="button is-info">Passer la commande</button></a></span></span>
+                {{ app.session.set('totale', totale) }}
+                    <span class="card-footer-item"><span><a href="{{ path('panier_validation')}}"><button class="button is-info">Passer la commande</button></a></span></span>
                 </footer>
             </div>
         {% else %}

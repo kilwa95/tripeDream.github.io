@@ -35,17 +35,17 @@ class UserType extends AbstractType
                     'label' => "Nom d'utilisateur",
                     'label_attr' => ['class' => 'label'],
                     'attr' => [
-                        'class' => 'input c4 mb-4',
+                        'class' => 'input mb-4',
                         'placeholder' => "Nom d'utilisateur"
                         ]
                     ]
-                )
+                    )
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les champs du mot de passe doivent correspondre.',
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe', 'label_attr' => ['class' => 'label'], 'attr' => ['class' => 'input mb-4', 'placeholder' => "Mot de passe"]],
-                'second_options' => ['label' => 'Répéter le mot de passe', 'label_attr' => ['class' => 'label'], 'attr' => ['class' => 'input mb-4', 'placeholder' => "Répéter le mot de passe"]],
+                'first_options'  => ['label' => 'Mot de passe', 'attr' => ['class' => 'input mb-4', 'placeholder' => "Mot de passe"]],
+                'second_options' => ['label' => 'Répéter le mot de passe', 'attr' => ['class' => 'input mb-4', 'placeholder' => "Répéter le mot de passe"]],
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
@@ -70,7 +70,7 @@ class UserType extends AbstractType
                 'label'  => "Nom de famille",
                 'label_attr' => ['class' => 'label'],
                 'attr'   => [
-                    'class'   => 'input c4 mb-4',
+                    'class'   => 'input mb-4',
                     'placeholder' => "Nom de famille"
                     ]
                 ]

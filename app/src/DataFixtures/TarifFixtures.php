@@ -20,10 +20,14 @@ class TarifFixtures extends Fixture implements DependentFixtureInterface
 
             // First tarif
             $tarif = new Tarif();
-            $tarif->setPrix($faker->randomNumber(3));
             $tarif->setDepart($voyage->getInfoPratique()->getDepart());
             $tarif->setRetour($voyage->getInfoPratique()->getRetour());
             $dayAfter = new \DateTime($tarif->getRetour()->format('Y-m-d H:i:s').' +1 day');
+
+            $duree = ceil($tarif->getRetour()->diff($tarif->getDepart())->format("%a"));
+            $prix = $faker->numberBetween(40, 99) * $duree;
+
+            $tarif->setPrix($prix);
 
             $tarif->setCapacite($faker->randomNumber(1));
             $tarif->setVoyage($voyage);

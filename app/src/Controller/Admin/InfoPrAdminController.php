@@ -160,8 +160,8 @@ class InfoPrAdminController extends AbstractController
                 $this->addFlash('success', "L'information pratique a été bien crée");
                 
                 return $this->redirectToRoute('info_pr_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('info_pr_list');
             }
@@ -188,8 +188,8 @@ class InfoPrAdminController extends AbstractController
                 $this->addFlash('success', "L'information pratique a été modifié avec succès");
     
                 return $this->redirectToRoute('info_pr_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('info_pr_list');
             }
@@ -216,8 +216,8 @@ class InfoPrAdminController extends AbstractController
             $this->addFlash('success', "L'information pratique a été supprimé avec succès");
 
             return $this->redirectToRoute('info_pr_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('info_pr_list');
         }
