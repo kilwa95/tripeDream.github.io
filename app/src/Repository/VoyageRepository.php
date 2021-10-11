@@ -81,13 +81,44 @@ class VoyageRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    // Find/search voyages by date depart
-    public function findVoyagesByDateDepart(string $depart)
+    // Find by date depart
+    public function findByDateDepart(string $depart)
     {
         $qb = $this->createQueryBuilder('v')
         ->join('v.infoPratique', 'ip')
-        ->where('ip.depart LIKE :depart')
+        ->where('status = avaible AND ip.depart LIKE :depart')
         ->setParameter('depart', $depart . "%");
+
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
+
+    // Find by pays de destination
+    public function findByPays(string $pays)
+    {
+        $qb = $this->createQueryBuilder('v')
+        ->join('v.pays', 'py')
+        ->where('v.status = :status AND py.name = :pays')
+        ->setParameter('status', 'avaible')
+        ->setParameter('pays', $pays);
+
+        $result = $qb->getQuery()->setMaxResults(1)->getSingleResult();
+
+        return $result;
+    }
+
+    // Find by date de départ, durée & pays de destination
+    public function findByDateDepartDureePays(string $depart, string $duree, string $pays)
+    {
+        $qb = $this->createQueryBuilder('v')
+        ->join('v.infoPratique', 'ip')
+        ->join('v.pays', 'py')
+        ->where('v.status = :status AND ip.depart LIKE :depart AND ip.duree = :duree AND py.name = :pays')
+        ->setParameter('status', 'avaible')
+        ->setParameter('depart', $depart . "%")
+        ->setParameter('duree', $duree)
+        ->setParameter('pays', $pays);
 
         $result = $qb->getQuery()->getResult();
 

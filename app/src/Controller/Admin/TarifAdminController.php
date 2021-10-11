@@ -156,8 +156,8 @@ class TarifAdminController extends AbstractController
                 $this->addFlash('success', "Le tarif a été bien crée");
                 
                 return $this->redirectToRoute('tarif_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('tarif_list');
             }
@@ -184,8 +184,8 @@ class TarifAdminController extends AbstractController
                 $this->addFlash('success', "Le tarif a été modifié avec succès");
     
                 return $this->redirectToRoute('tarif_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('tarif_list');
             }
@@ -212,8 +212,8 @@ class TarifAdminController extends AbstractController
             $this->addFlash('success', "Le tarif a été supprimé avec succès");
 
             return $this->redirectToRoute('tarif_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('tarif_list');
         }

@@ -153,8 +153,8 @@ class PaysAdminController extends AbstractController
                 $this->addFlash('success', "Le pays a été bien crée");
                 
                 return $this->redirectToRoute('pays_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('pays_list');
             }
@@ -181,8 +181,8 @@ class PaysAdminController extends AbstractController
                 $this->addFlash('success', "Le pays a été modifié avec succès");
     
                 return $this->redirectToRoute('pays_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('pays_list');
             }
@@ -209,8 +209,8 @@ class PaysAdminController extends AbstractController
             $this->addFlash('success', "Le pays a été supprimé avec succès");
 
             return $this->redirectToRoute('pays_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('pays_list');
         }

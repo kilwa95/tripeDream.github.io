@@ -10,3 +10,5 @@ import 'jquery-bootgrid/dist/jquery.bootgrid.css';
 
 import "./admin/bootgrid/style.css";
 import "./admin/bootgrid/script.js";
+
+import "./admin/corui/style.css";
