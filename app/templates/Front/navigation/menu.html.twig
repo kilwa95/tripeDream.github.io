@@ -106,9 +106,9 @@
 
                         {% if is_granted("ROLE_USER") %}
                       </a>
-                            <a  class="navbar-item"  href="{{ path('users_edit', {'id': app.user.id}) }}">
+                            <a  class="navbar-item" href="{{ path('show_front_user', {'id': app.user.id}) }}">
                                 <i class="bi bi-person-circle"></i>
-                                <span class="ml-2">Mon Profile</span>
+                                <span class="ml-2">Mon compte</span>
                             </a>
                             <a class="navbar-item" href="{{path('favorie_index')}}">
                                 <i class="bi bi-heart"></i>
