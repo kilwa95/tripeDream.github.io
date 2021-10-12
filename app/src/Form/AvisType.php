@@ -29,6 +29,8 @@ class AvisType extends AbstractType
             ->add('compteur', IntegerType::class, [
                 'attr' => [
                     'class' => 'mb-4',
+                    'min' => 1,
+                    'max' => 5
                 ],
                 'label'=> "Avis",
                 'help' => "Veuillez indiquer entre 1 et 5 étoiles"
