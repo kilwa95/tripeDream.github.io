@@ -93,16 +93,20 @@ class FavorieController extends AbstractController
     public function delete(int $id, FavorieRepository $favorieRepository): Response
     {   
         $user = $this->getUser();
+
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('admin');
         }
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
         } 
+
         $favorie = $favorieRepository->findOneBy(['voyage' => $id]);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($favorie);
         $entityManager->flush();
+        
+        $this->addFlash('success', "Le voyage a été supprimé de votre liste de faovoris avec succès");
 
         return $this->redirectToRoute('favorie_index');
     }

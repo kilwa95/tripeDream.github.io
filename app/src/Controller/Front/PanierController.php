@@ -106,6 +106,8 @@ class PanierController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($panier);
         $entityManager->flush();
+        
+        $this->addFlash('success', "Le voyage a été supprimé de votre panier avec succès");
 
         return $this->redirectToRoute('panier_index');
         // return $this->redirectToRoute('panier_validation', ['total' => $request->get('total')]);

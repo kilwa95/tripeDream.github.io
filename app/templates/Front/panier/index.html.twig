@@ -49,7 +49,12 @@
                             </form>
                         </div>
                         <footer class="card-footer">
-                            <span class="card-footer-item"><a href="{{ path('panier_delete', {'id': panier.id}) }}"><button class="button is-small is-danger">Supprimer</button></a></span>
+                            <span class="card-footer-item">
+                                <a data-urlDelBtn='{{ path('panier_delete', {'id': panier.id})}}' data-bs-toggle='modal' data-bs-target='#dangerModal' onclick="myFunction(this)">
+                                    <button class="button is-small is-danger">Supprimer</button>
+                                </a>
+                            </span>
+                            {# <span class="card-footer-item"><a href="{{ path('panier_delete', {'id': panier.id}) }}"><button class="button is-small is-danger">Supprimer</button></a></span> #}
                             <input class="tiny footer-voyage-price" style='width: 50px;height: 24px' value='' disabled> €</input>  
                             <span class="card-footer-item"><a href="{{ path('voyage_show', {'id': panier.id}) }}"><button class="button is-small is-success">Afficher le voyage</button></a></span>
                         </footer>
@@ -67,10 +72,38 @@
                     <p><b>Total:</b> <label value='{{ totale }} '>{{ totale }}</label>€</p>
                 </div>
                 <footer class="card-footer">
-                {{ app.session.set('totale', totale) }}
+                    {{ app.session.set('totale', totale) }}
                     <span class="card-footer-item"><span><a href="{{ path('panier_validation')}}"><button class="button is-info">Passer la commande</button></a></span></span>
                 </footer>
             </div>
+
+            <div class="modal fade" id="dangerModal" style='z-index:2000' tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmez-vous la suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    <div class="modal-body">
+                        Êtes-vous sûr de vouloir supprimer définitivement l'élément sélectionné ?
+                    </div>
+                    <div class="modal-footer">
+                        <a><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button></a>
+                        <a href="" class='confirm'><button type="button" class="btn btn-danger">Confirmer</button></a>
+                    </div>
+                </div>
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                function myFunction(e) {
+                    urlDelBtn = $(e).attr('data-urlDelBtn');
+                    modalId = $(e).attr("data-bs-target")
+                    modal = $(modalId);
+                    
+                    $(modalId+ ' .modal-footer a.confirm').attr("href", urlDelBtn)
+                };
+            </script>
         {% else %}
             <div class="box">
                 <p class="has-text-centered has-text-danger-dark">
@@ -80,10 +113,6 @@
         {% endif %}
     </div>
 </div>
-
-
-
-
 
 <script>
 let selector = document.querySelector('.date-price-select')
