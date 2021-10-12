@@ -20,6 +20,34 @@
             {{ menu() }}
             {# {% include 'Front/navigation/menu.html.twig' %} #}
 
+            <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                const $notification = $delete.parentNode;
+            
+                $delete.addEventListener('click', () => {
+                    $notification.parentNode.removeChild($notification);
+                });
+                });
+            });
+            </script>
+
+            {% for message in app.flashes('success') %}
+                <div class="container mt-3" style='z-index:1000;display:flex;align-items:center;justify-content:center;'>
+                    <div class="notification is-success">
+                        <button class="delete"></button>
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+
+            {# {% for message in app.flashes('success') %}
+                <div class="container mt-5 notification is-success" style='z-index:1000'>
+                    <button class="delete"></button>
+                    {{ message }}
+                </div>
+            {% endfor %} #}
+
             {{ render(controller('App\\Controller\\Front\\SearchController::searchBar')) }}
         </div>
         
@@ -27,7 +55,7 @@
             {% block hero %}{% endblock %}
         </div>
     </section>
-    
+
     <div class="" style="background: #EFF3F4;" id="list">
         <div class="container mb-5 pt-2">
             {{ slope_it_breadcrumb() }}
@@ -36,9 +64,9 @@
     </div>
     {{ footer() }}
     {# {% include 'Front/navigation/footer.html.twig' %} #}
+    
     {% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-   
+        {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </body>
 

@@ -32,7 +32,7 @@ class RegistrationController extends AbstractController
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
-                
+        
         if ($form->isSubmitted() && $form->isValid()) { 
             // 3) Encode the password
             $password = $passwordEncoder->encodePassword($user, $form->get('password')->getData());

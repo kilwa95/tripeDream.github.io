@@ -93,7 +93,9 @@
                 </a> #}
 
                 {% if is_granted("ROLE_USER") or is_granted("ROLE_AGENCE") %}
-                <div class="navbar-item has-dropdown is-hoverable">
+         
+                <div class="navbar-item has-dropdown is-hoverable"   >
+                     
                     <span class="navbar-item">
                         <div class="button is-white is-outlined">
                             <span class="mr-2">{{ app.user.username }}</span>
@@ -103,6 +105,11 @@
                     <div class="navbar-dropdown is-right">
 
                         {% if is_granted("ROLE_USER") %}
+                      </a>
+                            <a  class="navbar-item" href="{{ path('show_front_user', {'id': app.user.id}) }}">
+                                <i class="bi bi-person-circle"></i>
+                                <span class="ml-2">Mon compte</span>
+                            </a>
                             <a class="navbar-item" href="{{path('favorie_index')}}">
                                 <i class="bi bi-heart"></i>
                                 <span class="ml-2">Mes favoris</span>

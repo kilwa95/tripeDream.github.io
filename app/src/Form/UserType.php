@@ -58,7 +58,7 @@ class UserType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('email',EmailType::class, [
+            ->add('email', EmailType::class, [
                 'label' => 'E-mail',
                 'attr' => [
                     'class' => 'input mb-4',
@@ -103,21 +103,20 @@ class UserType extends AbstractType
                 ]
             ]);
         
-        if ($options['action'] == 'edit') {
+        if ($options['action'] == 'edit' || $options['type'] == 'edit_profil_front') {
             $builder->remove('reset');
         }
-        if ($this->security->getUser() === null || ($this->security->getUser()->getRoles()[0] !== 'ROLE_ADMIN')) {
+
+        if ($this->security->getUser() === null || ($this->security->getUser()->getRoles()[0] !== 'ROLE_ADMIN') || $options['type'] == 'edit_profil_front') {
             $builder->remove('submit');
             $builder->remove('reset');
         }
         
-    if($this->security->getUser()){
-        $currentUserId = $this->security->getUser()->getId();
-    }else{
-        $currentUserId = null;
-    }
-
-        //dd($currentUserId);
+        if ($this->security->getUser()){
+            $currentUserId = $this->security->getUser()->getId();
+        } else {
+            $currentUserId = null;
+        }
 
         if ($options['data']->getId() == $currentUserId && $this->security->getUser() !== null) {
             $builder->remove('roles');
@@ -141,6 +140,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => User::class,
+            'type' => null,
         ));
     }
 }

@@ -24,7 +24,7 @@ use SlopeIt\BreadcrumbBundle\Annotation\Breadcrumb;
 class PanierController extends AbstractController
 {
     /**
-     * @Route("/", name="panier_index", methods={"GET"})
+     * @Route("/", name="panier_index", methods={"GET", "POST"})
      * @Breadcrumb({
      *  { "label" = "Mon panier" },
      * })
@@ -55,6 +55,16 @@ class PanierController extends AbstractController
         $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
         $pagination->setParam('_fragment', 'list');
 
+        
+    //     if ($request->isMethod('POST')) {
+    //         foreach($ids as $id){
+    //           $voyage = $voyageRepository->find($id);
+    //           dump( $voyage);
+    //           die();
+           
+    //   }
+      
+      
         return $this->render('Front/panier/index.html.twig',[
             'paniers' =>  $pagination,
         ]);
@@ -154,19 +164,20 @@ class PanierController extends AbstractController
      */
     public function success(Request $request): Response
     {
+        //$total = $request->get("total");
         $total = $this->get('session')->get('totale');
 
         $user = $this->getUser();
-        if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin');
-        }
-        if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
-            return $this->redirectToRoute('agence_index');
-        }
-        
+        // if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
+        //     return $this->redirectToRoute('admin');
+        // }
+        // if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
+        //     return $this->redirectToRoute('agence_index');
+        // }else{
+        //     return $this->redirectToRoute('panier_index');
+        // }
         $entityManager = $this->getDoctrine()->getManager();
-        $paniers = $this->getUser()->getPaniers();
-        $user = $this->getUser();
+        $paniers = $user->getPaniers();
 
         foreach($paniers as $panier) {
             $id=  $panier->getVoyage()->getId();

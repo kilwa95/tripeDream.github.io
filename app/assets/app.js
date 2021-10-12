@@ -21,3 +21,5 @@ import './bulma/js/tabs.js';
 
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
+import './bulma/js/notification.js';
+

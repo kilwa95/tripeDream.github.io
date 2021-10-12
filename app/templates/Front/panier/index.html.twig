@@ -35,9 +35,22 @@
                             <p class="title is-6" align="center">{{ panier.name }}</p>
                             <p>{{ panier.description }}</p>
                         </div>
+                        <div class="v-card-content">
+                        <form method="post">
+                            <select class='date-price-select' name='chosen_price'> 
+                                <option value="">-Choisissez votre option de voyage--</option>
+                            {% for tarif in panier.tarif %}
+                            <optgroup label = "{{tarif.depart|date("d/m/Y")}} - {{tarif.retour|date("d/m/Y")}}"></optgroup>
+                                <option value="{{ tarif }}">
+                                    {{ tarif }}
+                                </options>
+                            {% endfor %}
+                            </select>
+                            </form>
+                        </div>
                         <footer class="card-footer">
                             <span class="card-footer-item"><a href="{{ path('panier_delete', {'id': panier.id}) }}"><button class="button is-small is-danger">Supprimer</button></a></span>
-                            <span class="card-footer-item">{{ panier.tarif|first.prix }} €</span>
+                            <input class="tiny footer-voyage-price" style='width: 50px;height: 24px' value='' disabled> €</input>  
                             <span class="card-footer-item"><a href="{{ path('voyage_show', {'id': panier.id}) }}"><button class="button is-small is-success">Afficher le voyage</button></a></span>
                         </footer>
                     </div>
@@ -51,7 +64,7 @@
 
             <div class="card">
                 <div class="v-card-content">
-                    <p><b>Total:</b> {{ totale }} €</p>
+                    <p><b>Total:</b> <label value='{{ totale }} '>{{ totale }}</label>€</p>
                 </div>
                 <footer class="card-footer">
                 {{ app.session.set('totale', totale) }}
@@ -68,4 +81,17 @@
     </div>
 </div>
 
+
+
+
+
+<script>
+let selector = document.querySelector('.date-price-select')
+
+selector.addEventListener('change', function(e){
+    document.querySelector('form').submit()
+  
+})
+
+</script>
 {% endblock %}

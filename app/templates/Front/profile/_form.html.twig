@@ -1,0 +1,56 @@
+{{ form_start(form) }}
+<div class="card-content">
+    <div class="help is-danger">
+        {{ form_errors(form) }}
+    </div>
+
+    <div class="field">
+        <label class="label">{{ form_label(form.username) }}</label>
+        <div class="control">
+            {{ form_widget(form.username) }}
+        </div>
+    </div>
+
+    <div class="field">
+        {# <label class="label">{{ form_label(form.password.first) }}</label> #}
+        <label class="label">Nouveau mot de passe</label>
+        <div class="control">
+            {{ form_widget(form.password.first) }}
+            <div class="help is-danger">{{ form_errors(form.password.first) }}</div>
+        </div>
+        {# <label class="label">{{ form_label(form.password.second) }}</label> #}
+        <label class="label">Répéter le nouveau mot de passe</label>
+        <div class="control">
+            {{ form_widget(form.password.second) }}
+            <div class="help is-danger">{{ form_errors(form.password.second) }}</div>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">{{ form_label(form.email) }}</label>
+        <div class="control">
+            {{ form_widget(form.email) }}
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">{{ form_label(form.lastname) }}</label>
+        <div class="control">
+            {{ form_widget(form.lastname) }}
+        </div>
+    </div>
+</div>
+
+<footer class="card-footer">
+    <div class="field mt-5 mb-4" align="center">
+        <p class="control">
+            <button class="button is-normal is-primary">
+                {{ button_label|default('Envoyer') }}
+            </button>
+        </p>
+    </div>
+
+    {# {{ form_row(form.submit) }} #}
+</footer>
+
+{{form_end(form) }}
