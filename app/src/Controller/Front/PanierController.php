@@ -72,10 +72,10 @@ class PanierController extends AbstractController
         $newTotal = $request->request->get('newTotal');
         
         if ($newTotal) {
-            $this->get('session')->set('totale', $newTotal);
+            $this->get('session')->set('total', $newTotal);
             return new JsonResponse($newTotal);
         } else {
-            $this->get('session')->set('totale', $totale);
+            $this->get('session')->set('total', $totale);
         }
       
         return $this->render('Front/panier/index.html.twig',[
@@ -144,7 +144,7 @@ class PanierController extends AbstractController
             return $this->redirectToRoute('agence_index');
         } 
        
-        $total = $this->get('session')->get('totale');
+        $total = $this->get('session')->get('total');
         $checkout_session = $payement->checkout($total);
         $paniers = $this->getUser()->getPaniers();
         $ids = [];
@@ -181,7 +181,7 @@ class PanierController extends AbstractController
     public function success(Request $request): Response
     {
         //$total = $request->get("total");
-        $total = $this->get('session')->get('totale');
+        $total = $this->get('session')->get('total');
 
         $user = $this->getUser();
         // if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
