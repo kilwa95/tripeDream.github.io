@@ -3,16 +3,20 @@
 {% block title %}Panier{% endblock %}
 
 {% block body %}
-{% set totale = 0 %}
+{# {% set totale = 0 %}
 {% set tarifs = [] %}
 
 {% for panier in paniers %}
-{% set tarifs = tarifs|merge([panier.tarif|first.prix]) %}
+    {% set tarifs = tarifs|merge([panier.tarif|first.prix]) %}
+    <input type="hidden" data-id="{{ panier.id }}" id="{{ loop.index0 }}" value="{{ panier.tarif[loop.index0].prix }}" />
 {% endfor %}
 
 {% for i in tarifs %}
-{% set totale = totale + i %}
-{% endfor %}
+    {% set totale = totale + i %}
+{% endfor %} #}
+
+<input type="hidden" id="currentTotal" value="{{ app.session.get('total') }}" />
+<input type="hidden" id="setTotal" value="" />
 
 <div class="container">
     <div class="section">
@@ -33,25 +37,37 @@
                         </div>
                         <div class="v-card-content">
                             <p class="title is-6" align="center">{{ panier.name }}</p>
-                            <p>{{ panier.description }}</p>
-                        </div>
-                        <div class="v-card-content">
-                        <form method="post">
-                            <select class='date-price-select' name='chosen_price'> 
-                                <option value="">-Choisissez votre option de voyage--</option>
-                            {% for tarif in panier.tarif %}
-                            <optgroup label = "{{tarif.depart|date("d/m/Y")}} - {{tarif.retour|date("d/m/Y")}}"></optgroup>
-                                <option value="{{ tarif }}">
-                                    {{ tarif }}
-                                </options>
-                            {% endfor %}
-                            </select>
+                            <p>{{ panier.description|striptags|length > 100 ? panier.description|striptags|slice(0, 100) ~ '...' : panier.description|striptags }}</p>
+
+                            <form method="post" class="mt-5 mb-3">
+                                <div class="control has-icons-left">
+                                    <div class="select is-info">
+                                        <select name='chosen_price' onchange="updatePanier(event)"> 
+                                            <option value="" data-id="{{ panier.id }}" data-prix="{{ panier.tarif[0].prix }}" data-capacite="{{ panier.tarif[0].capacite }}">Choisissez votre option de voyage</option>
+                                            {% for tarif in panier.tarif %}
+                                                {# <optgroup label="{{ tarif.depart|date("d/m/Y") }} - {{ tarif.retour|date("d/m/Y") }}">
+                                                </optgroup> #}
+                                                <option value="" data-id="{{ panier.id }}" data-prix="{{ tarif.prix }}" data-capacite="{{ tarif.capacite }}">
+                                                    {{ tarif.depart|date("d/m/Y") }} - {{ tarif.retour|date("d/m/Y") }}, prix: {{ tarif.prix }} €
+                                                </options>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <span class="icon is-small is-left">
+                                        <i class="bi bi-globe"></i>
+                                    </span>
+                                </div>
                             </form>
                         </div>
                         <footer class="card-footer">
-                            <span class="card-footer-item"><a href="{{ path('panier_delete', {'id': panier.id}) }}"><button class="button is-small is-danger">Supprimer</button></a></span>
-                            <input class="tiny footer-voyage-price" style='width: 50px;height: 24px' value='' disabled> €</input>  
-                            <span class="card-footer-item"><a href="{{ path('voyage_show', {'id': panier.id}) }}"><button class="button is-small is-success">Afficher le voyage</button></a></span>
+                            <span class="card-footer-item">
+                                <a data-urlDelBtn='{{ path('panier_delete', {'id': panier.id})}}' data-bs-toggle='modal' data-bs-target='#dangerModal' onclick="myFunction(this)">
+                                    <button class="button is-small is-danger"><i class='bi bi-x-square'></i></button>
+                                </a>
+                            </span>
+                            {# <span class="card-footer-item"><a href="{{ path('panier_delete', {'id': panier.id}) }}"><button class="button is-small is-danger">Supprimer</button></a></span> #}
+                            <span class="card-footer-item"><input name="input-prices" id="voyage-price{{ panier.id }}" style='width:100%;' value='{{ panier.tarif[0].prix }}' disabled>&nbsp;€</input></span>
+                            <span class="card-footer-item"><a href="{{ path('voyage_show', {'id': panier.id}) }}"><button class="button is-small is-success"><i class='bi bi-eye'></i></button></a></span>
                         </footer>
                     </div>
                 </div>
@@ -64,13 +80,40 @@
 
             <div class="card">
                 <div class="v-card-content">
-                    <p><b>Total:</b> <label value='{{ totale }} '>{{ totale }}</label>€</p>
+                    <p><b>Total:</b> <label id="labelTotal" value='{{ app.session.get('total') }}'>{{ app.session.get('total') }}</label>€</p>
                 </div>
                 <footer class="card-footer">
-                {{ app.session.set('totale', totale) }}
                     <span class="card-footer-item"><span><a href="{{ path('panier_validation')}}"><button class="button is-info">Passer la commande</button></a></span></span>
                 </footer>
             </div>
+
+            <div class="modal fade" id="dangerModal" style='z-index:2000' tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmez-vous la suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    <div class="modal-body">
+                        Êtes-vous sûr de vouloir supprimer définitivement l'élément sélectionné ?
+                    </div>
+                    <div class="modal-footer">
+                        <a><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button></a>
+                        <a href="" class='confirm'><button type="button" class="btn btn-danger">Confirmer</button></a>
+                    </div>
+                </div>
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                function myFunction(e) {
+                    urlDelBtn = $(e).attr('data-urlDelBtn');
+                    modalId = $(e).attr("data-bs-target")
+                    modal = $(modalId);
+                    
+                    $(modalId+ ' .modal-footer a.confirm').attr("href", urlDelBtn)
+                };
+            </script>
         {% else %}
             <div class="box">
                 <p class="has-text-centered has-text-danger-dark">
@@ -81,17 +124,61 @@
     </div>
 </div>
 
-
-
-
-
 <script>
-let selector = document.querySelector('.date-price-select')
 
-selector.addEventListener('change', function(e){
-    document.querySelector('form').submit()
-  
-})
+    $( document ).ready(function() {
+    });
+
+    function updatePanier(e) {
+        id = event.target.options[event.target.selectedIndex].dataset.id;
+        newPrice = event.target.options[event.target.selectedIndex].dataset.prix;
+        capacite = event.target.options[event.target.selectedIndex].dataset.capacite;
+
+        oldPrice = parseInt(document.getElementById("voyage-price"+id).value);
+        document.getElementById("voyage-price"+id).value = newPrice;
+
+        currentTotal = parseInt($("#currentTotal").val());
+        newTotal = currentTotal - oldPrice + parseInt(newPrice);
+
+        //console.log("oldTotal => ", currentTotal);
+        //console.log("newTotal => ", newTotal);
+        
+        session = "{"+"{" + " app" + ".session.set(" + "'total', " + newTotal + ") }}";
+        $("#currentTotal").val(newTotal);
+        $("#setTotal").val(session);
+        $("#labelTotal").html(newTotal);
+        $("#labelTotal").val(newTotal);
+        //getAllTripPrices();
+
+        $.ajax({
+            url: {{ path('panier_index') }},
+            type: "POST",
+            data: {"newTotal": newTotal},
+            success: function(data, textStatus, jqXHR) {
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Erreur AJAXs!');
+            }
+        });
+    }
+
+    // TO-DO
+    /*
+    function getAllTripPrices() {
+        inputs = $("[name='input-prices']");
+        prices = [];
+
+        $('input[name="input-prices"]').each(function(){
+            console.log(this);
+        });
+
+        for (input in inputs) {
+        }
+
+        return prices;
+    }
+    */
 
 </script>
+
 {% endblock %}

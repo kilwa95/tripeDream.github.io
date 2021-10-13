@@ -1,6 +1,6 @@
 {% extends 'base_front.html.twig' %}
 
-{% block title %}Détails de la commande{% endblock %}
+{% block title %}Récapitulatif de commande{% endblock %}
 
 {% block body %}
 
@@ -11,7 +11,7 @@
                 <div class="column is-8">
                     <div class="card is-shady" style="width: 100%;">
                         <div class="card-header">
-                            <p class="title is-6">Détails de la commande</p>
+                            <p class="title is-6">Récapitulatif de commande</p>
                         </div>
                         <div class="v-card-content">
                             <table class="table table is-striped is-narrow is-hoverable is-fullwidth">
@@ -19,7 +19,7 @@
                                     <tr>
                                         <th>Aperçu</th>
                                         <th>Dénomination</th>
-                                        <th>Prix</th>
+                                        {# <th>Prix</th> #}
                                         <th>Opérations</th>
                                     </tr>
                                 </thead>
@@ -32,15 +32,16 @@
                                             </a>
                                         </td>
                                         <td>{{ panier.name }}</td>
-                                        <td>{{ panier.tarif|first.prix }} €</td>
+                                        {# <td>{{ panier.tarif|first.prix }} €</td> #}
                                         <td>
                                             <a href="{{ path('voyage_show', {'id': panier.id}) }}"><button class="button is-small is-success"><i class="bi bi-eye"></i></button></a>
-                                            <a href="{{ path('panier_delete', {'id': panier.id, 'total': total}) }}"><button class="button is-small is-danger"><i class="bi bi-trash"></i></button></a>
+                                            {# <a href="{{ path('panier_delete', {'id': panier.id, 'total': total}) }}"><button class="button is-small is-danger"><i class="bi bi-trash"></i></button></a> #}
                                         </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            <a href="{{ path('panier_index')}}"><span><button class="button is-danger">Annuler</button></span></a>
                         </div>
                     </div>
                 </div>

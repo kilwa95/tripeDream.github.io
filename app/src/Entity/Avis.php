@@ -46,7 +46,7 @@ class Avis
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\LessThan(5)
+     * @Assert\LessThan(6)
      */
     private $compteur;
 
