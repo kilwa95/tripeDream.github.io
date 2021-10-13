@@ -3,7 +3,7 @@
     <div class="container">
         <div class="navbar-brand">
             <a href="{{ path('agence_index') }}">
-                <img src="{{ asset('images/logo4.png') }}" alt="TripDream: Trouvez et réservez des voyages en 1 clic" height="100" width="50">
+                <img src="{{ asset('build/images/logo4.png') }}" alt="TripDream: Trouvez et réservez des voyages en 1 clic" height="100" width="50">
             </a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
@@ -29,6 +29,10 @@
                         </div>
                     </span>
                     <div class="navbar-dropdown is-right">
+                        <a  class="navbar-item" href="{{ path('show_front_user', {'id': app.user.id}) }}">
+                            <i class="bi bi-person-circle"></i>
+                            <span class="ml-2">Mon compte</span>
+                        </a>
                         <a class="navbar-item" href="{{path('app_logout')}}">
                             <i class="bi bi-box-arrow-left"></i>
                             <span class="ml-2">Déconnexion</span>
