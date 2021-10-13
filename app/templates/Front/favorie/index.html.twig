@@ -24,7 +24,7 @@
                         </div>
                         <div class="v-card-content">
                             <p class="title is-6" align="center">{{ favorie.name }}</p>
-                            <p>{{ favorie.description }}</p>
+                            <p>{{ favorie.description|striptags|length > 100 ? favorie.description|striptags|slice(0, 100) ~ '...' : favorie.description|striptags }}</p>
                         </div>
                         <footer class="card-footer">
                             <span class="card-footer-item">{{ favorie.user.username }}</span>

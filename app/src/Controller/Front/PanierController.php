@@ -14,6 +14,7 @@ use App\Repository\PanierRepository;
 use App\Services\Payement;
 use Knp\Component\Pager\PaginatorInterface;
 use SlopeIt\BreadcrumbBundle\Annotation\Breadcrumb;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/panier")
@@ -30,8 +31,9 @@ class PanierController extends AbstractController
      * })
      */
     public function index(Request $request, VoyageRepository $voyageRepository, PaginatorInterface $paginator): Response
-    {   
+    {
         $user = $this->getUser();
+
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('admin');
         }
@@ -42,9 +44,11 @@ class PanierController extends AbstractController
 
         $ids = [];
         $voyages = [];
+        $totale = 0;
 
         foreach($paniers as $panier) {
             $id =  $panier->getVoyage()->getId();
+            $totale += $panier->getVoyage()->getTarif()[0]->getPrix();
             array_push($ids,$id);
         }
         foreach($ids as $id){
@@ -55,7 +59,6 @@ class PanierController extends AbstractController
         $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
         $pagination->setParam('_fragment', 'list');
 
-        
     //     if ($request->isMethod('POST')) {
     //         foreach($ids as $id){
     //           $voyage = $voyageRepository->find($id);
@@ -63,10 +66,20 @@ class PanierController extends AbstractController
     //           die();
            
     //   }
-      
+
+        // $pageRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) &&($_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0' ||  $_SERVER['HTTP_CACHE_CONTROL'] == 'no-cache');
+
+        $newTotal = $request->request->get('newTotal');
+        
+        if ($newTotal) {
+            $this->get('session')->set('totale', $newTotal);
+            return new JsonResponse($newTotal);
+        } else {
+            $this->get('session')->set('totale', $totale);
+        }
       
         return $this->render('Front/panier/index.html.twig',[
-            'paniers' =>  $pagination,
+            'paniers' => $pagination,
         ]);
     }
     /**
@@ -119,40 +132,41 @@ class PanierController extends AbstractController
      *  { "label" = "Passage commande" },
      * })
      */
-    public function validate( Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
+    public function validate(Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
     {
         $user = $this->getUser();
+
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('admin');
         }
+
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->redirectToRoute('agence_index');
         } 
        
         $total = $this->get('session')->get('totale');
-        $checkout_session =  $payement->checkout($total);
+        $checkout_session = $payement->checkout($total);
         $paniers = $this->getUser()->getPaniers();
         $ids = [];
         $voyages = [];
 
-        foreach($paniers as $panier) {
-            $id=  $panier->getVoyage()->getId();
-            array_push($ids,$id);
+        foreach ($paniers as $panier) {
+            $id = $panier->getVoyage()->getId();
+            array_push($ids, $id);
         }
-        foreach($ids as $id){
+        foreach ($ids as $id) {
             $voyage = $voyageRepository->find($id);
-            array_push($voyages,$voyage);
+            array_push($voyages, $voyage);
         }
 
         if ($request->isMethod('POST')) {
-
             return $this->json([
               'id' => $checkout_session->id
             ]);
         }
 
         return $this->render('Front/payement/checkout.html.twig',[
-            'paniers' =>  $voyages,
+            'paniers' => $voyages,
             'total' => $total
         ]);
 
