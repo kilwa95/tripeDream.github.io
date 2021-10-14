@@ -240,7 +240,7 @@ class UserAdminController extends AbstractController
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', "L'utilisateur a été modifié avec succès");
     
-                return $this->redirectToRoute('users_list');
+                return $this->redirectToRoute('app_logout');
             } catch(\Exception $e) {
                 $this->addFlash('danger', "Une erreur est survenue");
                 
