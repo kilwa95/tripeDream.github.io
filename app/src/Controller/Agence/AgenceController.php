@@ -60,7 +60,7 @@ class AgenceController extends AbstractController
             foreach($voyage->getTarif($tarif) as $dates)
             {   
                 if ((strtotime($dates->getDepart()->format('Y-m-d H:i:s')))  > strtotime($dates->getretour()->format('Y-m-d H:i:s')) ){
-                        $this->addFlash('danger', 'Votre date de depart peut pas etre inferieur a la date de retour');   
+                        $this->addFlash('danger', 'Votre date de retour peut pas etre inferieur a la date de depart');   
                         return $this->render('agence/new.html.twig', [
                             'voyage' => $voyage,
                             'form' => $form->createView(),
