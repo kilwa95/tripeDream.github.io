@@ -236,7 +236,7 @@ class UserAdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            try{
+            try {
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', "L'utilisateur a été modifié avec succès");
     

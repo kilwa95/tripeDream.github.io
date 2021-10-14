@@ -87,6 +87,14 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Order::class, mappedBy="user")
      */
     private $orders;
+    
+    /**
+     * Date/Time of the last login
+     *
+     * @var \Datetime
+     * @ORM\Column(name="last_login", type="datetime", nullable=true)
+     */
+    protected $lastLogin;
 
     public function __construct()
     {
@@ -389,5 +397,21 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param \Datetime $lastLogin
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+    }
+
+    /**
+     * @return \Datetime
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
     }
 }

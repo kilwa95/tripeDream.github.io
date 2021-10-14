@@ -45,6 +45,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $normalUserPwd = $this->encoder->encodePassword($user, $type[$i]);
             $encodedPassword =  $normalUserPwd;
             $user->setPassword($encodedPassword);
+            $user->setLastLogin($faker->dateTimeBetween('-'.rand(1, 30).' days', "now"));
 
             if ($type[$i] !== 'user')
                 $user->setSiret($faker->numberBetween(1000000000, 2147483646));
@@ -80,6 +81,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user->setPassword($encodedPassword);
             if (!$isSimpleUser)
                 $user->setSiret($faker->numberBetween(1000000000, 2147483646));
+            
+            $user->setLastLogin($faker->dateTimeBetween('-'.rand(1, 30).' days', "now"));
 
             $manager->persist($user);
         }
