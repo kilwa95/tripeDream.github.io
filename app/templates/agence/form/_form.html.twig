@@ -3,6 +3,11 @@
         <div class="card-header">
             <h3>Ajouter ou modifier un voyage</h3>
         </div>
+           {% for message in app.flashes('danger') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
         <div class="card-body">
             {{ form_start(form) }}
             <div class="my-custom-class-for-errors">

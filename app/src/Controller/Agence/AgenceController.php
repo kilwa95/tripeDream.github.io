@@ -57,7 +57,16 @@ class AgenceController extends AbstractController
         $form = $this->createForm(VoyageType::class, $voyage, ['new' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // dd($form->getData());
+            foreach($voyage->getTarif($tarif) as $dates)
+            {   
+                if ((strtotime($dates->getDepart()->format('Y-m-d H:i:s')))  > strtotime($dates->getretour()->format('Y-m-d H:i:s')) ){
+                        $this->addFlash('danger', 'Votre date de depart peut pas etre inferieur a la date de retour');   
+                        return $this->render('agence/new.html.twig', [
+                            'voyage' => $voyage,
+                            'form' => $form->createView(),
+                        ]);
+                    }
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($voyage);
             $entityManager->flush();

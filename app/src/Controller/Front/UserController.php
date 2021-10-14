@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -28,20 +28,28 @@ class UserController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/{id}", name="show_front_user", methods={"GET"})
      */
     public function show(User $user): Response
     {
+        if ($user !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
         return $this->render('Front/profile/show.html.twig', [
             'user' => $user,
         ]);
     }
 
     /**
+    *  @IsGranted("ROLE_USER")
      * @Route("/{id}/edit", name="edit_front_user", methods={"GET","POST"})
      */
     public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        if ($user !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
         $form = $this->createForm(UserType::class, $user, ['action' => 'edit', 'type' => 'edit_profil_front']);
         $form->handleRequest($request);
 
