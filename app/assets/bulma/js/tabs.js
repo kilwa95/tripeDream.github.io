@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('test')
+    // console.log('test')
     // document.getElementById('#tabs li').on('click', function() {
     //   var tab = document.getElementById(this).data('tab');
   

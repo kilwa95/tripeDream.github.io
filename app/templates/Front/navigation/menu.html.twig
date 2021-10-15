@@ -34,7 +34,7 @@
                             <form class="px-4 py-2">
                                 <input class="input is-rounded ds-input" type="text" placeholder="Rechercher" aria-label="search" onKeyUp='filterSearch(this)'>
                             </form>
-                            {% for pays in pays %}
+                            {% for pays in pays|slice(0, 20) %}
                                 <a href="{{ path('pays_name',{'id': pays.id}) }}" class='navbar-item dataSearch' data-search='{{pays.name}}'>{{pays.name}}</a>
                             {% endfor %}
                             <hr class="navbar-divider">
@@ -51,7 +51,7 @@
                             <form class="px-4 py-2">
                                 <input class="input is-rounded ds-input" type="text" placeholder="Rechercher" aria-label="search" onKeyUp='filterSearch(this)'>
                             </form>
-                            {% for activite in activites %}
+                            {% for activite in activites|slice(0, 20) %}
                                 <a href="{{ path('activite_name',{'id': activite.id}) }}" class='navbar-item dataSearch' data-search='{{activite.name}}'>{{activite.name}}</a>
                             {% endfor %}
                             <hr class="navbar-divider">
@@ -130,12 +130,14 @@
                         </a>
                     </div>
                 </div>
-                {% else %}
+                {% elseif (app.request.attributes.get('_route') != 'app_login') %}
                     <div class="navbar-item">
                         <div class="buttons">
-                            <a class="button is-primary" href="{{path('user_registration')}}">
-                            <strong>Inscription</strong>
-                            </a>
+                            {% if (app.request.attributes.get('_route') != 'user_registration') %}
+                                <a class="button is-primary" href="{{path('user_registration')}}">
+                                    <strong>Inscription</strong>
+                                </a>
+                            {% endif %}
                             <a class="button is-light" href="{{path('app_login')}}">
                             Connexion
                             </a>

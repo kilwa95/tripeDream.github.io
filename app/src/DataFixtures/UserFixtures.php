@@ -22,6 +22,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = \Faker\Factory::create('fr-FR');
+        
         $adresses = $manager->getRepository(Adresse::class)->findAll();
         
         // Generate 3 users with specifica email
@@ -30,7 +31,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
             $user = new User();
             $user->setEmail($type[$i].'@'.$type[$i].'.com');
-            $user->setUsername($faker->firstName());
+            $user->setUsername($faker->userName());
             $user->setLastName($faker->lastName());
             $user->setAdresse($adresses[array_rand($adresses)]);
             if ($i == 0)

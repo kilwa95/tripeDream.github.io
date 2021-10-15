@@ -9,3 +9,9 @@ import 'bulma';
 import './bulma/css/agence.css';
 // import 'jquery';
 import './bulma/js/menu.js';
+
+import './bulma/css/tabs.css';
+import './bulma/js/tabs.js';
+
+
+
