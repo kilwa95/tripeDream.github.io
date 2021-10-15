@@ -11,14 +11,22 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Form\UserType;
+use SlopeIt\BreadcrumbBundle\Annotation\Breadcrumb;
 
 /**
  * @Route("/profile")
+ * @Breadcrumb({
+ *  { "label" = "Voyages", "route" = "agence_index" },
+ *  { "label" = "Profile" }
+ * })
  */
 class UserController extends AbstractController
 {
     /**
      * @Route("/{id}", name="show_front_user", methods={"GET"})
+     * @Breadcrumb({
+     *  { "label" = "Voir" }
+     * })
      */
     public function show(User $user): Response
     {
@@ -39,6 +47,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="edit_front_user", methods={"GET", "POST"})
+     * @Breadcrumb({
+     *  { "label" = "Modifier" }
+     * })
      */
     public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
     {

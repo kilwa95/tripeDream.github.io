@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-
 class InfoPratiqueType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -23,11 +22,13 @@ class InfoPratiqueType extends AbstractType
                 'widget' => 'single_text',
                 'placeholder' => 'Select a value',
                 'format' => 'yyyy-MM-dd',
+                // 'disabled' => true,
             ])
             ->add('retour',DateType::class,[
                 'widget' => 'single_text',
                 'placeholder' => 'Select a value',
                 'format' => 'yyyy-MM-dd',
+                // 'disabled' => true,
             ])
             ->add('hebergement', TextType::class, [
                 'label'  => "Hébergement",
@@ -56,6 +57,11 @@ class InfoPratiqueType extends AbstractType
             $builder->remove('submit');
             $builder->remove('reset');
         }
+
+        if ($options['user'] != 'admin') {
+            $builder->remove('depart');
+            $builder->remove('retour');
+        }
         
         if ($options['action'] == 'edit') {
             $builder->remove('reset');
@@ -66,6 +72,7 @@ class InfoPratiqueType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => InfoPratique::class,
+            'user' => null,
         ]);
     }
 }
