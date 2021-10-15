@@ -33,7 +33,7 @@ class TarifFixtures extends Fixture implements DependentFixtureInterface
             $tarif->setVoyage($voyage);
             $manager->persist($tarif);
 
-            for ($i = 1; $i <= 9; $i++) {
+            for ($i = 1; $i <= 5; $i++) {
                 $tarif = new Tarif();
                 $tarif->setPrix($faker->randomNumber(3));
 
