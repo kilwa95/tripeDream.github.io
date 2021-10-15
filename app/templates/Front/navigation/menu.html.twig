@@ -130,12 +130,14 @@
                         </a>
                     </div>
                 </div>
-                {% else %}
+                {% elseif (app.request.attributes.get('_route') != 'app_login') %}
                     <div class="navbar-item">
                         <div class="buttons">
-                            <a class="button is-primary" href="{{path('user_registration')}}">
-                            <strong>Inscription</strong>
-                            </a>
+                            {% if (app.request.attributes.get('_route') != 'user_registration') %}
+                                <a class="button is-primary" href="{{path('user_registration')}}">
+                                    <strong>Inscription</strong>
+                                </a>
+                            {% endif %}
                             <a class="button is-light" href="{{path('app_login')}}">
                             Connexion
                             </a>
