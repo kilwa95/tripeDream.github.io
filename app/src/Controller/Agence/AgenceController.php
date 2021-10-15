@@ -57,7 +57,16 @@ class AgenceController extends AbstractController
         $form = $this->createForm(VoyageType::class, $voyage, ['new' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // dd($form->getData());
+            foreach($voyage->getTarif($tarif) as $dates)
+            {   
+                if ((strtotime($dates->getDepart()->format('Y-m-d H:i:s')))  > strtotime($dates->getretour()->format('Y-m-d H:i:s')) ){
+                        $this->addFlash('danger', 'Votre date de retour peut pas etre inferieur a la date de depart');   
+                        return $this->render('agence/new.html.twig', [
+                            'voyage' => $voyage,
+                            'form' => $form->createView(),
+                        ]);
+                    }
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($voyage);
             $entityManager->flush();
@@ -77,12 +86,20 @@ class AgenceController extends AbstractController
     public function show(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
         $voyages = $this->getUser()->getVoyage();
-
         return $this->render('agence/tableVoyages.html.twig', [
             'voyages' =>  $voyages,
         ]);
     }
-
+    /**
+     * @Route("/agence/user/{id}/participates", name="agence_voyage_show_participate", methods={"GET","POST"})
+    */
+    public function show_participate(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
+    {
+        $voyages = $this->getUser()->getVoyage();
+        return $this->render('agence/tableVoyageParticipates.html.twig', [
+            'voyages' =>  $voyages,
+        ]);
+    }
 
     /**
      * @Route("/{id}/edit", name="trip_edit", methods={"GET","POST"})
