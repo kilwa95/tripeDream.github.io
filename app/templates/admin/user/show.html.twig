@@ -15,10 +15,10 @@
                                 <i class="bi bi-pencil-square"></i>
                                 Modifier
                             </a>
-                            <a type="button" class="btn btn-outline-danger" href="{{ path('delete_user', {'id': user.id})}}">
+                            {# <a type="button" class="btn btn-outline-danger" data-urlDelBtn='{{ path('delete_user', {'id': user.id})}}' href="" data-toggle='modal' data-target='#dangerModal' onclick="myFunction(this)">
                                 <i class="bi bi-trash"></i>
                                 Supprimer
-                            </a>
+                            </a> #}
                         </div>
                     </div>
                     <div class="collapse show" id="coll">
@@ -65,6 +65,23 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function myFunction(e) {
+        urlDelBtn = $(e).attr('data-urlDelBtn');
+
+        modalId = $(e).attr("data-target")
+        modal = $(modalId);
+        
+        $(modalId+ ' .modal-footer a').attr("href", urlDelBtn)
+        modal.modal("show");
+
+        $("button[data-dismiss=modal]").click(function() {
+            modal.modal('hide');
+        });
+    };
+</script>
 
 {% set entity = 'user' %}
 {% include 'admin/back_to_list_card.html.twig' %}

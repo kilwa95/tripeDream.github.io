@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Pays;
 use App\Form\PaysType;
 use App\Repository\PaysRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/pays")
  */
 class PaysAdminController extends AbstractController
@@ -151,8 +153,8 @@ class PaysAdminController extends AbstractController
                 $this->addFlash('success', "Le pays a été bien crée");
                 
                 return $this->redirectToRoute('pays_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('pays_list');
             }
@@ -179,8 +181,8 @@ class PaysAdminController extends AbstractController
                 $this->addFlash('success', "Le pays a été modifié avec succès");
     
                 return $this->redirectToRoute('pays_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('pays_list');
             }
@@ -207,8 +209,8 @@ class PaysAdminController extends AbstractController
             $this->addFlash('success', "Le pays a été supprimé avec succès");
 
             return $this->redirectToRoute('pays_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('pays_list');
         }

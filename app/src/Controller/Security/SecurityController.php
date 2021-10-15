@@ -19,15 +19,16 @@ class SecurityController extends AbstractController
         $hasAccessFront = $this->isGranted('ROLE_USER');
         $hasAccessAdmin = $this->isGranted('ROLE_ADMIN');
         $hasAccessAgence = $this->isGranted('ROLE_AGENCE');
+
         $user = $this->getUser();
-        if ($user && $hasAccessFront ) {
+
+        if ($user && $hasAccessFront) {
             return $this->redirectToRoute('navigation');
-        } elseif($user && $hasAccessAdmin ){
+        } elseif ($user && $hasAccessAdmin) {
             return $this->redirectToRoute('admin_index');
-        } elseif($user && $hasAccessAgence ){
+        } elseif ($user && $hasAccessAgence) {
             return $this->redirectToRoute('agence_index');
         }
-        
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();

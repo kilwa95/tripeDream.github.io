@@ -83,6 +83,19 @@ class User implements UserInterface
      */
     private $participat;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="user")
+     */
+    private $orders;
+    
+    /**
+     * Date/Time of the last login
+     *
+     * @var \Datetime
+     * @ORM\Column(name="last_login", type="datetime", nullable=true)
+     */
+    protected $lastLogin;
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
@@ -90,6 +103,7 @@ class User implements UserInterface
         $this->voyage = new ArrayCollection();
         $this->paniers = new ArrayCollection();
         $this->participat = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
 
@@ -353,5 +367,51 @@ class User implements UserInterface
         $this->participat->removeElement($participat);
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getUser() === $this) {
+                $order->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Datetime $lastLogin
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+    }
+
+    /**
+     * @return \Datetime
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
     }
 }

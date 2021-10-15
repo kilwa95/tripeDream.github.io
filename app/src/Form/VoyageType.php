@@ -27,7 +27,9 @@ class VoyageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',TextType::class)
+            ->add('name', TextType::class, [
+                'label'  => "Nom",
+            ])
 
             ->add('description',TextareaType::class)
 
@@ -50,6 +52,7 @@ class VoyageType extends AbstractType
             ])
 
             ->add('activity',EntityType::class,[
+                'label'  => "Activité",
                 'class' => Activite::class,
                 'choice_label' => 'name',
                 'multiple' => true,
@@ -86,7 +89,7 @@ class VoyageType extends AbstractType
 
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
-                'label' => 'veiller choisir une image',
+                'label' => 'Veuillez choisir une image',
                 'allow_delete' => true,
                 'download_uri' => true,
                 'image_uri' => true
@@ -94,6 +97,7 @@ class VoyageType extends AbstractType
 
 
             ->add('submit', SubmitType::class, [
+                'label'  => "Envoyer",
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]

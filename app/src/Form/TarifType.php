@@ -10,25 +10,30 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class TarifType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('prix',MoneyType::class)
+            ->add('prix', MoneyType::class)
             
-            ->add('depart',DateType::class,[
+            ->add('depart', DateType::class, [
+                'label'  => "Date de départ",
                 'widget' => 'single_text',
                 'placeholder' => 'Select a value',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('arrive',DateType::class,[
+            ->add('retour', DateType::class,[
+                'label'  => "Date de retour",
                 'widget' => 'single_text',
                 'placeholder' => 'Select a value',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('capacite')
+            ->add('capacite', IntegerType::class, [
+                'label'  => "Capacité",
+            ])
             ->add('submit', SubmitType::class, [
                 'label'  => "Envoyer",
                 'attr' => [

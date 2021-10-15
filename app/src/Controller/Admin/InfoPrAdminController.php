@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\InfoPratique;
 use App\Form\InfoPratiqueType;
 use App\Repository\InfoPratiqueRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/info_pratiques")
  */
 class InfoPrAdminController extends AbstractController
@@ -59,15 +61,16 @@ class InfoPrAdminController extends AbstractController
 
         $start_from = ($current_page_number - 1) * $records_per_page;
 
-        $dql = 'SELECT info_pr.id, info_pr.rendez_vous, info_pr.fin_sejour, info_pr.hebergement, info_pr.repas, info_pr.covid19 FROM App\Entity\InfoPratique info_pr ';
+        $dql = 'SELECT info_pr.id, info_pr.depart, info_pr.retour, info_pr.duree, info_pr.hebergement, info_pr.repas, info_pr.covid19 FROM App\Entity\InfoPratique info_pr ';
 
         if (!empty($request->get("searchPhrase")))
         {
             $strMainSearch = $request->get("searchPhrase");
 
             $where = "WHERE (info_pr.id LIKE '%".$strMainSearch."%' OR "
-                ."info_pr.rendez_vous LIKE '%".$strMainSearch."%' OR "
-                ."info_pr.fin_sejour LIKE '%".$strMainSearch."%' OR "
+                ."info_pr.depart LIKE '%".$strMainSearch."%' OR "
+                ."info_pr.retour LIKE '%".$strMainSearch."%' OR "
+                ."info_pr.duree LIKE '%".$strMainSearch."%' OR "
                 ."info_pr.hebergement LIKE '%".$strMainSearch."%' OR "
                 ."info_pr.repas LIKE '%".$strMainSearch."%' OR "
                 ."info_pr.covid19 LIKE '%".$strMainSearch."%') ";
@@ -145,7 +148,7 @@ class InfoPrAdminController extends AbstractController
     {
         $info_pr = new InfoPratique();
 
-        $form = $this->createForm(InfoPratiqueType::class, $info_pr, ['action' => 'new']);
+        $form = $this->createForm(InfoPratiqueType::class, $info_pr, ['action' => 'new', 'user' => 'admin']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -157,8 +160,8 @@ class InfoPrAdminController extends AbstractController
                 $this->addFlash('success', "L'information pratique a été bien crée");
                 
                 return $this->redirectToRoute('info_pr_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('info_pr_list');
             }
@@ -185,8 +188,8 @@ class InfoPrAdminController extends AbstractController
                 $this->addFlash('success', "L'information pratique a été modifié avec succès");
     
                 return $this->redirectToRoute('info_pr_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('info_pr_list');
             }
@@ -213,8 +216,8 @@ class InfoPrAdminController extends AbstractController
             $this->addFlash('success', "L'information pratique a été supprimé avec succès");
 
             return $this->redirectToRoute('info_pr_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('info_pr_list');
         }

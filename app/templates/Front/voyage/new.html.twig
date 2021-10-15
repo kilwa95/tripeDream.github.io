@@ -1,10 +1,10 @@
 {% extends 'base_front.html.twig' %}
 
-{% block title %}New Voyage{% endblock %}
+{% block title %}Nouveau voyage{% endblock %}
 
 {% block body %}
 
-    <h1>Create new Voyage</h1>
+    <h1>Créer un nouveau voyage</h1>
     {{ include('Front/voyage/_form.html.twig') }}
     <a href="{{ path('agence_voyage_show', {'id': app.user.id}) }}">Retour à mes voyages</a>
 {% endblock %}

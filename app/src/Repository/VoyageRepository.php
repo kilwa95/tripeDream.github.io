@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Voyage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method Voyage|null find($id, $lockMode = null, $lockVersion = null)
@@ -63,5 +64,64 @@ class VoyageRepository extends ServiceEntityRepository
 
         // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetchAllAssociative();
+    }
+
+    // Find/search voyages by name
+    public function findVoyagesByName(string $query)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->where(
+                $qb->expr()->like('p.name', ':query')
+            )
+            ->setParameter('query', '%' . $query . '%')
+        ;
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
+    // Find by date depart
+    public function findByDateDepart(string $depart)
+    {
+        $qb = $this->createQueryBuilder('v')
+        ->join('v.infoPratique', 'ip')
+        ->where('status = avaible AND ip.depart LIKE :depart')
+        ->setParameter('depart', $depart . "%");
+
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
+
+    // Find by pays de destination
+    public function findByPays(string $pays)
+    {
+        $qb = $this->createQueryBuilder('v')
+        ->join('v.pays', 'py')
+        ->where('v.status = :status AND py.name = :pays')
+        ->setParameter('status', 'avaible')
+        ->setParameter('pays', $pays);
+
+        $result = $qb->getQuery()->setMaxResults(1)->getSingleResult();
+
+        return $result;
+    }
+
+    // Find by date de départ, durée & pays de destination
+    public function findByDateDepartDureePays(string $depart, string $duree, string $pays)
+    {
+        $qb = $this->createQueryBuilder('v')
+        ->join('v.infoPratique', 'ip')
+        ->join('v.pays', 'py')
+        ->where('v.status = :status AND ip.depart LIKE :depart AND ip.duree = :duree AND py.name = :pays')
+        ->setParameter('status', 'avaible')
+        ->setParameter('depart', $depart . "%")
+        ->setParameter('duree', $duree)
+        ->setParameter('pays', $pays);
+
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
     }
 }

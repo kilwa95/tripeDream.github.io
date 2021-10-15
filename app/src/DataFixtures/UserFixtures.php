@@ -23,8 +23,37 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = \Faker\Factory::create('fr-FR');
         $adresses = $manager->getRepository(Adresse::class)->findAll();
+        
+        // Generate 3 users with specifica email
+        $type = ['admin', 'agence', 'user'];
+        for ($i = 0; $i < 3; $i++) {
 
-        for ($i = 0; $i < 50; $i++) {
+            $user = new User();
+            $user->setEmail($type[$i].'@'.$type[$i].'.com');
+            $user->setUsername($faker->firstName());
+            $user->setLastName($faker->lastName());
+            $user->setAdresse($adresses[array_rand($adresses)]);
+            if ($i == 0)
+                $role = "ADMIN";
+            elseif ($i == 1)
+                $role = "AGENCE";
+            elseif ($i == 2)
+                $role = "USER";
+            $roles = ['ROLE_'.$role ];
+            $user->setRoles($roles);
+
+            $normalUserPwd = $this->encoder->encodePassword($user, $type[$i]);
+            $encodedPassword =  $normalUserPwd;
+            $user->setPassword($encodedPassword);
+            $user->setLastLogin($faker->dateTimeBetween('-'.rand(1, 30).' days', "now"));
+
+            if ($type[$i] !== 'user')
+                $user->setSiret($faker->numberBetween(1000000000, 2147483646));
+
+            $manager->persist($user);
+        }
+
+        for ($i = 0; $i < 20; $i++) {
 
             $user = new User();
             $user->setEmail($faker->email());
@@ -52,6 +81,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user->setPassword($encodedPassword);
             if (!$isSimpleUser)
                 $user->setSiret($faker->numberBetween(1000000000, 2147483646));
+            
+            $user->setLastLogin($faker->dateTimeBetween('-'.rand(1, 30).' days', "now"));
 
             $manager->persist($user);
         }

@@ -25,6 +25,7 @@ security:
           - App\Security\AppCustomAuthenticator
       logout:
         path: app_logout
+        # invalidate_session: false
       remember_me:
         secret: '%kernel.secret%'
         lifetime: 604800

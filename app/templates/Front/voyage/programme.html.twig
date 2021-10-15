@@ -1,22 +1,25 @@
-<div class="tab-pane fade show active mt-5" id="v-pills-programme" role="tabpanel" aria-labelledby="v-pills-programme-tab">
-      {% for programme in programme %}
-        <ul class="list-unstyled  ">
-            <li class="media w-75  ">
-               <h3 style="font-size:24px;color:#593e42;" class="mr-4">Jour {{programme.jour}}</h3>
-
-                <div class="media-body ">
-                    <div class="d-flex justify-content-between">
-                        <div><a href="" style="font-size:24px;font-weight:700; color:#61464b;" class="mt-0 mb-1">Saint
-                                Paul en Chablais</a></div>
-                    </div>
-
-
-                    <p style="font-size:16px; color: #61464b;" class="font-weight-light text-justify  ">
-                      {{programme.description}}
-                    </p>
-                </div>
-            </li>
-            <hr>
-        </ul>
-      {% endfor %}
-</div>
+<table class="table table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+        <tr>
+            <th><abbr title="Jour #">Jour</abbr></th>
+            {# <th>Voyage</th> #}
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th><abbr title="Jour #">Jour</abbr></th>
+            {# <th>Voyage</th> #}
+            <th>Description</th>
+        </tr>
+    </tfoot>
+    <tbody>
+        {% for programme in programme %}
+        <tr>
+            <td>{{programme.jour}}</td>
+            {# <td><a href="{{ path('voyage_show', {'id': programme.voyage.id}) }}" >{{programme.voyage.name}}</a></td> #}
+            <td>{{programme.description}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -11,8 +11,10 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/users")
  */
 class UserAdminController extends AbstractController
@@ -211,8 +213,8 @@ class UserAdminController extends AbstractController
                 $this->addFlash('success', "L'utilisateur a été bien crée");
                 
                 return $this->redirectToRoute('users_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('users_list');
             }
@@ -234,13 +236,13 @@ class UserAdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            try{
+            try {
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', "L'utilisateur a été modifié avec succès");
     
-                return $this->redirectToRoute('users_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+                return $this->redirectToRoute('app_logout');
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('users_list');
             }
@@ -267,8 +269,8 @@ class UserAdminController extends AbstractController
             $this->addFlash('success', "L'utilisateur a été supprimé avec succès");
 
             return $this->redirectToRoute('users_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('users_list');
         }

@@ -1,26 +1,81 @@
 {% extends 'base_security.html.twig' %}
+
+{% block title %}Inscription!{% endblock %}
+
 {% block body %}
 
-<div id="back">
-    <canvas id="canvas" class="canvas-back"></canvas>
-    <div class="backRight">
-    </div>
-    <div class="backLeft">
-    </div>
-</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
 
-<div class="right">
-    <div class="content">
-        <h2>Sign Up</h2>
-        {{ form_start(form) }}
-        <div class="form-element form-stack">
-            {{ form_widget(form) }}
+<section class="hero is-warning is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-5">
+            <div class="box">
+                {{ form_start(form) }}
+
+                  <div class="help is-danger">
+                    {{ form_errors(form) }}
+                  </div>
+
+                  <div class="field">
+                    <label class="label">{{ form_label(form.username) }}</label>
+                    <div class="control">
+                      {{ form_widget(form.username) }}
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    {# <label class="label">{{ form_label(form.password.first) }}</label> #}
+                    <label class="label">Mot de passe</label>
+                    <div class="control">
+                      {{ form_widget(form.password.first) }}
+                      <div class="help is-danger">{{ form_errors(form.password.first) }}</div>
+                    </div>
+                    {# <label class="label">{{ form_label(form.password.second) }}</label> #}
+                    <label class="label">Répéter le mot de passe</label>
+                    <div class="control">
+                      {{ form_widget(form.password.second) }}
+                      <div class="help is-danger">{{ form_errors(form.password.second) }}</div>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label class="label">{{ form_label(form.email) }}</label>
+                    <div class="control">
+                      {{ form_widget(form.email) }}
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label class="label">{{ form_label(form.lastname) }}</label>
+                    <div class="control">
+                      {{ form_widget(form.lastname) }}
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label class="label">{{ form_label(form.roles) }}</label>
+                    <div class="control">
+                      {{ form_widget(form.roles) }}
+                    </div>
+                  </div>
+
+                    {# {{ form_widget(form) }} #}
+                    
+                    <div class="field mt-5" align="center">
+                        <p class="control">
+                            <button class="button is-success">
+                                {{ button_label|default('Inscription') }}
+                            </button>
+                        </p>
+                    </div>
+                {{ form_end(form) }}
+            </div>
         </div>
-        <div class="form-element form-submit">
-            <button id="signUp" class="signup" type="submit"
-                name="signup">{{ button_label|default('Sign Up') }}</button>
-            <a href="{{path('app_login')}}" class="signup off">Log In</a>
-        </div>
-        {{ form_end(form) }}
+      </div>
     </div>
-    {% endblock %}
+  </div>
+</section>
+
+{% endblock %}

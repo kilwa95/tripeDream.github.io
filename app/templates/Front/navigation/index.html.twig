@@ -1,15 +1,15 @@
 {% extends 'base_front.html.twig' %}
 
-{% block title %}Hello NavigationController!{% endblock %}
+{% block title %}Bienvenue!{% endblock %}
 
 
-{% block body %}
+{% block hero %}
 
-{% include 'Front/navigation/sliders.html.twig' %}
-{% include 'Front/navigation/best-voyage.html.twig' %}
-{% include 'Front/navigation/idee-voyage.html.twig' %}
+    {# {% include 'Front/navigation/sliders.html.twig' %} #}
+    {% include 'Front/navigation/best-voyage.html.twig' %}
+    {% include 'Front/navigation/idee-voyage.html.twig' %}
 
-{# <div style="background: #040E27; height: 2vh;"></div> #}
-{# {% include 'Front/navigation/avis.html.twig' %} #}
+    {# <div style="background: #040E27; height: 2vh;"></div> #}
+    {# {% include 'Front/navigation/avis.html.twig' %} #}
 
 {% endblock %}

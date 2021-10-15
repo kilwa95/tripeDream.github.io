@@ -29,6 +29,9 @@
     "doctrine/dbal": {
         "version": "2.12.0"
     },
+    "doctrine/deprecations": {
+        "version": "v0.5.3"
+    },
     "doctrine/doctrine-bundle": {
         "version": "2.0",
         "recipe": {
@@ -96,6 +99,9 @@
     "egulias/email-validator": {
         "version": "2.1.23"
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.5"
+    },
     "fzaninotto/faker": {
         "version": "v1.9.1"
     },
@@ -107,6 +113,12 @@
     },
     "knplabs/knp-paginator-bundle": {
         "version": "v5.4.1"
+    },
+    "knplabs/knp-time-bundle": {
+        "version": "v1.16.1"
+    },
+    "laminas/laminas-code": {
+        "version": "4.4.3"
     },
     "monolog/monolog": {
         "version": "2.1.1"
@@ -155,6 +167,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "slope-it/breadcrumb-bundle": {
+        "version": "1.0.1"
     },
     "stripe/stripe-php": {
         "version": "v7.78.0"
@@ -565,11 +580,5 @@
     },
     "webmozart/assert": {
         "version": "1.9.1"
-    },
-    "zendframework/zend-code": {
-        "version": "3.4.1"
-    },
-    "zendframework/zend-eventmanager": {
-        "version": "3.2.1"
     }
 }

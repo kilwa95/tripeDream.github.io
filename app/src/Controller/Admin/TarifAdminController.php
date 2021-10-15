@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Tarif;
 use App\Form\TarifType;
 use App\Repository\TarifRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/tarif")
  */
 class TarifAdminController extends AbstractController
@@ -57,7 +59,7 @@ class TarifAdminController extends AbstractController
 
         $start_from = ($current_page_number - 1) * $records_per_page;
 
-        $dql = 'SELECT tarif.id, tarif.prix, tarif.depart, tarif.arrive, tarif.capacite, IDENTITY(tarif.voyage) FROM App\Entity\Tarif tarif ';
+        $dql = 'SELECT tarif.id, tarif.prix, tarif.depart, tarif.retour, tarif.capacite, IDENTITY(tarif.voyage) FROM App\Entity\Tarif tarif ';
 
         if (!empty($request->get("searchPhrase")))
         {
@@ -65,7 +67,7 @@ class TarifAdminController extends AbstractController
             $where = "WHERE (tarif.id LIKE '%".$strMainSearch."%' OR "
                 ."tarif.prix LIKE '%".$strMainSearch."%' OR "
                 ."tarif.depart LIKE '%".$strMainSearch."%' OR "
-                ."tarif.arrive LIKE '%".$strMainSearch."%' OR "
+                ."tarif.retour LIKE '%".$strMainSearch."%' OR "
                 ."tarif.capacite LIKE '%".$strMainSearch."%' OR "
                 ."IDENTITY(tarif.voyage) LIKE '%".$strMainSearch."%') ";
 
@@ -154,8 +156,8 @@ class TarifAdminController extends AbstractController
                 $this->addFlash('success', "Le tarif a été bien crée");
                 
                 return $this->redirectToRoute('tarif_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('tarif_list');
             }
@@ -182,8 +184,8 @@ class TarifAdminController extends AbstractController
                 $this->addFlash('success', "Le tarif a été modifié avec succès");
     
                 return $this->redirectToRoute('tarif_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('tarif_list');
             }
@@ -210,8 +212,8 @@ class TarifAdminController extends AbstractController
             $this->addFlash('success', "Le tarif a été supprimé avec succès");
 
             return $this->redirectToRoute('tarif_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('tarif_list');
         }

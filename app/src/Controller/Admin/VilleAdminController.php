@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Ville;
 use App\Form\VilleType;
 use App\Repository\VilleRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/ville")
  */
 class VilleAdminController extends AbstractController
@@ -151,8 +153,8 @@ class VilleAdminController extends AbstractController
                 $this->addFlash('success', "La ville a été bien crée");
                 
                 return $this->redirectToRoute('ville_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('ville_list');
             }
@@ -179,8 +181,8 @@ class VilleAdminController extends AbstractController
                 $this->addFlash('success', "La ville a été modifié avec succès");
     
                 return $this->redirectToRoute('ville_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('ville_list');
             }
@@ -207,8 +209,8 @@ class VilleAdminController extends AbstractController
             $this->addFlash('success', "La ville a été supprimé avec succès");
 
             return $this->redirectToRoute('ville_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('ville_list');
         }

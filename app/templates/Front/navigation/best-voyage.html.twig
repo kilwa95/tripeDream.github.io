@@ -1,36 +1,20 @@
-<section style="padding:200px; box-shadow:10px">
-    <div class=" container  d-flex flex-column justify-content-center align-items-center mt-5  mb-5">
+<section>
+    <div class="container  d-flex flex-column justify-content-center align-items-center mt-5  mb-5">
         <div>
-            <h2 class=" text-red">Best Voyages</h2>
+            <h2 class="is-size-4 has-text-white">Les meilleurs voyages</h2>
         </div>
+
+            {# {{ dump(voyages) }} #}
         <main class="page-content">
-            <div class="card-voyage">
-                <div class="content">
-                    <h2 class="title">Mountain View</h2>
-                    <p class="copy">Check out all of these gorgeous mountain trips with beautiful views of, you guessed
-                        it, the mountains</p><button class="btn">View Trips</button>
+            {% for voyage in voyages %}
+                <div class="card-voyage" style="background: no-repeat url({{ vich_uploader_asset(voyage) }});background-size: cover;">
+                    <div class="content">
+                        <h2 class="has-text-white">{{ voyage.name }}</h2>
+                        <p class="copy">{{ voyage.description|striptags|length > 80 ? voyage.description|striptags|slice(0, 80) ~ '...' : voyage.description|striptags }}</p>
+                        <button class="button is-rounded"><a href="{{ path('voyage_show', {'id': voyage.id}) }}" >Réservez</a></button>
+                    </div>
                 </div>
-            </div>
-            <div class="card-voyage">
-                <div class="content">
-                    <h2 class="title">To The Beach</h2>
-                    <p class="copy">Plan your next beach trip with these fabulous destinations</p><button
-                        class="btn">View Trips</button>
-                </div>
-            </div>
-            <div class="card-voyage">
-                <div class="content">
-                    <h2 class="title">Desert Destinations</h2>
-                    <p class="copy">It's the desert you've always dreamed of</p><button class="btn">Book Now</button>
-                </div>
-            </div>
-            <div class="card-voyage">
-                <div class="content">
-                    <h2 class="title">Explore The Galaxy</h2>
-                    <p class="copy">Seriously, straight up, just blast off into outer space today</p><button
-                        class="btn">Book Now</button>
-                </div>
-            </div>
+            {% endfor %}
         </main>
 
     </div>

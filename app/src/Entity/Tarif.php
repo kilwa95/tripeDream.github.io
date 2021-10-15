@@ -30,7 +30,7 @@ class Tarif
     /**
      * @ORM\Column(type="datetime")
      */
-    private $arrive;
+    private $retour;
 
     /**
      * @ORM\Column(type="integer")
@@ -71,14 +71,14 @@ class Tarif
         return $this;
     }
 
-    public function getArrive(): ?\DateTimeInterface
+    public function getRetour(): ?\DateTimeInterface
     {
-        return $this->arrive;
+        return $this->retour;
     }
 
-    public function setArrive(\DateTimeInterface $arrive): self
+    public function setRetour(\DateTimeInterface $retour): self
     {
-        $this->arrive = $arrive;
+        $this->retour = $retour;
 
         return $this;
     }

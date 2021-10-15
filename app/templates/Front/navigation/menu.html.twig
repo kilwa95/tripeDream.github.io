@@ -1,91 +1,159 @@
-<header>
-    <a href="{{ path('navigation') }}" class="logo"></a>
-    <nav class="site-nav">
-        <ul>
 
-            <li>
-                <div class="menu-item">
-                    <a class="menu-item-name" href="{{ path('voyage_index') }}">voyages </a>
-                </div>
-            </li>
-            <li>
-                <div class="menu-item">
-                    <a class="menu-item-name" href="javascript:void(0);">Pays</a>
-                    <ul class="sub-menu">
-                        <input type='text' class='searchable-input' onKeypress='filterSearch(this)'>
-                        {% for pays in pays %}
-                        <li><a href="{{ path('pays_name',{'id': pays.id}) }}" class='dataSearch' data-search='{{pays.name}}'>{{pays.name}}</a></li>
-                        {% endfor %}
-                        <li><a class="read-more" href="{{ path('voyage_index') }}">Read more....</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <div class="menu-item">
-                    <a class="menu-item-name" href="javascript:void(0);">
-                        activites
-                    </a>
-                    <ul class="sub-menu">
-                         <input type='text' class='searchable-input' onKeypress='filterSearch(this)'>
-                        {% for activite in activites %}
-                        <li><a href="{{ path('activite_name',{'id': activite.id}) }}" class='dataSearch' data-search='{{activite.name}}'>{{activite.name}}</a></li>
-                        {% endfor %}
-                        <li><a class="read-more" href="{{ path('voyage_index') }}">Read more....</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <div class="menu-item">
-                    <a class="menu-item-name" href="javascript:void(0);">
-                        Sasions
-                    </a>
-                    <ul class="sub-menu">
-                        {% for saison in saison %}
-                        <li><a href="{{ path('saison_name',{'id': saison.id}) }}">{{saison.name}}</a></li>
-                        {% endfor %}
-                        <li><a class="read-more" href="{{ path('voyage_index') }}">Read more....</a></li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-    </nav>
-    {% if is_granted("ROLE_USER") %}
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle mb-3" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-expanded="false">
-            {{  app.user.username}}
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="{{path('favorie_index')}}">Mon favorie <span
-              class=" nbselection badge badge-danger">{{ app.user.favorie|length }}</span>
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a href="{{ path('navigation') }}">
+                <img src="{{ asset('build/images/logo4.png') }}" alt="TripDream: Trouvez et réservez des voyages en 1 clic" height="100" width="50">
             </a>
-            <a class="dropdown-item" href="{{path('panier_index')}}">Mon panier <span
-              class=" nbselection badge badge-danger">{{ app.user.paniers|length }}</span>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
             </a>
-            <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+        </div>
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                {% if (is_granted('ROLE_USER') or app.user == null) %}
+                    <span class="navbar-item">
+                        <a class="button is-white is-outlined" href="{{ path('navigation') }}">
+                        Accueil
+                        </a>
+                    </span>
+                    <span class="navbar-item">
+                        <a class="button is-white is-outlined" href="{{ path('voyage_index') }}">
+                        Voyages
+                        </a>
+                    </span>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <span class="navbar-item">
+                            <a class="button is-white is-outlined">
+                            Pays
+                            </a>
+                        </span>
+                        <div class="navbar-dropdown">
+                            <form class="px-4 py-2">
+                                <input class="input is-rounded ds-input" type="text" placeholder="Rechercher" aria-label="search" onKeyUp='filterSearch(this)'>
+                            </form>
+                            {% for pays in pays %}
+                                <a href="{{ path('pays_name',{'id': pays.id}) }}" class='navbar-item dataSearch' data-search='{{pays.name}}'>{{pays.name}}</a>
+                            {% endfor %}
+                            <hr class="navbar-divider">
+                            <a class="navbar-item read-more" href="{{ path('voyage_index') }}">Voir plus....</a>
+                        </div>
+                    </div>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <span class="navbar-item">
+                            <a class="button is-white is-outlined">
+                            Activités
+                            </a>
+                        </span>
+                        <div class="navbar-dropdown">
+                            <form class="px-4 py-2">
+                                <input class="input is-rounded ds-input" type="text" placeholder="Rechercher" aria-label="search" onKeyUp='filterSearch(this)'>
+                            </form>
+                            {% for activite in activites %}
+                                <a href="{{ path('activite_name',{'id': activite.id}) }}" class='navbar-item dataSearch' data-search='{{activite.name}}'>{{activite.name}}</a>
+                            {% endfor %}
+                            <hr class="navbar-divider">
+                            <a class="navbar-item read-more" href="{{ path('voyage_index') }}">Voir plus....</a>
+                        </div>
+                    </div>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <span class="navbar-item">
+                            <a class="button is-white is-outlined">
+                            Saisons
+                            </a>
+                        </span>
+                        <div class="navbar-dropdown">
+                            <form class="px-4 py-2">
+                                <input class="input is-rounded ds-input" type="text" placeholder="Rechercher" aria-label="search" onKeyUp='filterSearch(this)'>
+                            </form>
+                            {% for saison in saison %}
+                                <a href="{{ path('saison_name',{'id': saison.id}) }}" class='navbar-item dataSearch' data-search='{{saison.name}}'>{{saison.name}}</a>
+                            {% endfor %}
+                            <hr class="navbar-divider">
+                        </div>
+                    </div>
+                {% elseif (is_granted('ROLE_AGENCE')) %}
+                    <span class="navbar-item">
+                        <a class="button is-white is-outlined" href="{{ path('agence_index') }}">
+                        Mes voyages
+                        </a>
+                    </span>
+                    <span class="navbar-item">
+                        <a class="button is-white is-outlined" href="{{ path('voyage_new') }}">
+                        Créer un voyage
+                        </a>
+                    </span>
+                {% endif %}
+            </div>
+            <div class="navbar-end">
+                {# <a class="navbar-item is-hidden-desktop-only" href="https://github.com/kilwa95/tripeDream.github.io" target="_blank" onmouseover="this.style.background='initial'">
+                    <i class="bi bi-github"></i>
+                </a> #}
+
+                {% if is_granted("ROLE_USER") or is_granted("ROLE_AGENCE") %}
+         
+                <div class="navbar-item has-dropdown is-hoverable"   >
+                     
+                    <span class="navbar-item">
+                        <div class="button is-white is-outlined">
+                            <span class="mr-2">{{ app.user.username }}</span>
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                    </span>
+                    <div class="navbar-dropdown is-right">
+                            <a  class="navbar-item" href="{{ path('show_front_user', {'id': app.user.id}) }}">
+                                <i class="bi bi-person-circle"></i>
+                                <span class="ml-2">Mon compte</span>
+                            </a>
+                            {% if is_granted("ROLE_USER") %}
+                            <a class="navbar-item" href="{{path('favorie_index')}}">
+                                <i class="bi bi-heart"></i>
+                                <span class="ml-2">Mes favoris</span>
+                                <span class="badge badge-danger ml-auto" style="background: red">{{ app.user.favorie|length }}</span>
+                            </a>
+                            <a class="navbar-item" href="{{path('panier_index')}}">
+                                <i class="bi bi-pen"></i>
+                                <span class="ml-2">Mon panier</span>
+                                <span class="badge badge-warning ml-auto" style="background: red">{{ app.user.paniers|length }}</span>
+                            </a>
+                            <a class="navbar-item" href="{{path('purchase_index')}}">
+                                <i class="bi bi-credit-card-2-back"></i>
+                                <span class="ml-2">Mon historique</span>
+                            </a>
+                            <hr class="navbar-divider">
+                            {% endif %}
+                        <a class="navbar-item" href="{{path('app_logout')}}">
+                            <i class="bi bi-box-arrow-left"></i>
+                            <span class="ml-2">Déconnexion</span>
+                        </a>
+                    </div>
+                </div>
+                {% else %}
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-primary" href="{{path('user_registration')}}">
+                            <strong>Inscription</strong>
+                            </a>
+                            <a class="button is-light" href="{{path('app_login')}}">
+                            Connexion
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
-
-    {% else %}
-    <a href="{{path('app_login')}}" class="button primary">Log In</a>
-    <a href="{{path('user_registration')}}" class="button secondary">Sign Up</a>
-    {% endif %}
-
-
-
-
-
-</header>
+</nav>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-function filterSearch(input){
-  let text = $(input).val().toLowerCase();
-  $(document).find(".sub-menu > li > a").filter(function () {
-    if($(this).attr('data-search') !== undefined){
-      $(this).toggle($(this).attr('data-search').toLowerCase().indexOf(text) > -1);
-    }
-  });
-}
-
-
+  function filterSearch(input){
+    let text = $(input).val().toLowerCase();
+    $(document).find(".navbar-dropdown > a").filter(function () {
+      if($(this).attr('data-search') !== undefined){
+        $(this).toggle($(this).attr('data-search').toLowerCase().indexOf(text) > -1);
+      }
+    });
+  }
 </script>

@@ -1,22 +1,47 @@
-<header class="c-header c-header-light px-3">
-    <button class="c-header-toggler" type="button">
-        <span class="c-header-toggler-icon"></span>
-    </button>
-    <ul class="c-header-nav mr-auto ">
-        <li class="c-header-nav-item active">
-            <a class="c-header-nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="c-header-nav-item">
-            <a class="c-header-nav-link" href="{{ path('agence_voyage_show', {'id': app.user.id}) }}">mes voyages</a>
-        </li>
+<!-- START NAV -->
+<nav class="navbar is-white">
+    <div class="container">
+        <div class="navbar-brand">
+            <a href="{{ path('agence_index') }}">
+                <img src="{{ asset('build/images/logo4.png') }}" alt="TripDream: Trouvez et réservez des voyages en 1 clic" height="100" width="50">
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            </a>
+        </div>
 
-        <li class="c-header-nav-item">
-            <a class="c-header-nav-link" href="{{path('voyage_new')}}">créer un voyage</a>
-        </li>
+        <div id="navMainMenuAgence" class="navbar-menu">
 
-    </ul>
-    <div class="c-header-nav-item mt-2">
-        <a class="c-header-nav-link btn btn-outline-danger" href="{{path('app_logout')}}">logout</a>
+            <div class="navbar-start">
+                <a class="navbar-item" href="{{ path('agence_voyage_show', {'id': app.user.id}) }}">Mes voyages</a>
+                <a class="navbar-item" href="{{path('voyage_new')}}">Créer un voyage</a>
+            </div>
+
+        
+            <div class="navbar-end">
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <span class="navbar-item">
+                        <div class="button is-outlined">
+                            <span class="mr-2">{{ app.user.username }}</span>
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                    </span>
+                    <div class="navbar-dropdown is-right">
+                        <a  class="navbar-item" href="{{ path('show_front_user', {'id': app.user.id}) }}">
+                            <i class="bi bi-person-circle"></i>
+                            <span class="ml-2">Mon compte</span>
+                        </a>
+                        <a class="navbar-item" href="{{path('app_logout')}}">
+                            <i class="bi bi-box-arrow-left"></i>
+                            <span class="ml-2">Déconnexion</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-</header>
+</nav>
+<!-- END NAV -->

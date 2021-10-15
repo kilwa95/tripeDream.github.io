@@ -20,8 +20,8 @@
     </div>
 
     <h3>Info pratique</h3>
-    {{ form_row(form.infoPratique.rendez_vous) }}
-    {{ form_row(form.infoPratique.fin_sejour) }}
+    {{ form_row(form.infoPratique.depart) }}
+    {{ form_row(form.infoPratique.retour) }}
     {{ form_row(form.infoPratique.hebergement) }}
     {{ form_row(form.infoPratique.repas) }}
     {{ form_row(form.infoPratique.covid19) }}
@@ -33,7 +33,7 @@
                 <div class="panel-body">
                     {{ form_row(tarif.prix) }}
                     {{ form_row(tarif.depart) }}
-                    {{ form_row(tarif.arrive) }}
+                    {{ form_row(tarif.retour) }}
                     {{ form_row(tarif.capacite) }}
                 </div>
             </div>

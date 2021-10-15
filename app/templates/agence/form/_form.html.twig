@@ -1,8 +1,13 @@
 <div class="container-fluid">
     <div class="card">
         <div class="card-header">
-            <h3>Ajouter un nouveux voyage</h3>
+            <h3>Ajouter ou modifier un voyage</h3>
         </div>
+           {% for message in app.flashes('danger') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
         <div class="card-body">
             {{ form_start(form) }}
             <div class="my-custom-class-for-errors">
@@ -20,10 +25,7 @@
                     {{ form_row(form.saison) }}
                     {{ form_row(form.activity) }}
                     {{ form_row(form.imageFile) }}
-
                 </div>
-
-
 
                 <div class="programme col-3 mb-5 border-right"
                     data-prototype="{{ form_row(form.programme.vars.prototype)|e('html_attr') }}">
@@ -33,29 +35,29 @@
                     {{ form_row(programme.description) }}
                     {% endfor %}
                     <button type="button" class=" btn btn-info mb-2 add_item_link"
-                        data-collection-holder-class="programme">Add a porgramme</button>
+                        data-collection-holder-class="programme">Ajouter un programme</button>
                 </div>
 
                 <div class="tarif col-3 mb-5 border-right"
                     data-prototype="{{ form_row(form.tarif.vars.prototype)|e('html_attr') }}">
-                    <h4>tarifs</h4>
+                    <h4>Tarifs</h4>
                     {% for tarif in form.tarif %}
                     {{ form_row(tarif.prix) }}
                     {{ form_row(tarif.depart) }}
-                    {{ form_row(tarif.arrive) }}
+                    {{ form_row(tarif.retour) }}
                     {{ form_row(tarif.capacite) }}
                     {% endfor %}
-                    <button type="button" class=" btn btn-info mb-2 add_item_link"
-                        data-collection-holder-class="tarif">Add a tarif</button>
+                    <button type="button" class=" btn btn-info mb-2 add_item_link" data-collection-holder-class="tarif">Ajouter un tarif</button>
                 </div>
 
                 <div class="col-3 border-right">
-                    <h4>info pratique</h4>
-                    {{ form_row(form.infoPratique.rendez_vous) }}
-                    {{ form_row(form.infoPratique.fin_sejour) }}
+                    <h4>Informations pratiques</h4>
+                    {# {{ form_row(form.infoPratique.depart) }}
+                    {{ form_row(form.infoPratique.retour) }} #}
                     {{ form_row(form.infoPratique.hebergement) }}
                     {{ form_row(form.infoPratique.repas) }}
                     {{ form_row(form.infoPratique.covid19) }}
+                    {{ form_row(form.infoPratique.duree) }}
                 </div>
 
             </div>
@@ -67,3 +69,5 @@
             {{ form_row(form.submit) }}
         </div>
         {{form_end(form) }}
+
+</script>

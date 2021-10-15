@@ -12,10 +12,10 @@ class SaisonFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $saisons = [
-            ['name' => 'hiver'],
-            ['name' => 'ete'],
-            ['name' => 'printemps'],
-            ['name' => 'autome'],
+            ['name' => 'Hiver'],
+            ['name' => 'Été'],
+            ['name' => 'Printemps'],
+            ['name' => 'Automne'],
         ];
         foreach ( $saisons as  $item ){
             $saison = new Saison();

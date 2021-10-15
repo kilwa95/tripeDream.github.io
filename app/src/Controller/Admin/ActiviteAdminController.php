@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Activite;
 use App\Form\ActiviteType;
 use App\Repository\ActiviteRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/activite")
  */
 class ActiviteAdminController extends AbstractController
@@ -151,8 +153,8 @@ class ActiviteAdminController extends AbstractController
                 $this->addFlash('success', "L'activité a été bien crée");
                 
                 return $this->redirectToRoute('activite_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('activite_list');
             }
@@ -179,8 +181,8 @@ class ActiviteAdminController extends AbstractController
                 $this->addFlash('success', "L'activité a été modifié avec succès");
     
                 return $this->redirectToRoute('activite_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('activite_list');
             }
@@ -207,8 +209,8 @@ class ActiviteAdminController extends AbstractController
             $this->addFlash('success', "L'activité a été supprimé avec succès");
 
             return $this->redirectToRoute('activite_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('activite_list');
         }

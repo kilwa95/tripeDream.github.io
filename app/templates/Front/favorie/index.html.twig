@@ -1,47 +1,84 @@
 {% extends 'base_front.html.twig' %}
 
-{% block title %}Favorie index{% endblock %}
+{% block title %}Favoris{% endblock %}
+
 {% block body %}
 
-<div class="mt-5" style="min-height: 70vh;">
-    <div class="container">
-        <h1 class="text-center mb-5">My favories</h1>
-        <div class="row">
-            {% if  favories  is defined %}
-            {% for favorie in favories %}
-            <div class="col-3 mr-4 mb-4">
-                <a href="{{path('voyage_show',{'id': favorie.id})}}">
-                    <div class="card" style="width: 18rem;">
-                        {# <img class="card-img-top"
-                        src="https://www.labalaguere.com/sites/default/files/styles/banner_voyage/public/upload_voyages/FP1COLC_1.jpg?itok=pOymZ75X"
-                        alt="Card image cap"> #}
-                        <img class="card-img-top"src="{{ vich_uploader_asset(favorie) }}" alt="{{ favorie.name }}" />
-
-                        <div class="card-body">
-                            <h5 class="card-title">{{favorie.name}}</h5>
-                            <p style="max-height:200px;" class="card-text text-truncate">{{favorie.description}}</p>
-                            <div style="background:grey;border-radius:2px;padding:10px;"
-                                class="d-flex mb-3 justify-content-between">
-                                <div class="text-white">Agence</div>
-                                <div class="text-white">{{ favorie.user.username}}</div>
-                            </div>
-                            <div style="background:grey;border-radius:2px;padding:10px;"
-                                class="d-flex mb-3 justify-content-between">
-                                <div class="text-white">A partir de</div>
-                                {# {% for price in favorie.tarif %} #}
-                                <div class="text-white">{{favorie.tarif|first.prix}} euro</div>
-                                {# {% endfor %} #}
-                            </div>
-                            <a href="{{path('favorie_delete',{'id': favorie.id})}}" class="btn btn-danger ">remove
-                                favorie</a>
-                        </div>
-                    </div>
+<div class="container">
+    <div class="section">
+        {% if favories is not empty %}
+            <div class="box">
+                <p class="has-text-centered">
+                    Mes favoris
+                </p>
             </div>
+            
+            <div class="columns is-multiline">
+            {% for favorie in favories %}
+                <div class="column is-one-third">
+                    <div class="card is-shady">
+                        <div class="card-image">
+                            <a class="image is-16by9" href="{{ path('voyage_show', {'id': favorie.id}) }}">
+                                <img src="{{ vich_uploader_asset(favorie) }}" alt="{{ favorie.name }}" />
+                            </a>
+                        </div>
+                        <div class="v-card-content">
+                            <p class="title is-6" align="center">{{ favorie.name }}</p>
+                            <p>{{ favorie.description|striptags|length > 100 ? favorie.description|striptags|slice(0, 100) ~ '...' : favorie.description|striptags }}</p>
+                        </div>
+                        <footer class="card-footer">
+                            <span class="card-footer-item">{{ favorie.user.username }}</span>
+                            <span class="card-footer-item">
+                                <a data-urlDelBtn='{{ path('favorie_delete', {'id': favorie.id})}}' data-bs-toggle='modal' data-bs-target='#dangerModal' onclick="myFunction(this)">
+                                    <button class="button is-small is-danger">Supprimer</button>
+                                </a>
+                            </span>
+                            <span class="card-footer-item">{{ favorie.tarif|first.prix }} €</span>
+                        </footer>
+                    </div>
+                </div>
             {% endfor %}
-            {% endif %}
+            </div>
 
-        </div>
+            <div class="pagination justify-content-center">
+                {{ knp_pagination_render(favories) }}
+            </div>
 
+            <div class="modal fade" id="dangerModal" style='z-index:2000' tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmez-vous la suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    <div class="modal-body">
+                        Êtes-vous sûr de vouloir supprimer définitivement l'élément sélectionné ?
+                    </div>
+                    <div class="modal-footer">
+                        <a><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button></a>
+                        <a href="" class='confirm'><button type="button" class="btn btn-danger">Confirmer</button></a>
+                    </div>
+                </div>
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                function myFunction(e) {
+                    urlDelBtn = $(e).attr('data-urlDelBtn');
+                    modalId = $(e).attr("data-bs-target")
+                    modal = $(modalId);
+                    
+                    $(modalId+ ' .modal-footer a.confirm').attr("href", urlDelBtn)
+                };
+            </script>
+        {% else %}
+            <div class="box">
+                <p class="has-text-centered has-text-danger-dark">
+                    La liste de favoris est vide
+                </p>
+            </div>
+        {% endif %}
     </div>
 </div>
+
 {% endblock %}

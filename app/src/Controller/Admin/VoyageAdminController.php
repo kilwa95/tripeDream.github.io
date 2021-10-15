@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Voyage;
 use App\Form\VoyageType;
 use App\Repository\VoyageRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/voyages")
  */
 class VoyageAdminController extends AbstractController
@@ -155,8 +157,8 @@ class VoyageAdminController extends AbstractController
                 $this->addFlash('success', "Le voyage a été bien crée");
                 
                 return $this->redirectToRoute('voyage_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('voyage_list');
             }
@@ -183,8 +185,8 @@ class VoyageAdminController extends AbstractController
                 $this->addFlash('success', "Le voyage a été modifié avec succès");
     
                 return $this->redirectToRoute('voyage_list');
-            } catch(\Exception $e){
-                $this->addFlash('danger', $e->getMessage());
+            } catch(\Exception $e) {
+                $this->addFlash('danger', "Une erreur est survenue");
                 
                 return $this->redirectToRoute('voyage_list');
             }
@@ -211,8 +213,8 @@ class VoyageAdminController extends AbstractController
             $this->addFlash('success', "Le voyage a été supprimé avec succès");
 
             return $this->redirectToRoute('voyage_list');
-        } catch(\Exception $e){
-            $this->addFlash('danger', $e->getMessage());
+        } catch(\Exception $e) {
+            $this->addFlash('danger', "Une erreur est survenue");
             
             return $this->redirectToRoute('voyage_list');
         }
