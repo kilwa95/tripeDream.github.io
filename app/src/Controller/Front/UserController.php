@@ -28,7 +28,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_USER")
      * @Route("/{id}", name="show_front_user", methods={"GET"})
      */
     public function show(User $user): Response
@@ -42,7 +41,6 @@ class UserController extends AbstractController
     }
 
     /**
-    *  @IsGranted("ROLE_USER")
      * @Route("/{id}/edit", name="edit_front_user", methods={"GET","POST"})
      */
     public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response

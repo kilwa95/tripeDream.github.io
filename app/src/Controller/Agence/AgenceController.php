@@ -86,12 +86,20 @@ class AgenceController extends AbstractController
     public function show(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
         $voyages = $this->getUser()->getVoyage();
-
         return $this->render('agence/tableVoyages.html.twig', [
             'voyages' =>  $voyages,
         ]);
     }
-
+    /**
+     * @Route("/agence/user/{id}/participates", name="agence_voyage_show_participate", methods={"GET","POST"})
+    */
+    public function show_participate(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
+    {
+        $voyages = $this->getUser()->getVoyage();
+        return $this->render('agence/tableVoyageParticipates.html.twig', [
+            'voyages' =>  $voyages,
+        ]);
+    }
 
     /**
      * @Route("/{id}/edit", name="trip_edit", methods={"GET","POST"})

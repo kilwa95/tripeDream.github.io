@@ -47,8 +47,9 @@
                     {{ message }}
                 </div>
             {% endfor %} #}
-
-            {{ render(controller('App\\Controller\\Front\\SearchController::searchBar')) }}
+                {% if is_granted("ROLE_USER") %}
+                    {{ render(controller('App\\Controller\\Front\\SearchController::searchBar')) }}
+                {% endif %}
         </div>
         
         <div class="hero-body">
