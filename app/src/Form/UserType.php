@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 use Symfony\Component\Security\Core\Security;
 
@@ -51,10 +51,9 @@ class UserType extends AbstractType
                     new NotBlank([
                         'message' => 'Veuillez entrer un mot de passe',
                     ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères.',
-                        'max' => 4096,
+                    new Regex([
+                        'pattern' => '/^(?=.*\d)(?=.*[A-Z])(?=.*[@#$%+])(?!.*(.)\1{2}).*[a-z]/m',
+                        'message' => 'Votre mot de passe doit comporter au moins 8 caractères, dont des lettres majuscules et minuscules, un chiffre et un symbole.'
                     ]),
                 ],
             ])
@@ -134,7 +133,6 @@ class UserType extends AbstractType
                 ));
         }
     }
-
 
     public function configureOptions(OptionsResolver $resolver)
     {

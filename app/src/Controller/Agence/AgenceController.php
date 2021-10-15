@@ -56,16 +56,24 @@ class AgenceController extends AbstractController
         $voyage->setStatus("avaible");
         $form = $this->createForm(VoyageType::class, $voyage, ['new' => true]);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $infoPr = $form->get('infoPratique')->getData();
+            $infoPr->setDepart($voyage->getTarif()[0]->getDepart());
+            $infoPr->setRetour($voyage->getTarif()[0]->getRetour());
+            $voyage->setInfoPratique($infoPr);
+
             foreach($voyage->getTarif($tarif) as $dates)
-            {   
-                if ((strtotime($dates->getDepart()->format('Y-m-d H:i:s')))  > strtotime($dates->getretour()->format('Y-m-d H:i:s')) ){
-                        $this->addFlash('danger', 'Votre date de retour peut pas etre inferieur a la date de depart');   
-                        return $this->render('agence/new.html.twig', [
-                            'voyage' => $voyage,
-                            'form' => $form->createView(),
-                        ]);
-                    }
+            {
+                if ((strtotime($dates->getDepart()->format('Y-m-d H:i:s'))) > strtotime($dates->getRetour()->format('Y-m-d H:i:s')) ) {
+                    $this->addFlash('danger', 'La date de retour indiqué dans le tarif ne peut être inférieure à la date de départ');
+
+                    return $this->render('agence/new.html.twig', [
+                        'voyage' => $voyage,
+                        'form' => $form->createView(),
+                    ]);
+                }
             }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($voyage);

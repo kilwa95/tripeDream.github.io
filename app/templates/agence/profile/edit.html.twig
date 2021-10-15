@@ -1,0 +1,32 @@
+{% extends 'agence/index.html.twig' %}
+
+{% block title %}Modifier mon compte{% endblock %}
+{% block core %}
+
+<div class="container" id="compte">
+    <div class="section">
+        <div class="card">
+            <div class="card-header">
+                <p class="card-header-title is-size-5 is-centered">
+                    Modifier mon compte
+                </p>
+            </div>
+            {% for message in app.flashes('success') %}
+                <div class="container mt-5 notification is-success">
+                    <button class="delete"></button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {% for message in app.flashes('danger') %}
+                <div class="container mt-5 notification is-danger">
+                    <button class="delete"></button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {{ include('Front/profile/_form.html.twig') }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

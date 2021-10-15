@@ -114,6 +114,9 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v5.4.1"
     },
+    "knplabs/knp-time-bundle": {
+        "version": "v1.16.1"
+    },
     "laminas/laminas-code": {
         "version": "4.4.3"
     },

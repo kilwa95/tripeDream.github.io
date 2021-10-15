@@ -41,15 +41,12 @@
                 </div>
             {% endfor %}
 
-            {# {% for message in app.flashes('success') %}
-                <div class="container mt-5 notification is-success" style='z-index:1000'>
-                    <button class="delete"></button>
-                    {{ message }}
-                </div>
-            {% endfor %} #}
-                {% if is_granted("ROLE_USER") %}
-                    {{ render(controller('App\\Controller\\Front\\SearchController::searchBar')) }}
-                {% endif %}
+            {% set route = app.request.attributes.get('_route') %}
+            {% set routes = ["show_front_user", "edit_front_user", "favorie_index", "panier_index", "panier_validation", "panier_success", "purchase_index"] %}
+
+            {% if route not in routes %}
+                {{ render(controller('App\\Controller\\Front\\SearchController::searchBar')) }}
+            {% endif %}
         </div>
         
         <div class="hero-body">

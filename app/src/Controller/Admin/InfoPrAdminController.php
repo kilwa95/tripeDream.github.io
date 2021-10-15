@@ -148,7 +148,7 @@ class InfoPrAdminController extends AbstractController
     {
         $info_pr = new InfoPratique();
 
-        $form = $this->createForm(InfoPratiqueType::class, $info_pr, ['action' => 'new']);
+        $form = $this->createForm(InfoPratiqueType::class, $info_pr, ['action' => 'new', 'user' => 'admin']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
