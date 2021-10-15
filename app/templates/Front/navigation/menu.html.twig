@@ -38,7 +38,7 @@
                                 <a href="{{ path('pays_name',{'id': pays.id}) }}" class='navbar-item dataSearch' data-search='{{pays.name}}'>{{pays.name}}</a>
                             {% endfor %}
                             <hr class="navbar-divider">
-                            <a class="navbar-item read-more" href="{{ path('voyage_index') }}">Voir plus....</a>
+                            <a class="navbar-item read-more" href="{{ path('trips_by_pays') }}">Voir plus...</a>
                         </div>
                     </div>
                     <div class="navbar-item has-dropdown is-hoverable">
@@ -55,7 +55,7 @@
                                 <a href="{{ path('activite_name',{'id': activite.id}) }}" class='navbar-item dataSearch' data-search='{{activite.name}}'>{{activite.name}}</a>
                             {% endfor %}
                             <hr class="navbar-divider">
-                            <a class="navbar-item read-more" href="{{ path('voyage_index') }}">Voir plus....</a>
+                            <a class="navbar-item read-more" href="{{ path('voyage_index') }}">Voir plus...</a>
                         </div>
                     </div>
                     <div class="navbar-item has-dropdown is-hoverable">
