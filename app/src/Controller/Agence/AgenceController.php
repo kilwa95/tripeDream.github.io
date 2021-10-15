@@ -100,6 +100,9 @@ class AgenceController extends AbstractController
     }
     /**
      * @Route("/agence/user/{id}/participates", name="agence_voyage_show_participate", methods={"GET","POST"})
+     * @Breadcrumb({
+     *  { "label" = "Participants" }
+     * })
     */
     public function show_participate(VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {

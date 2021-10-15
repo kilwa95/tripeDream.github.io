@@ -1,23 +1,20 @@
-{% extends 'base_front.html.twig' %}
+{% extends 'agence/index.html.twig' %}
 
 {% block title %}Détails voyage{% endblock %}
-{% block stylesheets %}
-{{parent()}}
-{# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> #}
-{% endblock %}
 
-{% block body %}
+{% block core %}
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
     $('#tabs li').on('click', function() {
-        var tab = $(this).data('tab');
+    var tab = $(this).data('tab');
 
-        $('#tabs li').removeClass('is-active');
-        $(this).addClass('is-active');
+    $('#tabs li').removeClass('is-active');
+    $(this).addClass('is-active');
 
-        $('#tab-content #cont').removeClass('is-active');
-        $('#cont[data-content="' + tab + '"]').addClass('is-active');
+    $('#tab-content #cont').removeClass('is-active');
+    $('#cont[data-content="' + tab + '"]').addClass('is-active');
     });
 
     $("#leave-comm-btn").click(function() {
