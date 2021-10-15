@@ -21,23 +21,29 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
         $faker = \Faker\Factory::create('fr-FR');
         $users = $manager->getRepository(User::class)->findAll();
         $usersAgencies = [];
-        $images = ['image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg', 'image5.jpg', 'image6.jpg',
-                   'image7.jpg', 'image8.jpg', 'image9.jpg', 'image10.jpg', 'image11.jpg', 'image12.jpg',
-                   'image13.jpg', 'image14.jpg', 'image15.jpg', 'image16.jpg', 'image17.jpg', 'image17.jpg',
-                   'image18.jpg', 'image19.jpg', 'image20.jpg', 'image21.jpg', 'image22.jpg', 'image23.jpg',
-                   'image24.jpg','image25.jpg', 'image26.jpg', 'image27.jpg', 'image28.jpg', 'image29.jpg',
-                   'image30.jpg', 'image31.jpg', 'image32.jpg', 'image33.jpg', 'image34.jpg', 'image35.jpg',
-                   'image36.jpg', 'image37.jpg', 'image38.jpg', 'image39.jpg', 'image40.jpg', 'image41.jpg',
-                   'image42.jpg', 'image43.jpg', 'image44.jpg', 'image45.jpg', 'image46.jpg', 'image47.jpg',
-                   'image48.jpg', 'image49.jpg', 'image50.jpg', 'image51.jpg', 'image52.jpg', 'image53.jpg',
-                   'image54.jpg', 'image55.jpg', 'image56.jpg', 'image57.jpg', 'image58.jpg', 'image59.jpg',
-                   'image60.jpg', 'image61.jpg', 'image62.jpg', 'image63.jpg', 'image64.jpg', 'image65.jpg',
-                   'image66.jpg', 'image67.jpg', 'image68.jpg', 'image69.jpg', 'image70.jpg', 'image71.jpg',
-                   'image72.jpg', 'image73.jpg', 'image74.jpg', 'image73.jpg', 'image74.jpg', 'image75.jpg',
-                   'image78.jpg', 'image79.jpg', 'image80.jpg', 'image81.jpg', 'image82.jpg', 'image83.jpg',
-                   'image84.jpg', 'image85.jpg', 'image86.jpg', 'image87.jpg', 'image88.jpg', 'image89.jpg',
-                   'image90.jpg', 'image91.jpg', 'image92.jpg', 'image93.jpg', 'image94.jpg', 'image95.jpg',
-                   'image96.jpg', 'image97.jpg', 'image98.jpg', 'image99.jpg', 'image100.jpg'
+        
+        $images = ["afghanistan.jpeg", "afrique_du_sud.jpeg", "albanie.jpeg", "algerie.jpeg", "allemagne.jpeg", "andorre.jpeg", "angola.jpeg", "anguilla.jpeg", "antarctique.jpeg", "antigua-et-barbuda.jpeg",
+                   "antilles_neerlandaises.jpeg", "arabie_saoudite.jpeg", "argentine.jpeg", "armenie.jpeg", "aruba.jpeg", "australie.jpeg", "autriche.jpeg", "azerbaidjan.jpeg", "bahamas.jpeg", "bahrein.jpeg",
+                   "bangladesh.jpeg", "barbade.jpeg", "belarus.jpeg", "belgique.jpeg", "belize.jpeg", "benin.jpeg", "bermudes.jpeg", "bhoutan.jpeg", "bolivie.jpeg", "bosnie-herzegovine.jpeg", "botswana.jpeg",
+                   "bresil.jpeg", "brunei_darussalam.jpeg", "bulgarie.jpeg", "burkina_faso.jpeg", "burundi.jpeg", "cambodge.jpeg", "cameroun.jpeg", "canada.jpeg", "cap-vert.jpeg", "chili.jpeg", "chine.jpeg",
+                   "chypre.jpeg", "colombie.jpeg", "comores.jpeg", "congo.jpeg", "coree_du_nord.jpeg", "coree_du_sud.jpeg", "costa_rica.jpeg", "cote_d_ivoire.jpeg", "croatie.jpeg", "cuba.jpeg", "danemark.jpeg",
+                   "djibouti.jpeg", "dominique.jpeg", "egypte.jpeg", "el_salvador.jpeg", "emirats_arabes_unis.jpeg", "equateur.jpeg", "erythree.jpeg", "espagne.jpeg", "estonie.jpeg", "etats-unis_d_amerique.jpeg",
+                   "ethiopie.jpeg", "russie.jpeg", "fidji.jpeg", "finlande.jpeg", "france.jpeg", "gabon.jpeg", "gambie.jpeg", "georgie.jpeg", "ghana.jpeg", "gibraltar.jpeg", "grece.jpeg", "groenland.jpeg",
+                   "guadeloupe.jpeg", "guam.jpeg", "guatemala.jpeg", "guinee.jpeg", "guinee_equatoriale.jpeg", "guinee-bissau.jpeg", "guyana.jpeg", "guyane_francaise.jpeg", "haiti.jpeg", "honduras.jpeg", "hong_kong.jpeg",
+                   "hongrie.jpeg", "ile_norfolk.jpeg", "iles_cook.jpeg", "iles_d_aland.jpeg", "iles_falkland.jpeg", "iles_feroe.jpeg", "iles_mariannes_septentrionales.jpeg",
+                   "iles_marshall.jpeg", "iles_salomon.jpeg", "iles_svalbard_et_jan_mayen.jpeg", "iles_turques_et_caiques.jpeg", "iles_vierges_americaines.jpeg", "iles_vierges_britanniques.jpeg",
+                   "iles_wallis_et_futuna.jpeg", "inde.jpeg", "indonesie.jpeg", "iran.jpeg", "iraq.jpeg", "irlande.jpeg", "islande.jpeg", "italie.jpeg", "jamaique.jpeg", "japon.jpeg", "jordanie.jpeg", "kazakhstan.jpeg",
+                   "kenya.jpeg", "kirghizistan.jpeg", "kiribati.jpeg", "koweit.jpeg", "laos.jpeg", "lesotho.jpeg", "lettonie.jpeg", "liban.jpeg", "liberia.jpeg", "libye.jpeg", "liechtenstein.jpeg", "lituanie.jpeg", "luxembourg.jpeg",
+                   "macao.jpeg", "madagascar.jpeg", "malaisie.jpeg", "malawi.jpeg", "maldives.jpeg", "mali.jpeg", "malte.jpeg", "maroc.jpeg", "martinique.jpeg", "maurice.jpeg", "mauritanie.jpeg", "mayotte.jpeg", "mexique.jpeg", "micronesie.jpeg",
+                   "moldovie.jpeg", "monaco.jpeg", "mongolie.jpeg", "montserrat.jpeg", "mozambique.jpeg", "myanmar.jpeg", "namibie.jpeg", "nauru.jpeg", "nepal.jpeg", "nicaragua.jpeg", "niger.jpeg", "nigeria.jpeg", "nioue.jpeg", "norvege.jpeg",
+                   "nouvelle-caledonie.jpeg", "nouvelle-zelande.jpeg", "oman.jpeg", "ouganda.jpeg", "ouzbekistan.jpeg", "pakistan.jpeg", "palaos.jpeg", "palestine.jpeg", "panama.jpeg", "papouasie-nouvelle-guinee.jpeg",
+                   "paraguay.jpeg", "pays-bas.jpeg", "perou.jpeg", "philippines.jpeg", "pitcairn.jpeg", "pologne.jpeg", "polynesie_francaise.jpeg", "porto_rico.jpeg", "portugal.jpeg", "qatar.jpeg",
+                   "republique_democratique_du_congo.jpeg", "republique_dominicaine.jpeg", "republique_tcheque.jpeg", "reunion.jpeg", "roumanie.jpeg", "royaume-uni.jpeg", "rwanda.jpeg", "saint-kitts-et-nevis.jpeg",
+                   "saint-marin.jpeg", "saint-pierre-et-miquelon.jpeg", "saint-siege.jpeg", "saint-vincent-et-les_grenadines.jpeg", "sainte-helene.jpeg", "sainte-lucie.jpeg", "samoa.jpeg", "samoas_americaines.jpeg",
+                   "sao_tome-et-principe.jpeg", "senegal.jpeg", "serbie-et-montenegro.jpeg", "seychelles.jpeg", "sierra_leone.jpeg", "singapour.jpeg", "slovaquie.jpeg", "slovenie.jpeg", "somalie.jpeg", "soudan.jpeg",
+                   "sri_lanka.jpeg", "suede.jpeg", "suisse.jpeg", "suriname.jpeg", "swaziland.jpeg", "syrie.jpeg", "tadjikistan.jpeg", "taiwan.jpeg", "tanzanie.jpeg", "tchad.jpeg", "thailande.jpeg", "timor-leste.jpeg", "togo.jpeg",
+                   "tokelaou.jpeg", "tonga.jpeg", "trinite-et-tobago.jpeg", "tunisie.jpeg", "turkmenistan.jpeg", "turquie.jpeg", "tuvalu.jpeg", "ukraine.jpeg", "uruguay.jpeg", "vanuatu.jpeg", "venezuela.jpeg", "viet_nam.jpeg",
+                   "yemen.jpeg", "zambie.jpeg", "zimbabwe.jpeg"
         ];
 
         foreach ($users as $user) {
@@ -51,7 +57,7 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
         $saison = $manager->getRepository(Saison::class)->findAll();
         $villes = $manager->getRepository(Ville::class)->findAll();
 
-        $NB_TRIPS = 100;
+        $NB_TRIPS = 226;
         for ($i = 0, $prInd = 0; $i < $NB_TRIPS; $i++, $prInd += 7) {
             $voyage  = new Voyage();
             $voyage->setUser($usersAgencies[array_rand($usersAgencies)]);
@@ -60,7 +66,7 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
             $voyage->setDescription($faker->realText());
             $voyage->setPointFort($faker->realText());
             $voyage->addActivity($activites[array_rand($activites)]);
-            $voyage->addPay($pays[array_rand($pays)]);
+            $voyage->addPay($pays[$i]);
             $voyage->addSaison($saison[array_rand($saison)]);
             $voyage->addVille($villes[array_rand($villes)]);
             // $voyage->setImageName($images[array_rand($images)]);
