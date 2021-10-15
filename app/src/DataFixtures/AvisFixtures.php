@@ -19,7 +19,7 @@ class AvisFixtures extends Fixture implements DependentFixtureInterface
         $voyages = $manager->getRepository(Voyage::class)->findAll();
         $users = $manager->getRepository(User::class)->findAll();
 
-        for ($i=0; $i<1000; $i++) {
+        for ($i=0; $i<500; $i++) {
             $avis  = new Avis();
             $avis->setTitre($faker->word());
             $avis->setCompteur(rand(1,5));
