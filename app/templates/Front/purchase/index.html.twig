@@ -17,7 +17,7 @@
                         <tr>
                             <th>Aperçu</th>
                             <th>Dénomination</th>
-                            <th>Prix</th>
+                            {# <th>Prix</th> #}
                             <th>Opérations</th>
                         </tr>
                     </thead>
@@ -30,7 +30,7 @@
                                 </a>
                             </td>
                             <td>{{ purchase.name }}</td>
-                            <td>{{ purchase.tarif|first.prix }} €</td>
+                            {# <td>{{ purchase.tarif|first.prix }} €</td> #}
                             <td>
                                 <a href="{{ path('voyage_show', {'id': purchase.id}) }}"><button class="button is-small is-success"><i class="bi bi-eye"></i></button></a>
                             </td>

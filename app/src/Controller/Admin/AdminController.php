@@ -27,11 +27,11 @@ class AdminController extends AbstractController
         ]);
     }
 
-    private function isUserOnline(User $user)
-    {
-        $now = new \DateTime();
-        $now->modify('-5 minutes');
+    // private function isUserOnline(User $user)
+    // {
+    //     $now = new \DateTime();
+    //     $now->modify('-5 minutes');
 
-        return $user->getLastActivity() > $now;
-    }
+    //     return $user->getLastActivity() > $now;
+    // }
 }

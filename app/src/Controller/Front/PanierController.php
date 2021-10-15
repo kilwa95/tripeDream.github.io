@@ -123,7 +123,6 @@ class PanierController extends AbstractController
         $this->addFlash('success', "Le voyage a été supprimé de votre panier avec succès");
 
         return $this->redirectToRoute('panier_index');
-        // return $this->redirectToRoute('panier_validation', ['total' => $request->get('total')]);
     }
      /**
      * @Route("/validation/create-checkout-session", name="panier_validation", methods={"POST","GET"})
