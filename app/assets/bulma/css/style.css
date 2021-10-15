@@ -23915,7 +23915,7 @@ print {
 	}
 }
 
-.hero.is-warning {
+.hero.is-warning, .hero.is-primary {
 	background: linear-gradient(
 		rgba(0, 0, 0, 0.7),
 		rgba(0, 0, 0, 0.7)
@@ -23926,7 +23926,7 @@ print {
 	background-size: cover;
 }
 
-.hero.is-warning:not(.logsign) {
+.hero.is-warning:not(.logsign), .hero.is-primary:not(.logsign) {
 	background: linear-gradient(
 		rgba(0, 0, 0, 0.7),
 		rgba(0, 0, 0, 0.7)

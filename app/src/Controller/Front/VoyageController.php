@@ -208,7 +208,7 @@ class VoyageController extends AbstractController
                 'form' => $form->createView(),
                 
             ]);
-        } elseif ($this->isGranted('ROLE_USER')) {
+        } elseif ($this->isGranted('ROLE_USER') or $this->isGranted('IS_AUTHENTICATED_ANONYMOUSLY')) {
             return $this->render('Front/voyage/show.html.twig', [
                 'voyage' => $voyage,
                 'activites' => $activiteRepository->findAll(),
