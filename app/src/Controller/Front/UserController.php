@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -22,6 +22,10 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
+        if ($user !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+        
         if ($user !== null & $this->isGranted('ROLE_AGENCE')) {
             return $this->render('agence/profile/show.html.twig', [
                 'user' => $user,
@@ -38,6 +42,9 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        if ($user !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
         $form = $this->createForm(UserType::class, $user, ['action' => 'edit', 'type' => 'edit_profil_front']);
         $form->handleRequest($request);
 

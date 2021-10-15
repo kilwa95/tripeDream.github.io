@@ -36,6 +36,7 @@ class InfoPratiqueType extends AbstractType
             ->add('covid19', TextType::class, [
                 'label'  => "Informations sanitaires (Covid 19)",
             ])
+            ->add('duree')
             ->add('submit', SubmitType::class, [
                 'label'  => "Envoyer",
                 'attr' => [
