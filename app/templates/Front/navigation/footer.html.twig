@@ -59,26 +59,26 @@
                <p class="bd-footer-link-title">
                   <span>Pays</span>
                </p>
-               {% for pays in pays %}
+               {% for pays in pays|slice(0, 10) %}
                   <p class="bd-footer-link">
                      <a href="{{ path('pays_name',{'id': pays.id}) }}">{{pays.name}}</a>
                   </p>
                {% endfor %}
                <p class="bd-footer-link bd-is-more">
-                  <a href="{{ path('voyage_index') }}">Voir plus</a>
+                  <a href="{{ path('voyage_index') }}">Voir plus...</a>
                </p>
             </div>
             <div class="column is-3">
                <p class="bd-footer-link-title">
                   <span>Activités</span>
                </p>
-               {% for activite in activites %}
+               {% for activite in activites|slice(0, 10) %}
                   <p class="bd-footer-link">
                      <a href="{{ path('activite_name',{'id': activite.id}) }}">{{activite.name}}</a>
                   </p>
                {% endfor %}
                <p class="bd-footer-link bd-is-more">
-                  <a href="{{ path('voyage_index') }}">Voir plus</a>
+                  <a href="{{ path('voyage_index') }}">Voir plus...</a>
                </p>
             </div>
             <div class="column is-3">

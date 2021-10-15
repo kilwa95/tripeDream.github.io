@@ -58,7 +58,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
             $user = new User();
             $user->setEmail($faker->email());
-            $user->setUsername($faker->firstName());
+            $user->setUsername($faker->userName());
             $user->setLastName($faker->lastName());
             $user->setAdresse($adresses[array_rand($adresses)]);
             $roles = array_rand(array_flip(['ROLE_USER', 'ROLE_AGENCE', 'ROLE_ADMIN']));

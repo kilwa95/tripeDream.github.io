@@ -1,0 +1,39 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Voyages par pays{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <section id="popular-destinations" class="popular-destinations py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="is-size-4 mb-4 has-text-black text-center">Voyages par destination</h2>
+                </div>
+                {% for voyage in voyagesByPays %}
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <a href="{{ path('voyage_show', {'id': voyage.id}) }}" class="text-white">
+                            <figure class="position-relative overflow-hidden">
+                                <img class="" src="{{ vich_uploader_asset(voyage) }}" alt="{{ voyage.pays[0].name }}" width="600px" height="300px">
+                                <figcaption class="d-flex align-items-center justify-content-center position-absolute">
+                                    <h3>{{ voyage.pays[0].name }}</h3>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="pagination justify-content-center" id="list">
+            {{ knp_pagination_render(voyagesByPays) }}
+        </div>
+    </section>
+</div>
+
+{% endblock %}

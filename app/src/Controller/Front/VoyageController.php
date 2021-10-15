@@ -63,6 +63,32 @@ class VoyageController extends AbstractController
     }
 
     /**
+     * @Route("/pays", name="trips_by_pays", methods={"GET"})
+     * @Breadcrumb({
+     *  { "label" = "Pays" }
+     * })
+     */
+    public function tripsByPays(Request $request, VoyageRepository $voyageRepository, PaysRepository $paysRepository, PaginatorInterface $paginator): Response
+    {
+        $voyages = $voyageRepository->findBy(['status' => 'avaible']);
+
+        $pays = $paysRepository->findAll();
+
+        $voyagesByPays = [];
+
+        foreach ($pays as $p) {
+            $voyagesByPays[] = $voyageRepository->findByPays($p->getName());
+        }
+
+        $pagination = $paginator->paginate($voyagesByPays, $request->query->getInt('page', 1), 6);
+        $pagination->setParam('_fragment', 'list');
+
+        return $this->render('Front/navigation/trips_by_pays.html.twig', [
+            'voyagesByPays' => $pagination,
+        ]);
+    }
+
+    /**
      * @Route("/pays/{id}", name="pays_name", methods={"GET"})
      * @Breadcrumb({
      *  { "label" = "Voyages", "route" = "voyage_index" },
