@@ -4,7 +4,7 @@ $(document).ready(function() {
 	var $tagsCollectionHolder = $('div.tarif');
 
 	$tagsCollectionHolder.data('index', $tagsCollectionHolder.find('input').length);
-	console.log($tagsCollectionHolder);
+	// console.log($tagsCollectionHolder);
 	$('body').on('click', '.add_item_link', function(e) {
 		var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
 		addFormToCollection($collectionHolderClass);

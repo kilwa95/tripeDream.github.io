@@ -182,6 +182,7 @@ class VoyageController extends AbstractController
         $avis = new Avis();
         $form = $this->createForm(AvisType::class, $avis);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $avis->setUser($this->getUser());
             $avis->setVoyage($voyage);        
@@ -191,20 +192,37 @@ class VoyageController extends AbstractController
 
             return $this->redirectToRoute('voyage_show', ['id' => $voyage->getId()]);
         }
-
-        return $this->render('Front/voyage/show.html.twig', [
-            'voyage' => $voyage,
-            'activites' => $activiteRepository->findAll(),
-            'pays' => $PaysRepository->findAll(),
-            'saison' =>  $SaisonRepository->findAll(),
-            'avis' => $voyage->getAvis(),
-            'infosPratiques' => $voyage->getInfoPratique(),
-            'programme' => $voyage->getProgramme(),
-            'tarifs'  => $voyage->getTarif(),
-            'isfavorie' =>  $isfavorie,
-            'isPanier' =>  $isPanier,
-            'form' => $form->createView(),
-            
-        ]);
+        
+        if ($this->isGranted('ROLE_AGENCE')) {
+            return $this->render('agence/voyage/show.html.twig', [
+                'voyage' => $voyage,
+                'activites' => $activiteRepository->findAll(),
+                'pays' => $PaysRepository->findAll(),
+                'saison' =>  $SaisonRepository->findAll(),
+                'avis' => $voyage->getAvis(),
+                'infosPratiques' => $voyage->getInfoPratique(),
+                'programme' => $voyage->getProgramme(),
+                'tarifs'  => $voyage->getTarif(),
+                'isfavorie' =>  $isfavorie,
+                'isPanier' =>  $isPanier,
+                'form' => $form->createView(),
+                
+            ]);
+        } elseif ($this->isGranted('ROLE_USER') or $this->isGranted('IS_AUTHENTICATED_ANONYMOUSLY')) {
+            return $this->render('Front/voyage/show.html.twig', [
+                'voyage' => $voyage,
+                'activites' => $activiteRepository->findAll(),
+                'pays' => $PaysRepository->findAll(),
+                'saison' =>  $SaisonRepository->findAll(),
+                'avis' => $voyage->getAvis(),
+                'infosPratiques' => $voyage->getInfoPratique(),
+                'programme' => $voyage->getProgramme(),
+                'tarifs'  => $voyage->getTarif(),
+                'isfavorie' =>  $isfavorie,
+                'isPanier' =>  $isPanier,
+                'form' => $form->createView(),
+                
+            ]);
+        }
     }
 }
