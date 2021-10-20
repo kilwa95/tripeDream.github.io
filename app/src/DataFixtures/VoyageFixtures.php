@@ -57,7 +57,7 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
         $saison = $manager->getRepository(Saison::class)->findAll();
         $villes = $manager->getRepository(Ville::class)->findAll();
 
-        $NB_TRIPS = 126;
+        $NB_TRIPS = 226;
         for ($i = 0, $prInd = 0; $i < $NB_TRIPS; $i++, $prInd += 7) {
             $voyage  = new Voyage();
             $voyage->setUser($usersAgencies[array_rand($usersAgencies)]);
