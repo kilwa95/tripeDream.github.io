@@ -47,4 +47,14 @@ class TarifRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    // public function findById($id): ?Tarif
+    // {
+    //     return $this->createQueryBuilder('t')
+    //         ->andWhere('t.id = :id')
+    //         ->setParameter('id', $id)
+    //         ->getQuery()
+    //         ->getOneOrNullResult()
+    //     ;
+    // }
 }

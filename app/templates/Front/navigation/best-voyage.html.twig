@@ -10,7 +10,7 @@
                 <div class="card-voyage" style="background: no-repeat url({{ vich_uploader_asset(voyage) }});background-size: cover;">
                     <div class="content">
                         <h2 class="has-text-white">{{ voyage.name }}</h2>
-                        <p class="copy">{{ voyage.description|striptags|length > 80 ? voyage.description|striptags|slice(0, 80) ~ '...' : voyage.description|striptags }}</p>
+                        <p class="copy">{{ voyage.description|striptags|length > 60 ? voyage.description|striptags|slice(0, 60) ~ '...' : voyage.description|striptags }}</p>
                         <button class="button is-rounded"><a href="{{ path('voyage_show', {'id': voyage.id}) }}" >Réservez</a></button>
                     </div>
                 </div>

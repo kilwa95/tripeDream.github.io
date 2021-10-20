@@ -19,7 +19,8 @@
                                     <tr>
                                         <th>Aperçu</th>
                                         <th>Dénomination</th>
-                                        {# <th>Prix</th> #}
+                                        <th>Prix</th>
+                                        <th>N° voyageurs</th>
                                         <th>Opérations</th>
                                     </tr>
                                 </thead>
@@ -33,6 +34,8 @@
                                         </td>
                                         <td>{{ panier.name }}</td>
                                         {# <td>{{ panier.tarif|first.prix }} €</td> #}
+                                        <td>{{ selectedPrices[panier.id] }} €</td>
+                                        <td>{{ selectedNbPers[panier.id] }}</td>
                                         <td>
                                             <a href="{{ path('voyage_show', {'id': panier.id}) }}"><button class="button is-small is-success"><i class="bi bi-eye"></i></button></a>
                                             {# <a href="{{ path('panier_delete', {'id': panier.id, 'total': total}) }}"><button class="button is-small is-danger"><i class="bi bi-trash"></i></button></a> #}

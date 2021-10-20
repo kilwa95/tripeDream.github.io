@@ -86,7 +86,7 @@ class VoyageRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('v')
         ->join('v.infoPratique', 'ip')
-        ->where('status = avaible AND ip.depart LIKE :depart')
+        ->where('ip.depart LIKE :depart')
         ->setParameter('depart', $depart . "%");
 
         $result = $qb->getQuery()->getResult();
@@ -99,8 +99,7 @@ class VoyageRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('v')
         ->join('v.pays', 'py')
-        ->where('v.status = :status AND py.name = :pays')
-        ->setParameter('status', 'avaible')
+        ->where('py.name = :pays')
         ->setParameter('pays', $pays);
 
         $result = $qb->getQuery()->setMaxResults(1)->getSingleResult();
@@ -114,8 +113,7 @@ class VoyageRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('v')
         ->join('v.infoPratique', 'ip')
         ->join('v.pays', 'py')
-        ->where('v.status = :status AND ip.depart LIKE :depart AND ip.duree = :duree AND py.name = :pays')
-        ->setParameter('status', 'avaible')
+        ->where('ip.depart LIKE :depart AND ip.duree = :duree AND py.name = :pays')
         ->setParameter('depart', $depart . "%")
         ->setParameter('duree', $duree)
         ->setParameter('pays', $pays);

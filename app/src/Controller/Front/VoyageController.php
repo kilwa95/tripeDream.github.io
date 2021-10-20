@@ -51,7 +51,8 @@ class VoyageController extends AbstractController
         }
         // $voyages = $voyageRepository->findAll();
 
-        $voyages = $voyageRepository->findBy(['status' => 'avaible']);
+        // $voyages = $voyageRepository->findBy(['status' => 'avaible']);
+        $voyages = $voyageRepository->findAll();
         $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
         $pagination->setParam('_fragment', 'list');
 
@@ -70,7 +71,8 @@ class VoyageController extends AbstractController
      */
     public function tripsByPays(Request $request, VoyageRepository $voyageRepository, PaysRepository $paysRepository, PaginatorInterface $paginator): Response
     {
-        $voyages = $voyageRepository->findBy(['status' => 'avaible']);
+        // $voyages = $voyageRepository->findBy(['status' => 'avaible']);
+        $voyages = $voyageRepository->findAll();
 
         $pays = $paysRepository->findAll();
 
@@ -179,6 +181,8 @@ class VoyageController extends AbstractController
      */
     public function show(Request $request,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository,Voyage $voyage): Response
     {
+        $this->denyAccessUnlessGranted('view', $voyage);
+
         $isfavorie = false;
         if($this->getUser()){
             $favories = $this->getUser()->getFavorie();

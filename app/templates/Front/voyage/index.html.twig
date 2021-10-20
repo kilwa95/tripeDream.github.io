@@ -17,12 +17,12 @@
                     <div class="column is-one-third">
                         <div class="card is-shady">
                             <div class="card-image">
-                                <a class="image is-16by9" href="{{ path('voyage_show', {'id': voyage.id}) }}">
+                                <a class="image is-16by9" href="{{ path('voyage_show', {'id': voyage.id}) }}#list">
                                     <img src="{{ vich_uploader_asset(voyage) }}" alt="{{ voyage.name }}" />
                                 </a>
                             </div>
                             <div class="v-card-content">
-                                <p class="title is-6" align="center"><a href="{{ path('voyage_show', {'id': voyage.id}) }}" >{{voyage.name}}</a></p>
+                                <p class="title is-6" align="center"><a href="{{ path('voyage_show', {'id': voyage.id}) }}#list" >{{voyage.name}}</a></p>
                                 <p>{{voyage.description}}</p>
                             </div>
                             <footer class="card-footer">
