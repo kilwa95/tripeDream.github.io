@@ -34,7 +34,7 @@ class TarifFixtures extends Fixture implements DependentFixtureInterface
             $tarif->setVoyage($voyage);
             $manager->persist($tarif);
 
-            for ($i = 1; $i <= 5; $i++) {
+            for ($i = 1; $i <= 9; $i++) {
                 $tarif = new Tarif();
                 $tarif->setDepart($dayAfter);
                 $tarif->setRetour(new \DateTime($tarif->getDepart()->format('Y-m-d H:i:s').' +'.rand(6, 30).' day'));
