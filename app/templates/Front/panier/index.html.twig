@@ -3,20 +3,10 @@
 {% block title %}Panier{% endblock %}
 
 {% block body %}
-{# {% set totale = 0 %}
-{% set tarifs = [] %}
-
-{% for panier in paniers %}
-    {% set tarifs = tarifs|merge([panier.tarif|first.prix]) %}
-    <input type="hidden" data-id="{{ panier.id }}" id="{{ loop.index0 }}" value="{{ panier.tarif[loop.index0].prix }}" />
-{% endfor %}
-
-{% for i in tarifs %}
-    {% set totale = totale + i %}
-{% endfor %} #}
 
 <input type="hidden" id="currentTotal" value="{{ app.session.get('total') }}" />
 <input type="hidden" id="setTotal" value="" />
+<input type="hidden" id="setSelectedTrips" value="" />
 
 <div class="container">
     <div class="section">
@@ -28,6 +18,14 @@
             </div>
             <div class="columns is-multiline">
             {% for panier in paniers %}
+                {% set break = false %}
+                {% set firstTarif = null %}
+                {% for tarif in panier.tarif %}
+                    {% if tarif.capacite > 0 and not break %}
+                        {% set firstTarif = tarif %}
+                        {% set break = true %}
+                    {% endif %}
+                {% endfor %}
                 <div class="column is-one-third">
                     <div class="card is-shady">
                         <div class="card-image">
@@ -40,16 +38,18 @@
                             <p>{{ panier.description|striptags|length > 100 ? panier.description|striptags|slice(0, 100) ~ '...' : panier.description|striptags }}</p>
 
                             <form method="post" class="mt-5 mb-3">
+                                <label class="label">Choisissez votre option de voyage:</label>
                                 <div class="control has-icons-left">
                                     <div class="select is-info">
-                                        <select name='chosen_price' onchange="updatePanier(event)"> 
-                                            <option value="" data-id="{{ panier.id }}" data-prix="{{ panier.tarif[0].prix }}" data-capacite="{{ panier.tarif[0].capacite }}">Choisissez votre option de voyage</option>
+                                        <select name='chosen_tarif' onchange="updatePanier(event)"> 
+                                            {# <option name="selectedTrip" value="" data-idTarif="{{ panier.tarif[0].id }}" data-id="{{ panier.id }}" data-prix="{{ panier.tarif[0].prix }}" data-capacite="{{ panier.tarif[0].capacite }}">Choisissez votre option de voyage</option> #}
+                                            
                                             {% for tarif in panier.tarif %}
-                                                {# <optgroup label="{{ tarif.depart|date("d/m/Y") }} - {{ tarif.retour|date("d/m/Y") }}">
-                                                </optgroup> #}
-                                                <option value="" data-id="{{ panier.id }}" data-prix="{{ tarif.prix }}" data-capacite="{{ tarif.capacite }}">
-                                                    {{ tarif.depart|date("d/m/Y") }} - {{ tarif.retour|date("d/m/Y") }}, prix: {{ tarif.prix }} €
-                                                </options>
+                                                {% if tarif.capacite > 0 %}
+                                                    <option name="selectedTrip" value="" data-idTarif="{{ tarif.id }}" data-id="{{ panier.id }}" data-prix="{{ tarif.prix }}" data-capacite="{{ tarif.capacite }}">
+                                                        {{ tarif.depart|date("d/m/Y") }} - {{ tarif.retour|date("d/m/Y") }}, prix: {{ tarif.prix }} €
+                                                    </options>
+                                                {% endif %}
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -57,16 +57,34 @@
                                         <i class="bi bi-globe"></i>
                                     </span>
                                 </div>
+                                <br>
+                                <div class="control has-icons-left">
+                                    <div class="select is-primary">
+                                        <select name='options' id='chosen_person_nb{{ panier.id }}' onchange="updateNbPers(event)"> 
+                                            {# <option value="" data-id="{{ panier.id }}" data-prix="{{ panier.tarif[0].prix }}" data-nbpers="{{ 1 }}">Choisissez le nombre de voyageurs</option> #}
+                                            {% for i in 1..firstTarif.capacite %}
+                                                <option value="" data-id="{{ panier.id }}" data-prix="{{ firstTarif.prix }}" data-nbpers="{{ i }}">
+                                                    {{ i }}
+                                                </options>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <span class="icon is-small is-left">
+                                        <i class="bi bi-person"></i>
+                                    </span>
+                                </div>
+
                             </form>
                         </div>
                         <footer class="card-footer">
                             <span class="card-footer-item">
                                 <a data-urlDelBtn='{{ path('panier_delete', {'id': panier.id})}}' data-bs-toggle='modal' data-bs-target='#dangerModal' onclick="myFunction(this)">
-                                    <button class="button is-small is-danger"><i class='bi bi-x-square'></i></button>
+                                    <button class="button is-small is-danger"><i class='bi bi-x'></i></button>
                                 </a>
                             </span>
                             {# <span class="card-footer-item"><a href="{{ path('panier_delete', {'id': panier.id}) }}"><button class="button is-small is-danger">Supprimer</button></a></span> #}
-                            <span class="card-footer-item"><input name="input-prices" id="voyage-price{{ panier.id }}" style='width:100%;' value='{{ panier.tarif[0].prix }}' disabled>&nbsp;€</input></span>
+                            <span class="card-footer-item"><input name="input-prices" data-idTrip="{{ panier.id }}" id="voyage-price{{ panier.id }}" class="text-center" style='width:100%;' value='{{ firstTarif.prix }}' disabled>&nbsp;€</input></span>
+                            <span class="card-footer-item"><input name="input-nbPers" data-idTrip="{{ panier.id }}" id="voyage-id{{ panier.id }}" class="text-center" style='width:100%;' value='1' disabled>&nbsp;<i class='bi bi-person'></i></input></span>
                             <span class="card-footer-item"><a href="{{ path('voyage_show', {'id': panier.id}) }}"><button class="button is-small is-success"><i class='bi bi-eye'></i></button></a></span>
                         </footer>
                     </div>
@@ -74,16 +92,16 @@
             {% endfor %}
             </div>
 
-            <div class="pagination justify-content-center">
+            {# <div class="pagination justify-content-center">
                 {{ knp_pagination_render(paniers) }}
-            </div>
+            </div> #}
 
             <div class="card">
                 <div class="v-card-content">
-                    <p><b>Total:</b> <label id="labelTotal" value='{{ app.session.get('total') }}'>{{ app.session.get('total') }}</label>€</p>
+                    <p><b>Total:</b> <label id="labelTotal" value=''>0</label>€</p>
                 </div>
                 <footer class="card-footer">
-                    <span class="card-footer-item"><span><a href="{{ path('panier_validation')}}"><button class="button is-info">Passer la commande</button></a></span></span>
+                    <span class="card-footer-item"><span><button id="checkoutBtn" class="button is-info">Passer la commande</button></span></span>
                 </footer>
             </div>
 
@@ -134,6 +152,15 @@
         newPrice = event.target.options[event.target.selectedIndex].dataset.prix;
         capacite = event.target.options[event.target.selectedIndex].dataset.capacite;
 
+        //$newoptions = '<option value="" data-id="'+id+'" data-prix="'+newPrice+'" data-nbpers="1">Choisissez le nombre de voyageurs</options>';
+        $newoptions = '';
+
+        for (var i = 1; i <= capacite; i++) {
+            $newoptions += '<option value="" data-id="'+id+'" data-prix="'+newPrice+'" data-nbpers="'+i+'">'+i+'</options>';
+        }
+
+        $('select#chosen_person_nb'+id).html($newoptions);
+
         oldPrice = parseInt(document.getElementById("voyage-price"+id).value);
         document.getElementById("voyage-price"+id).value = newPrice;
 
@@ -153,7 +180,44 @@
         $.ajax({
             url: {{ path('panier_index') }},
             type: "POST",
-            data: {"newTotal": newTotal},
+            data: {
+                "newTotal": newTotal,
+                //"idVoyage": id
+            },
+            success: function(data, textStatus, jqXHR) {
+                
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Erreur AJAXs!');
+            }
+        });
+    }
+
+    function updateNbPers(e) {
+        id = event.target.options[event.target.selectedIndex].dataset.id;
+        price = event.target.options[event.target.selectedIndex].dataset.prix;
+        newNbPers = event.target.options[event.target.selectedIndex].dataset.nbpers;
+        
+        newPrice = parseInt(price) * newNbPers;
+        oldPrice = parseInt($("#voyage-price"+id).val());
+        $("#voyage-price"+id).val(newPrice);
+        currentTotal = parseInt($("#currentTotal").val());
+        newTotal = currentTotal - oldPrice + parseInt(newPrice);
+        session = "{"+"{" + " app" + ".session.set(" + "'total', " + newTotal + ") }}";
+        $("#currentTotal").val(newTotal);
+        $("#setTotal").val(session);
+        $("#labelTotal").html(newTotal);
+        $("#labelTotal").val(newTotal);
+
+        $("#voyage-id"+id).val(newNbPers);
+
+        $.ajax({
+            url: {{ path('panier_index') }},
+            type: "POST",
+            data: {
+                "newTotal": newTotal,
+                //"idVoyage": id
+            },
             success: function(data, textStatus, jqXHR) {
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -162,22 +226,73 @@
         });
     }
 
-    // TO-DO
-    /*
-    function getAllTripPrices() {
-        inputs = $("[name='input-prices']");
-        prices = [];
+    function getAllSelectedPrices() {
+        selects = $('input[name="input-prices"]');
+        selectedPrices = {};
 
-        $('input[name="input-prices"]').each(function(){
-            console.log(this);
+        selects.each(function() {
+            tripId = $(this).attr('data-idTrip');
+            tripPrice = $(this).val();
+            selectedPrices[tripId] = tripPrice;
+
+            //console.log("tripId = "+tripId);
+            //console.log("tripPrice = "+tripPrice);
         });
 
-        for (input in inputs) {
-        }
-
-        return prices;
+        return selectedPrices;
     }
-    */
+
+    function getAllSelectedNbPers() {
+        selects = $('input[name="input-nbPers"]');
+        selectedNbPers = {};
+
+        selects.each(function() {
+            tripId = $(this).attr('data-idTrip');
+            tripCapacite = $(this).val();
+            selectedNbPers[tripId] = tripCapacite;
+
+            //console.log("tripId = "+tripId);
+            //console.log("tripCapacite = "+tripCapacite);
+        });
+
+        return selectedNbPers;
+    }
+
+    function getAllSelectedTarifs() {
+        selects = $('select[name="chosen_tarif"]').find(':selected');
+        selectedTarifs = {};
+
+        selects.each(function() {
+            tripId = $(this).attr('data-id');
+            tarifId = $(this).attr('data-idTarif');
+            selectedTarifs[tripId] = tarifId;
+        });
+
+        return selectedTarifs;
+    }
+
+    $('#checkoutBtn').on('click', function() {
+
+        selectedPrices = getAllSelectedPrices();
+        selectedNbPers = getAllSelectedNbPers();
+        selectedTarifs = getAllSelectedTarifs();
+
+        $.ajax({
+            url: "{{ path('panier_validation') }}",
+            type: "POST",
+            data: {
+                "selectedPrices": selectedPrices,
+                "selectedNbPers": selectedNbPers,
+                "selectedTarifs": selectedTarifs,
+            },
+            success: function(data, textStatus, jqXHR) {
+                window.location = "{{ path('panier_validation') }}";
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Erreur AJAXs!');
+            }
+        });
+    })
 
 </script>
 
