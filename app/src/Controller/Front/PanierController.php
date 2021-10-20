@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Panier;
 use App\Entity\Voyage;
+use App\Entity\Tarif;
 use App\Repository\VoyageRepository;
 use App\Repository\PanierRepository;
 use App\Services\Payement;
@@ -53,11 +54,11 @@ class PanierController extends AbstractController
         }
         foreach($ids as $id){
             $voyage = $voyageRepository->find($id);
-            array_push($voyages,$voyage);
+            array_push($voyages, $voyage);
         }
 
-        $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
-        $pagination->setParam('_fragment', 'list');
+        // $pagination = $paginator->paginate($voyages, $request->query->getInt('page', 1), 6);
+        // $pagination->setParam('_fragment', 'list');
 
     //     if ($request->isMethod('POST')) {
     //         foreach($ids as $id){
@@ -73,13 +74,15 @@ class PanierController extends AbstractController
         
         if ($newTotal) {
             $this->get('session')->set('total', $newTotal);
+            
             return new JsonResponse($newTotal);
         } else {
             $this->get('session')->set('total', $totale);
         }
       
         return $this->render('Front/panier/index.html.twig',[
-            'paniers' => $pagination,
+            // 'paniers' => $pagination,
+            'paniers' => $voyages,
         ]);
     }
     /**
@@ -133,6 +136,22 @@ class PanierController extends AbstractController
      */
     public function validate(Request $request, VoyageRepository $voyageRepository, Payement $payement): Response
     {
+        $selectedPrices = $request->request->get('selectedPrices');
+        $selectedNbPers = $request->request->get('selectedNbPers');
+        $selectedTarifs = $request->request->get('selectedTarifs');
+        
+        if ($selectedPrices) {
+            $this->get('session')->set('selectedPrices', $selectedPrices);
+            $this->get('session')->set('selectedNbPers', $selectedNbPers);
+            $this->get('session')->set('selectedTarifs', $selectedTarifs);
+        }
+
+        $selectedPrices = $this->get('session')->get('selectedPrices');
+        $selectedNbPers = $this->get('session')->get('selectedNbPers');
+
+        //dd($selectedPrices);
+        //dd($selectedNbPers);
+
         $user = $this->getUser();
 
         if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
@@ -166,6 +185,8 @@ class PanierController extends AbstractController
 
         return $this->render('Front/payement/checkout.html.twig',[
             'paniers' => $voyages,
+            'selectedPrices' => $selectedPrices,
+            'selectedNbPers' => $selectedNbPers,
             'total' => $total
         ]);
 
@@ -181,6 +202,8 @@ class PanierController extends AbstractController
     {
         //$total = $request->get("total");
         $total = $this->get('session')->get('total');
+        $selectedNbPers = $this->get('session')->get('selectedNbPers');
+        $selectedTarifs = $this->get('session')->get('selectedTarifs');
 
         $user = $this->getUser();
         // if ($user !== null & $this->isGranted('ROLE_ADMIN')) {
@@ -194,9 +217,20 @@ class PanierController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $paniers = $user->getPaniers();
 
+        foreach($selectedTarifs as $tripId => $tarifId) {
+            $tarifToUpdate = $entityManager->getRepository(Tarif::class)->find($tarifId);
+
+            $oldCapacite = $tarifToUpdate->getCapacite();
+            $nbPers = $selectedNbPers[$tripId];
+            $newCapacite = $oldCapacite - $nbPers;
+
+            $tarifToUpdate->setCapacite($newCapacite);
+            $entityManager->flush();
+        }
+
         foreach($paniers as $panier) {
-            $id=  $panier->getVoyage()->getId();
-            $voyage =  $entityManager->getRepository(Voyage::class)->find($id);
+            $id = $panier->getVoyage()->getId();
+            $voyage = $entityManager->getRepository(Voyage::class)->find($id);
             $voyage->setStatus('avaible');
             $voyage->addUsersParticipat($user);
             $entityManager->flush();
@@ -205,7 +239,6 @@ class PanierController extends AbstractController
             $entityManager->remove($panier);
             $entityManager->flush();
         }
-
           
         return $this->render('Front/payement/success.html.twig',[
             //'paniers' =>  $voyages,

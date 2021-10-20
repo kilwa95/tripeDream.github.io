@@ -16,7 +16,7 @@ use SlopeIt\BreadcrumbBundle\Annotation\Breadcrumb;
 /**
  * @Route("/profile")
  * @Breadcrumb({
- *  { "label" = "Voyages", "route" = "agence_index" },
+ *  { "label" = "Voyages", "route" = "voyage_index" },
  *  { "label" = "Profile" }
  * })
  */

@@ -25,24 +25,28 @@ class TarifFixtures extends Fixture implements DependentFixtureInterface
             $dayAfter = new \DateTime($tarif->getRetour()->format('Y-m-d H:i:s').' +1 day');
 
             $duree = ceil($tarif->getRetour()->diff($tarif->getDepart())->format("%a"));
-            $prix = $faker->numberBetween(40, 99) * $duree;
+
+            $prix = $faker->numberBetween(30, 99) * $duree;
 
             $tarif->setPrix($prix);
 
-            $tarif->setCapacite($faker->randomNumber(1));
+            $tarif->setCapacite($faker->numberBetween(3, 10));
             $tarif->setVoyage($voyage);
             $manager->persist($tarif);
 
             for ($i = 1; $i <= 5; $i++) {
                 $tarif = new Tarif();
-                $tarif->setPrix($faker->randomNumber(3));
-
                 $tarif->setDepart($dayAfter);
-                $tarif->setRetour(new \DateTime($tarif->getDepart()->format('Y-m-d H:i:s').' +'.rand(6, 60).' day'));
-                                                
+                $tarif->setRetour(new \DateTime($tarif->getDepart()->format('Y-m-d H:i:s').' +'.rand(6, 30).' day'));
                 $dayAfter = new \DateTime($tarif->getRetour()->format('Y-m-d H:i:s').' +1 day');
+
+                $duree = ceil($tarif->getRetour()->diff($tarif->getDepart())->format("%a"));
     
-                $tarif->setCapacite($faker->randomNumber(1));
+                $prix = $faker->numberBetween(30, 99) * $duree;
+    
+                $tarif->setPrix($prix);
+    
+                $tarif->setCapacite($faker->numberBetween(3, 10));
                 $tarif->setVoyage($voyage);
                 $manager->persist($tarif);
             }

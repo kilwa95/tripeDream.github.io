@@ -29,7 +29,8 @@ class NavigationController extends AbstractController
             return $this->redirectToRoute('agence_index');
         }
 
-        $voyages = $voyageRepository->findBy(['status' => 'avaible']);
+        // $voyages = $voyageRepository->findBy(['status' => 'avaible']);
+        $voyages = $voyageRepository->findAll();
         shuffle($voyages);
         $voyages = array_slice($voyages, 0, 4);
 
