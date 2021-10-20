@@ -179,6 +179,8 @@ class VoyageController extends AbstractController
      */
     public function show(Request $request,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository,FavorieRepository $favorieRepository,Voyage $voyage): Response
     {
+        $this->denyAccessUnlessGranted('view', $voyage);
+
         $isfavorie = false;
         if($this->getUser()){
             $favories = $this->getUser()->getFavorie();

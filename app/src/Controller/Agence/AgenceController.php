@@ -120,6 +120,8 @@ class AgenceController extends AbstractController
      */
     public function edit(Request $request, Voyage $voyage, VoyageRepository $voyageRepository ,ActiviteRepository $activiteRepository,PaysRepository $PaysRepository,SaisonRepository $SaisonRepository): Response
     {
+        $this->denyAccessUnlessGranted('edit', $voyage);
+
         $form = $this->createForm(VoyageType::class, $voyage);
         $form->handleRequest($request);
 
@@ -142,6 +144,8 @@ class AgenceController extends AbstractController
     public function delete(int $id, VoyageRepository $tripRepository): Response
     {
         $trip = $tripRepository->find($id);
+
+        $this->denyAccessUnlessGranted('delete', $trip);
 
         $programmes = $trip->getProgramme();
         $tarifs = $trip->getTarif();

@@ -98,7 +98,7 @@
 
             <div class="card">
                 <div class="v-card-content">
-                    <p><b>Total:</b> <label id="labelTotal" value=''>0</label>€</p>
+                    <p><b>Total:</b> <label id="labelTotal" value=''>{{ app.session.get('total')}}</label>€</p>
                 </div>
                 <footer class="card-footer">
                     <span class="card-footer-item"><span><button id="checkoutBtn" class="button is-info">Passer la commande</button></span></span>
