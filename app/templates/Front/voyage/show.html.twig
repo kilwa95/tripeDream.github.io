@@ -74,7 +74,7 @@ $(document).ready(function() {
                         <div class="column is-3">
                             <div align="">
                                 {% if isPanier == true %}
-                                    <a class="text-white" href="{{path('panier_new',{'id': voyage.id})}}"><button class="button is-primary">Ajouté au panier</button></a>
+                                    <a class="text-white" href="{{path('panier_new',{'id': voyage.id})}}"><button class="button is-primary" disabled>Ajouté au panier</button></a>
                                 {% elseif is_granted("ROLE_USER") %}
                                     <a class="text-white" href="{{path('panier_new',{'id': voyage.id})}}"><button class="button is-warning">Ajouter au panier</button></a>
                                 {% endif %}
